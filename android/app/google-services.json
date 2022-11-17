@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "443401904437",
+    "project_id": "lifegoals-50b41",
+    "storage_bucket": "lifegoals-50b41.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:443401904437:android:a76bd1196d49347ccc6c7c",
+        "android_client_info": {
+          "package_name": "fi.nikkijuk.lifegoals.lifegoals"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "443401904437-0d5f2g7rrb9v903k53d58r73b64ngudn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCEFQ13txytxMo4lJMtfbISzwHxE6kcUPA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "443401904437-0d5f2g7rrb9v903k53d58r73b64ngudn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
