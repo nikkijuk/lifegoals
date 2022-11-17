@@ -23,6 +23,8 @@ $ dart pub global activate very_good_cli
 
 #### Create app with very good core as base
 
+https://github.com/VeryGoodOpenSource/very_good_core
+
 ```sh
 # create app with very good cli
 $ very_good create lifegoals --desc “Flutter lifegoals app" --org “fi.nikkijuk.lifegoals”
@@ -30,11 +32,17 @@ $ very_good create lifegoals --desc “Flutter lifegoals app" --org “fi.nikkij
 
 #### Configure firebase
 
-Create firebase instance 'lifegoals'
-
 - https://firebase.google.com/codelabs/firebase-get-to-know-flutter#2
 
+Create account to https://firebase.google.com/
+
+Go to Firebase console https://console.firebase.google.com/
+
+Create firebase instance 'lifegoals'
+
 #### install firebase cli
+
+- https://github.com/firebase/firebase-tools
 
 ```sh
 # use brew (osx) to install firebase cli
@@ -48,6 +56,7 @@ brew install firebase-cli
 ```sh
 # login to firebase
 $ firebase login
+
 # list all projects
 $ firebase projects:list
 ```
