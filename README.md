@@ -100,12 +100,21 @@ change min sdk level to be 21
 
 Note: I don't know if 21 is correct version, but after this change we get forward
 
+#### create firebase configuration
+
+```sh
+# create configuration files 
+$ flutterfire configure
+```
+
 ####  Format generated firebase config
 
 ```sh
 # format all files according to dart rules
 $ flutter format .  
 ```
+
+Note: there's some rule ignores present, but they might not be all applied
 
 #### Fix analyse errors in generated firebase config
 
@@ -114,7 +123,7 @@ $ flutter format .
 $ flutter analyze lib test
 ```
 
-modify to firebase_options.dart
+modify generated firebase_options.dart
 
 - disable rule: no_default_cases
 
