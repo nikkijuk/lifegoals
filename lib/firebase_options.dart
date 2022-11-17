@@ -70,7 +70,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '443401904437',
     projectId: 'lifegoals-50b41',
     storageBucket: 'lifegoals-50b41.appspot.com',
-    iosClientId: '443401904437-82dtg8jt158rgcbpcavaloh5cg0h8to1.apps.googleusercontent.com',
+    iosClientId:
+        '443401904437-82dtg8jt158rgcbpcavaloh5cg0h8to1.apps.googleusercontent.com',
     iosBundleId: 'fi.nikkijuk.lifegoals.lifegoals',
   );
 }
