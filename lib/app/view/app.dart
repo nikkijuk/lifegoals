@@ -8,7 +8,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/counter/counter.dart';
-import 'package:lifegoals/counter/view/about_page.dart';
+import 'package:lifegoals/about/view/about_page.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
 // GoRouter configuration
