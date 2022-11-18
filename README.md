@@ -151,6 +151,59 @@ modify generated firebase_options.dart
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members, no_default_cases
 ```
 
+#### Add router
+
+flutter pub add go_router
+
+```sh
+# check if we have problems
+$ flutter pub add go_router
+```
+
+#### Import go router
+
+lib/app/view/app.dart
+
+```
+    import 'package:go_router/go_router.dart';
+```
+
+#### Add route config
+
+- https://pub.dev/documentation/go_router/latest/topics/Get%20started-topic.html
+
+lib/app/view/app.dart
+
+```
+// GoRouter configuration
+final _router = GoRouter(
+  routes: [
+    GoRoute(
+      path: '/',
+      builder: (context, state) => const CounterPage(),
+    ),
+  ],
+);
+```
+
+#### take router config in use
+
+lib/app/view/app.dart
+
+```
+    return MaterialApp.router(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+        colorScheme: ColorScheme.fromSwatch(
+          accentColor: const Color(0xFF13B9FF),
+        ),
+      ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: _router,
+    );
+```
+
 ## Flavors 🚀
 
 This project contains 3 flavors:
