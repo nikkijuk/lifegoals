@@ -3,5 +3,9 @@
     "counterAppBarTitle": "Contador",
     "@counterAppBarTitle": {
         "description": "Texto mostrado en la AppBar de la página del contador"
+    },
+    "aboutAppBarTitle": "Sobre",
+    "@aboutAppBarTitle": {
+        "description": "Texto mostrado en la AppBar de la página del sobre"
     }
 }

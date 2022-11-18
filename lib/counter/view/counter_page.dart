@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
@@ -43,6 +44,11 @@ class CounterView extends StatelessWidget {
           FloatingActionButton(
             onPressed: () => context.read<CounterCubit>().decrement(),
             child: const Icon(Icons.remove),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () => context.go ("/about"),
+            child: const Icon(Icons.info),
           ),
         ],
       ),

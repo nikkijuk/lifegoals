@@ -188,6 +188,8 @@ final _router = GoRouter(
 
 #### take router config in use
 
+use router constructor https://api.flutter.dev/flutter/material/MaterialApp/MaterialApp.router.html
+
 lib/app/view/app.dart
 
 ```
@@ -203,6 +205,18 @@ lib/app/view/app.dart
       routerConfig: _router,
     );
 ```
+
+#### add about page
+
+define new route
+- add "about" route which points to about page to router configuration
+
+add counter page button to navigate using new route
+- add "i" icon to counter page to navigate to about page with context.go ("/about")
+
+create about page component
+- add navigation back to counter
+- add localizations
 
 ## Flavors 🚀
 
