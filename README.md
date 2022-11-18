@@ -12,6 +12,8 @@ Flutter lifegoals app
 
 ## How to repeat creating this app
 
+NOTE: There's currently only needed configs for "production" flavor. Running others flavors might fail.
+
 #### Install very good cli
 
 https://github.com/VeryGoodOpenSource/very_good_cli
@@ -217,6 +219,12 @@ add counter page button to navigate using new route
 create about page component
 - add navigation back to counter
 - add localizations
+
+#### fix hero tag errors
+
+- https://api.flutter.dev/flutter/material/FloatingActionButton/heroTag.html
+
+added hero tags while there's more than one action button in tree
 
 ## Flavors 🚀
 

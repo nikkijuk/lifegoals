@@ -30,7 +30,6 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //return MaterialApp (
     return MaterialApp.router(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
@@ -40,7 +39,6 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      //home: const CounterPage(),
       routerConfig: _router,
     );
   }
