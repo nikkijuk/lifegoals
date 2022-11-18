@@ -19,7 +19,7 @@ final _router = GoRouter(
       builder: (context, state) => const CounterPage(),
     ),
     GoRoute(
-      path: 'about',
+      path: '/about',
       builder: (context, state) => const AboutPage(),
     ),
   ],
