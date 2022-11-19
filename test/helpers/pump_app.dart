@@ -53,16 +53,16 @@ extension PumpRouterApp on WidgetTester {
           path: initialLocation,
           builder: (context, state) => widget,
         ),
-        ...Routes().props.map(
-              (e) => GoRoute(
-                path: e! as String,
-                builder: (context, state) => Container(
-                  key: Key(
-                    getRouterKey(e as String),
-                  ),
-                ),
+        ...Routes.ALL.map(
+          (p) => GoRoute(
+            path: p,
+            builder: (context, state) => Container(
+              key: Key(
+                getRouterKey(p),
               ),
-            )
+            ),
+          ),
+        )
       ],
     );
 
