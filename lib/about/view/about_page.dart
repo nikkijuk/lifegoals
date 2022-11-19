@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/l10n/l10n.dart';
-
-import '../../core/navigation.dart';
 
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});

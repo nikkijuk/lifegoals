@@ -35,10 +35,12 @@ extension PumpRealRouterApp on WidgetTester {
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
           routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate),
+          routerDelegate: router.routerDelegate,
+      ),
     );
   }
 }
+
 /*
 extension PumpRouterApp on WidgetTester {
   Future<void> pumpRouterApp(Widget widget) {

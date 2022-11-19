@@ -6,9 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/l10n/l10n.dart';
-
-import '../../core/navigation.dart';
 
 class App extends StatelessWidget {
   const App({super.key});

@@ -8,10 +8,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
-
-import '../../core/navigation.dart';
 
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
