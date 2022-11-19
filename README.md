@@ -251,6 +251,133 @@ $ flutter test --coverage --test-randomize-ordering-seed randomgenhtml coverage/
 $ genhtml coverage/lcov.info -o coverage/
 ```
 
+#### Rats! Navigation needs to be tested
+
+There isn't ready testing libraries for go router, so we need to do own helpers
+
+Look ideas from here
+
+- https://guillaume.bernos.dev/testing-go-router/
+- https://guillaume.bernos.dev/testing-go-router-2/
+
+#### Add mocking for router
+
+https://pub.dev/packages/mocktail
+
+flutter pub add mocktail
+
+```sh
+# add mocking lib
+$ flutter pub add mocktail
+```
+
+Define mocked router and provider for mocked router
+
+```
+class MockGoRouter extends Mock implements GoRouter {}
+
+class MockGoRouterProvider extends StatelessWidget {
+  const MockGoRouterProvider({
+    required this.goRouter,
+    required this.child,
+    super.key,
+  });
+
+  /// The mock navigator used to mock navigation calls.
+  final MockGoRouter goRouter;
+
+  /// The child [Widget] to render.
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context) => InheritedGoRouter(
+        goRouter: goRouter,
+        child: child,
+      );
+}
+
+```
+
+
+
+#### Write addition test helpers
+
+test/helpers/pump_app.dart
+
+one for mocked routes
+
+```
+extension PumpMockRouterApp on WidgetTester {
+  Future<void> pumpMockRouterApp(Widget widget, MockGoRouter mockGoRouter) {
+    return pumpWidget(
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
+      ),
+    );
+  }
+}
+```
+
+one without mocking for app startup
+
+```
+extension PumpRealRouterApp on WidgetTester {
+  Future<void> pumpRealRouterApp(GoRouter router) {
+    return pumpWidget(
+      MaterialApp.router(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
+      ),
+    );
+  }
+}
+```
+
+NOTE: If there is persistent state which needs to be filled in state management 
+and changes routing rules this logic will become later more complicated.
+
+#### Write test for default root (/)
+
+```
+    testWidgets('renders CounterPage via Router as home screen',
+        (tester) async {
+      await tester.pumpRealRouterApp(router());
+      expect(find.byType(CounterView), findsOneWidget);
+      expect(find.byType(BackButton), findsNothing);
+    });
+```
+
+#### Write tests which use mocked router
+
+```
+    testWidgets('is redirected when button is tapped', (tester) async {
+      final mockGoRouter = MockGoRouter();
+
+      await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+
+      await tester.tap(find.byIcon(Icons.info));
+      await tester.pumpAndSettle();
+
+      verify(() => mockGoRouter.go(Routes.about)).called(1);
+      verifyNever(() => mockGoRouter.go(Routes.home));
+    });
+  });
+```
+
+#### Set ignores when nothing else helps
+
+Read docs https://pub.dev/packages/coverage
+
+- Use *// coverage:ignore-line* to ignore one line. 
+- Use *// coverage:ignore-start* and *// coverage:ignore-end* to ignore range of lines inclusive. 
+- Use *// coverage:ignore-file* to ignore the whole file.
+
+NOTE: this is needed as route builders are not used while testing - they are mocked, so: never called.
+
 ## Flavors 🚀
 
 This project contains 3 flavors:

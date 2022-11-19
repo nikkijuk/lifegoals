@@ -24,10 +24,6 @@ extension PumpApp on WidgetTester {
   }
 }
 
-String getRouterKey(String route) {
-  return 'key_$route';
-}
-
 extension PumpRealRouterApp on WidgetTester {
   Future<void> pumpRealRouterApp(GoRouter router) {
     return pumpWidget(
@@ -40,44 +36,6 @@ extension PumpRealRouterApp on WidgetTester {
     );
   }
 }
-
-/*
-extension PumpRouterApp on WidgetTester {
-  Future<void> pumpRouterApp(Widget widget) {
-    const initialLocation = '/_initial';
-
-    final router = GoRouter(
-      initialLocation: initialLocation,
-      routes: [
-        GoRoute(
-          path: initialLocation,
-          builder: (context, state) => widget,
-        ),
-        ...Routes.ALL.map(
-          (p) => GoRoute(
-            path: p,
-            builder: (context, state) => Container(
-              key: Key(
-                getRouterKey(p),
-              ),
-            ),
-          ),
-        )
-      ],
-    );
-
-    return pumpWidget(
-      MaterialApp.router(
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
-        routeInformationParser: router.routeInformationParser,
-        routerDelegate: router.routerDelegate,
-      ),
-    );
-  }
-}
-
- */
 
 extension PumpMockRouterApp on WidgetTester {
   Future<void> pumpMockRouterApp(Widget widget, MockGoRouter mockGoRouter) {
