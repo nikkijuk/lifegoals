@@ -32,10 +32,10 @@ extension PumpRealRouterApp on WidgetTester {
   Future<void> pumpRealRouterApp(GoRouter router) {
     return pumpWidget(
       MaterialApp.router(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          routeInformationParser: router.routeInformationParser,
-          routerDelegate: router.routerDelegate,
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        routeInformationParser: router.routeInformationParser,
+        routerDelegate: router.routerDelegate,
       ),
     );
   }
