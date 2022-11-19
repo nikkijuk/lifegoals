@@ -226,6 +226,31 @@ create about page component
 
 added hero tags while there's more than one action button in tree
 
+#### fix 100% code coverage problem
+
+Adding about page was ok, but test code coverage might have dropped
+
+#### install lcov
+
+get tools
+
+```sh
+# install lcov (osx)
+$ brew install lcov
+```
+
+#### check coverage
+
+all but 100% fail at github
+
+```sh
+# collect code coverage
+$ flutter test --coverage --test-randomize-ordering-seed randomgenhtml coverage/lcov.info -o coverage/
+
+# check if we have problems
+$ genhtml coverage/lcov.info -o coverage/
+```
+
 ## Flavors 🚀
 
 This project contains 3 flavors:

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
+import '../../core/navigation.dart';
+
 class AboutPage extends StatelessWidget {
   const AboutPage({super.key});
 
@@ -15,7 +17,7 @@ class AboutPage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <ElevatedButton>[
             ElevatedButton(
-              onPressed: () => context.go('/'),
+              onPressed: () => context.go(Routes.home),
               child: const Icon(Icons.arrow_back),
             ),
           ],

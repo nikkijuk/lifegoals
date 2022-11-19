@@ -9,14 +9,44 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
+import '../../helpers/routing.dart';
 
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 
 void main() {
+  group('CounterPageRouting', () {
+    testWidgets('renders CounterPage via Router as home screen', (tester) async {
+      await tester.pumpRealRouterApp(
+        router()
+      );
+      expect(find.byType(CounterView), findsOneWidget);
+      expect(find.byType(BackButton), findsNothing);
+    });
+
+    testWidgets('is redirected when button is tapped', (tester) async {
+
+      final mockGoRouter = MockGoRouter();
+
+      await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter
+      );
+
+      await tester.tap(find.byIcon(Icons.info));
+      await tester.pumpAndSettle();
+
+      verify(() => mockGoRouter.go(Routes.about)).called(1);
+      verifyNever(() => mockGoRouter.go(Routes.home));
+
+    });
+
+  });
+
   group('CounterPage', () {
     testWidgets('renders CounterView', (tester) async {
       await tester.pumpApp(const CounterPage());

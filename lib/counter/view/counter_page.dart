@@ -11,6 +11,8 @@ import 'package:go_router/go_router.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
+import '../../core/navigation.dart';
+
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
@@ -49,7 +51,7 @@ class CounterView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.go('/about'),
+            onPressed: () => context.go(Routes.about),
             heroTag: 'about',
             child: const Icon(Icons.info),
           ),

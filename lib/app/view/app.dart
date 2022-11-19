@@ -6,24 +6,9 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
-import 'package:lifegoals/about/view/about_page.dart';
-import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
-// GoRouter configuration
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const CounterPage(),
-    ),
-    GoRoute(
-      path: '/about',
-      builder: (context, state) => const AboutPage(),
-    ),
-  ],
-);
+import '../../core/navigation.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -39,7 +24,7 @@ class App extends StatelessWidget {
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: _router,
+      routerConfig: router(),
     );
   }
 }
