@@ -80,14 +80,11 @@ extension PumpRouterApp on WidgetTester {
 extension PumpMockRouterApp on WidgetTester {
   Future<void> pumpMockRouterApp(Widget widget, MockGoRouter mockGoRouter) {
     return pumpWidget(
-        MaterialApp(
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          home: MockGoRouterProvider(
-            goRouter: mockGoRouter,
-            child: widget
-          ),
-        ),
+      MaterialApp(
+        localizationsDelegates: AppLocalizations.localizationsDelegates,
+        supportedLocales: AppLocalizations.supportedLocales,
+        home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
+      ),
     );
   }
 }

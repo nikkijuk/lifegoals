@@ -22,14 +22,10 @@ void main() {
     });
 
     group('AboutPageRouting', () {
-
       testWidgets('is redirected when button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
-        await tester.pumpMockRouterApp(
-          const AboutPage(),
-          mockGoRouter
-        );
+        await tester.pumpMockRouterApp(const AboutPage(), mockGoRouter);
 
         await tester.tap(find.byIcon(Icons.arrow_back));
         await tester.pumpAndSettle();
@@ -37,8 +33,6 @@ void main() {
         verify(() => mockGoRouter.go(Routes.home)).called(1);
         verifyNever(() => mockGoRouter.go(Routes.about));
       });
-
     });
-
   });
 }
