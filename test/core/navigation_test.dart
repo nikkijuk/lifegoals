@@ -14,7 +14,8 @@ void main() {
     test(
       'check if routes are valid',
       () async {
-        for (GoRoute route in router().routeConfiguration.routes.cast()) {
+        for (final route
+            in router().routeConfiguration.routes.cast<GoRoute>()) {
           expect(route.path, isNotNull);
           expect(route.builder, isNotNull);
         }
