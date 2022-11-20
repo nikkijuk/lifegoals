@@ -146,6 +146,8 @@ $ flutter analyze lib test
 
 modify generated firebase_options.dart
 
+as it doesn't compile, and it's generated, make minimal changes to get forward.. 
+
 - disable rule: *no_default_cases*
 
 ```
@@ -153,7 +155,11 @@ modify generated firebase_options.dart
 // ignore_for_file: lines_longer_than_80_chars, avoid_classes_with_only_static_members, no_default_cases
 ```
 
+generated files might be regenerated later, so you don't want to make them perfect
+
 #### Add router
+
+- https://pub.dev/packages/go_router
 
 flutter pub add go_router
 
@@ -162,9 +168,11 @@ flutter pub add go_router
 $ flutter pub add go_router
 ```
 
-#### Import go router
+#### make separate class to routes and router rules
 
-lib/app/view/app.dart
+lib/core/navigation.dart
+
+#### Import go router
 
 ```
     import 'package:go_router/go_router.dart';
@@ -174,18 +182,25 @@ lib/app/view/app.dart
 
 - https://pub.dev/documentation/go_router/latest/topics/Get%20started-topic.html
 
-lib/app/view/app.dart
+Define routes
 
 ```
-// GoRouter configuration
-final _router = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const CounterPage(),
-    ),
-  ],
-);
+class Routes {
+  static const home = '/';
+}
+```
+
+Create function to build router
+
+```
+GoRouter router() => GoRouter(
+      routes: [
+        GoRoute(
+          path: Routes.home,
+          builder: (_, __) => const CounterPage(),
+        )
+      ],
+    );
 ```
 
 #### take router config in use
@@ -204,17 +219,18 @@ lib/app/view/app.dart
       ),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: _router,
+      routerConfig: router(),
     );
 ```
 
 #### add about page
 
 define new route
-- add "about" route which points to about page to router configuration
+- add "about" route 
+- add router configuration which points to about page
 
 add counter page button to navigate using new route
-- add "i" icon to counter page to navigate to about page with context.go ("/about")
+- add "i" icon to counter page to navigate to about page with context.go (Routes.about)
 
 create about page component
 - add navigation back to counter
@@ -264,8 +280,6 @@ Look ideas from here
 
 https://pub.dev/packages/mocktail
 
-flutter pub add mocktail
-
 ```sh
 # add mocking lib
 $ flutter pub add mocktail
@@ -295,10 +309,7 @@ class MockGoRouterProvider extends StatelessWidget {
         child: child,
       );
 }
-
 ```
-
-
 
 #### Write addition test helpers
 
@@ -339,6 +350,8 @@ extension PumpRealRouterApp on WidgetTester {
 
 NOTE: If there is persistent state which needs to be filled in state management 
 and changes routing rules this logic will become later more complicated.
+
+NOTE: Might not work with deep linking currently. Not tested as web is not primary target.
 
 #### Write test for default root (/)
 

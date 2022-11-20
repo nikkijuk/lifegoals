@@ -1,10 +1,3 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
@@ -13,6 +6,7 @@ import 'package:lifegoals/l10n/l10n.dart';
 import 'routing.dart';
 
 extension PumpApp on WidgetTester {
+  /// pumpApp can be used when routing is not needed in test
   Future<void> pumpApp(Widget widget) {
     return pumpWidget(
       MaterialApp(
@@ -25,6 +19,7 @@ extension PumpApp on WidgetTester {
 }
 
 extension PumpRealRouterApp on WidgetTester {
+  /// pumpRealRouterApp can be used when real routing is needed in test
   Future<void> pumpRealRouterApp(GoRouter router) {
     return pumpWidget(
       MaterialApp.router(
@@ -38,6 +33,7 @@ extension PumpRealRouterApp on WidgetTester {
 }
 
 extension PumpMockRouterApp on WidgetTester {
+  /// pumpMockRouterApp can be used when mocked routing is needed in test
   Future<void> pumpMockRouterApp(Widget widget, MockGoRouter mockGoRouter) {
     return pumpWidget(
       MaterialApp(

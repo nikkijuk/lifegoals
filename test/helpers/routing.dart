@@ -3,8 +3,10 @@ import 'package:go_router/go_router.dart';
 
 import 'package:mocktail/mocktail.dart';
 
+/// Mocked go router
 class MockGoRouter extends Mock implements GoRouter {}
 
+/// Provider for mocked go router
 class MockGoRouterProvider extends StatelessWidget {
   const MockGoRouterProvider({
     required this.goRouter,

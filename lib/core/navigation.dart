@@ -5,8 +5,6 @@ import 'package:lifegoals/counter/counter.dart';
 class Routes {
   static const home = '/';
   static const about = '/about';
-
-//  static const ALL = [home, about];
 }
 
 GoRouter router() => GoRouter(
