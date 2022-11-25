@@ -53,8 +53,6 @@ $ brew install firebase-cli
 
 #### Login and Check firebase project
 
-brew install firebase-cli
-
 ```sh
 # login to firebase
 $ firebase login
@@ -160,8 +158,6 @@ generated files might be regenerated later, so you don't want to make them perfe
 #### Add router
 
 - https://pub.dev/packages/go_router
-
-flutter pub add go_router
 
 ```sh
 # check if we have problems
@@ -315,7 +311,7 @@ class MockGoRouterProvider extends StatelessWidget {
 
 test/helpers/pump_app.dart
 
-one for mocked routes
+one helper method for mocked routes
 
 ```
 extension PumpMockRouterApp on WidgetTester {
@@ -331,7 +327,7 @@ extension PumpMockRouterApp on WidgetTester {
 }
 ```
 
-one without mocking for app startup
+one helper method without mocking for app startup
 
 ```
 extension PumpRealRouterApp on WidgetTester {
@@ -349,7 +345,8 @@ extension PumpRealRouterApp on WidgetTester {
 ```
 
 NOTE: If there is persistent state which needs to be filled in state management 
-and changes routing rules this logic will become later more complicated.
+and changes routing rules this logic will become later more complicated 
+or test will need to do setup before building app.
 
 NOTE: Might not work with deep linking currently. Not tested as web is not primary target.
 
@@ -363,6 +360,8 @@ NOTE: Might not work with deep linking currently. Not tested as web is not prima
       expect(find.byType(BackButton), findsNothing);
     });
 ```
+
+Note: This test should select "/" route as default.
 
 #### Write tests which use mocked router
 
