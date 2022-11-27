@@ -20,6 +20,27 @@ Flutter lifegoals app
 - Firebase auth UI ties you to single cloud provider, and changing it later would be harder than necessary
 - Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
 
+## Command you need repeatedly while experimenting
+
+#### format code
+
+```sh
+$ dart format .
+```
+
+#### Analyze code
+
+```sh
+$ flutter analyze lib test
+```
+
+#### Measure code coverage
+
+```sh
+$ flutter test --coverage --test-randomize-ordering-seed random
+$ genhtml coverage/lcov.info -o coverage/
+```
+
 ## How to repeat creating this app
 
 NOTE: There's currently only needed configs for "production" flavor. Running others flavors might fail.
@@ -399,6 +420,8 @@ Read docs https://pub.dev/packages/coverage
 - Use *// coverage:ignore-file* to ignore the whole file.
 
 NOTE: this is needed as route builders are not used while testing - they are mocked, so: never called.
+
+####
 
 ## Flavors 🚀
 
