@@ -27,7 +27,7 @@ void main() {
       expect(find.byType(BackButton), findsNothing);
     });
 
-    testWidgets('is redirected when button is tapped', (tester) async {
+    testWidgets('is redirected when about button is tapped', (tester) async {
       final mockGoRouter = MockGoRouter();
 
       await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
@@ -38,6 +38,32 @@ void main() {
       verify(() => mockGoRouter.go(Routes.about)).called(1);
       verifyNever(() => mockGoRouter.go(Routes.home));
     });
+
+    testWidgets('is redirected when login button is tapped', (tester) async {
+      final mockGoRouter = MockGoRouter();
+
+      await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+
+      await tester.tap(find.byIcon(Icons.login));
+      await tester.pumpAndSettle();
+
+      verify(() => mockGoRouter.go(Routes.login)).called(1);
+      verifyNever(() => mockGoRouter.go(Routes.home));
+    });
+
+    testWidgets('is redirected when profile button is tapped', (tester) async {
+      final mockGoRouter = MockGoRouter();
+
+      await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+
+      await tester.tap(find.byIcon(Icons.verified_user));
+      await tester.pumpAndSettle();
+
+      verify(() => mockGoRouter.go(Routes.profile)).called(1);
+      verifyNever(() => mockGoRouter.go(Routes.home));
+    });
+
+
   });
 
   group('CounterPage', () {

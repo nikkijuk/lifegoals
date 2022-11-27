@@ -25,20 +25,22 @@ GoRouter router() => GoRouter(
         ),
         GoRoute(
           path: Routes.login,
-          builder: (ctx, state) => singInScreen(ctx),
+          builder: (ctx, state) => singInScreen(ctx), // coverage:ignore-line
         ),
+        /*
         GoRoute(
           path: Routes.logout,
           builder: forgotPasswordScreen,
         ),
+         */
         GoRoute(
           path: Routes.profile,
-          builder: (ctx, state) => profileScreen(ctx),
+          builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line
         ),
         GoRoute(
           name: Routes.forgotPasswordName,
           path: Routes.forgotPasswordPath,
-          builder: forgotPasswordScreen,
+          builder: forgotPasswordScreen, // coverage:ignore-line
         )
       ],
     );
