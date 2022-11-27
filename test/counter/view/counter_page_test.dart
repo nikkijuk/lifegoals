@@ -62,8 +62,6 @@ void main() {
       verify(() => mockGoRouter.go(Routes.profile)).called(1);
       verifyNever(() => mockGoRouter.go(Routes.home));
     });
-
-
   });
 
   group('CounterPage', () {
