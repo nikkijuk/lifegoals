@@ -54,6 +54,21 @@ class CounterView extends StatelessWidget {
             heroTag: 'about',
             child: const Icon(Icons.info),
           ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () => context.go(Routes.login),
+            heroTag: 'login',
+            child: const Icon(Icons.login),
+          ),
+          // TODO(jnikki): showing / allowing press of profile button
+          //  even if is not authenticated creates NPE
+          //  within firebase-auth-ui
+          const SizedBox(height: 8),
+          FloatingActionButton(
+            onPressed: () => context.go(Routes.profile),
+            heroTag: 'profile',
+            child: const Icon(Icons.verified_user),
+          ),
         ],
       ),
     );

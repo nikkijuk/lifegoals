@@ -1,21 +1,44 @@
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/about/view/about_page.dart';
+import 'package:lifegoals/authentication/authentication_views.dart';
 import 'package:lifegoals/counter/counter.dart';
 
 class Routes {
   static const home = '/';
   static const about = '/about';
+  static const login = '/login';
+  static const logout = '/logout';
+  static const profile = '/profile';
+  static const forgotPasswordName = 'forgot';
+  static const forgotPasswordPath = '/forgot/:email';
 }
 
 GoRouter router() => GoRouter(
       routes: [
         GoRoute(
           path: Routes.home,
-          builder: (_, __) => const CounterPage(),
+          builder: (ctx, state) => const CounterPage(),
         ),
         GoRoute(
           path: Routes.about,
-          builder: (_, __) => const AboutPage(), // coverage:ignore-line
+          builder: (ctx, state) => const AboutPage(), // coverage:ignore-line
+        ),
+        GoRoute(
+          path: Routes.login,
+          builder: (ctx, state) => singInScreen(ctx),
+        ),
+        GoRoute(
+          path: Routes.logout,
+          builder: forgotPasswordScreen,
+        ),
+        GoRoute(
+          path: Routes.profile,
+          builder: (ctx, state) => profileScreen(ctx),
+        ),
+        GoRoute(
+          name: Routes.forgotPasswordName,
+          path: Routes.forgotPasswordPath,
+          builder: forgotPasswordScreen,
         )
       ],
     );
