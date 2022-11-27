@@ -5,14 +5,10 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:lifegoals/core/navigation.dart';
-import 'package:lifegoals/firebase_options.dart';
-import 'package:lifegoals/l10n/l10n.dart';
-
 import 'package:lifegoals/core/appconfig.dart';
+import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/l10n/l10n.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
