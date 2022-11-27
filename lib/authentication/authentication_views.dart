@@ -1,9 +1,13 @@
+// coverage:ignore-file
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 
 import 'package:lifegoals/core/navigation.dart';
+
+// TODO(jnikki): this file would really need some tests
 
 /// Sing in to app
 Widget singInScreen(BuildContext context) {
