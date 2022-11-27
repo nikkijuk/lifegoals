@@ -12,6 +12,8 @@ import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/firebase_options.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
+import 'package:lifegoals/core/appconfig.dart';
+
 class App extends StatelessWidget {
   const App({super.key});
 
@@ -20,7 +22,7 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    init();
+    initFirebase();
 
     return MaterialApp.router(
       theme: ThemeData(
@@ -33,30 +35,5 @@ class App extends StatelessWidget {
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router(),
     );
-  }
-
-  Future<void> init() async {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-
-    FirebaseUIAuth.configureProviders([
-      EmailAuthProvider(),
-    ]);
-
-    // It would be now possible for example in Bloc to listen changes
-    // and notify UI when something changes
-
-    /*
-        FirebaseAuth.instance.userChanges().listen((user) {
-      if (user != null) {
-        _loggedIn = true; // emit -> authenticated
-      } else {
-        _loggedIn = false; // emit -> unauthenticated, unknown
-      }
-      notifyListeners();
-    });
-
-     */
   }
 }
