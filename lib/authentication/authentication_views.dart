@@ -13,34 +13,18 @@ Widget singInScreen(BuildContext context) {
         (context, email) => context
             .goNamed(Routes.forgotPasswordName, params: {'email': email ?? ''}),
       ),
-      AuthStateChangeAction((context, state) {
-        // damn, why should state ever be null when callback is called?
-        if (state == null) {
-          return;
+      AuthStateChangeAction<SignedIn>((context, state) {
+        final user = state.user;
+        if (user != null) {
+          _showVerifyEmailMessage(context, user);
         }
-        // switch doesn't manage to do typecasts
-        // result1: switch needs to operate on runtimetype
-        // result2: inside case you need to do typecasting again
-        switch (state.runtimeType) {
-          case SignedIn:
-            final s = state as SignedIn;
-            final user = s.user;
-            if (user == null) {
-              break;
-            }
-            _showVerifyEmailMessage(context, user);
-            break;
-          case UserCreated:
-            final s = state as UserCreated;
-            final user = s.credential.user;
-            if (user == null) {
-              break;
-            }
-            user.updateDisplayName(user.email!.split('@')[0]);
-            _showVerifyEmailMessage(context, user);
-            break;
-          default:
-            break;
+        context.go(Routes.home);
+      }),
+      AuthStateChangeAction<UserCreated>((context, state) {
+        final user = state.credential.user;
+        if (user != null) {
+          user.updateDisplayName(user.email!.split('@')[0]);
+          _showVerifyEmailMessage(context, user);
         }
         context.go(Routes.home);
       }),
