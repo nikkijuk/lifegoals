@@ -10,6 +10,16 @@ Flutter lifegoals app
 
 ---
 
+# Reflections
+
+- VGV Cli creates with Github good development environment really fast
+- Bloc seems to me easy to use and especially test
+- I hope Freezed helps to save some boilerplate code from Blocs events and states
+- Go router seems to be solid choice - easy api, well documented - only 100% code coverage is challenging
+- I thought to use firebase auth ui, but are now uncertain if it makes sense to broke modularization of architecture just for it
+- Firebase auth UI ties you to single cloud provider, and changing it later would be harder than necessary
+- Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
+
 ## How to repeat creating this app
 
 NOTE: There's currently only needed configs for "production" flavor. Running others flavors might fail.
