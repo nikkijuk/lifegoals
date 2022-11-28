@@ -16,7 +16,6 @@ import '../../helpers/helpers.dart';
 import '../../helpers/routing.dart';
 
 void main() {
-
   setUpAll(configureDependencies);
 
   group('AboutPage', () {
