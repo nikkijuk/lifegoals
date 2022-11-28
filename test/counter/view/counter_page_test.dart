@@ -71,7 +71,6 @@ void main() {
         verifyNever(() => mockGoRouter.go(Routes.home));
       });
 
-      // TODO(jnikki): this test should react on authentication state
       testWidgets('is redirected when profile button is tapped',
           (tester) async {
         final mockGoRouter = MockGoRouter();
@@ -79,7 +78,6 @@ void main() {
         final mockAuthenticationBloc = MockAuthencationBloc();
 
         // TODO(jnikki): handling of initial state is blurry
-        // but results are what count, or??
 
         // Stub the state stream
         whenListen(

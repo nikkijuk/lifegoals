@@ -13,6 +13,7 @@ class Routes {
   static const forgotPasswordPath = '/forgot/:email';
 }
 
+// ignores for coverage are added as navigation is tested with mocked routes
 GoRouter router() => GoRouter(
       routes: [
         GoRoute(
@@ -27,12 +28,6 @@ GoRouter router() => GoRouter(
           path: Routes.login,
           builder: (ctx, state) => singInScreen(ctx), // coverage:ignore-line
         ),
-        /*
-        GoRoute(
-          path: Routes.logout,
-          builder: forgotPasswordScreen,
-        ),
-         */
         GoRoute(
           path: Routes.profile,
           builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line

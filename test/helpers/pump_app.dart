@@ -55,6 +55,7 @@ extension PumpRealRouterApp on WidgetTester {
 
 extension PumpMockRouterApp on WidgetTester {
   /// pumpMockRouterApp can be used when mocked routing is needed in test
+  /// Mocking authentication bloc allows changing easily user state
   Future<void> pumpMockRouterApp(
     Widget widget,
     MockGoRouter mockGoRouter,

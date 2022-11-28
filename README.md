@@ -748,9 +748,17 @@ Alternative test setup build would be usage of *flutter_test_config.dart*. Pleas
 
 #### Blocs & Dependency injection?
 
-Blocs lifecycle and access to it is controlled by widgets it's connected with. 
+Blocs lifecycle and access to it is controlled by widgets it's connected with.
+
+- Bloc defined using BlocProvider above MaterialApp is global
+- Global Bloc is shared to whole Presentation layer using buildContext
+- BuildContext can be passed using callbacks to further logic, which is quite handly 
 
 In this world of DI you basically have one copy of something created by your DI mechanism. 
+
+- Blocks can have repository injected to them
+- Repository might have storage client injected
+- Now we can have in test different storage client as during production
 
 I'm trying to find middle way here, since it seems to me that even if domain layer might need
 DI / services locators / etc.. presentation layer lives very differently.
