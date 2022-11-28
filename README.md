@@ -41,6 +41,40 @@ $ flutter test --coverage --test-randomize-ordering-seed random
 $ genhtml coverage/lcov.info -o coverage/
 ```
 
+or
+
+```sh
+# Run all tests and enforce 100% coverage
+$ very_good test --coverage --min-coverage 100
+```
+
+## Ignores needed to generated classes
+
+#### firebase config
+
+add to the start of the file
+
+lib/firebase_options.dart
+
+```
+// coverage:ignore-file
+// ignore_for_file: no_default_cases
+```
+
+#### injectable config
+
+add to the start of the file
+
+lib/core/injection.config.dart
+
+```
+// ignore_for_file: unnecessary_lambdas
+// ignore_for_file: lines_longer_than_80_chars
+// ignore_for_file: comment_references
+// ignore_for_file: cascade_invocations
+// ignore_for_file: require_trailing_commas
+```
+
 ## How to repeat creating this app
 
 NOTE: There's currently only needed configs for "production" flavor. Running others flavors might fail.
@@ -48,6 +82,8 @@ NOTE: There's currently only needed configs for "production" flavor. Running oth
 #### Install very good cli
 
 https://github.com/VeryGoodOpenSource/very_good_cli
+
+https://cli.vgv.dev/
 
 ```sh
 # install very good cli
@@ -57,6 +93,8 @@ $ dart pub global activate very_good_cli
 #### Create app with very good core as base
 
 https://github.com/VeryGoodOpenSource/very_good_core
+
+https://cli.vgv.dev/docs/templates/core
 
 ```sh
 # create app with very good cli
@@ -421,7 +459,252 @@ Read docs https://pub.dev/packages/coverage
 
 NOTE: this is needed as route builders are not used while testing - they are mocked, so: never called.
 
-####
+#### Add firebase initialization
+
+lib/core/appconfig.dart
+
+```
+Future<void> initFirebase() async {
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  // tests never get this far.. even if tests should use this method
+  FirebaseUIAuth.configureProviders([
+    EmailAuthProvider(),
+  ]);
+}
+```
+
+Now you have *EmailAuthProvider()* in use, 
+so please also configure firebase to allow this authentication method.
+
+#### Create needed screens for sigup / login, forgot password and profile
+
+Each screen needs function which creates in when go router is asking to create it
+
+lib/core/appconfig.dart
+
+```
+/// Sing in to app
+Widget singInScreen(BuildContext context) {
+  return SignInScreen(
+    actions: [
+      ForgotPasswordAction(
+        (context, email) => context
+            .goNamed(Routes.forgotPasswordName, params: {'email': email ?? ''}),
+      ),
+      AuthStateChangeAction<SignedIn>((context, state) {
+        final user = state.user;
+        if (user != null) {
+          _showVerifyEmailMessage(context, user);
+        }
+        context.go(Routes.home);
+      }),
+      AuthStateChangeAction<UserCreated>((context, state) {
+        final user = state.credential.user;
+        if (user != null) {
+          user.updateDisplayName(user.email!.split('@')[0]);
+          _showVerifyEmailMessage(context, user);
+        }
+        context.go(Routes.home);
+      }),
+    ],
+  );
+}
+
+void _showVerifyEmailMessage(BuildContext context, User user) {
+  final verificationNeeded = !user.emailVerified;
+  if (verificationNeeded) {
+    user.sendEmailVerification();
+    const snackBar = SnackBar(
+      // TODO(jnikki): localize
+      content: Text('Please check your email to verify your email address'),
+    );
+    ScaffoldMessenger.of(context).showSnackBar(snackBar);
+  }
+}
+
+/// User has forgotten password
+Widget forgotPasswordScreen(BuildContext context, GoRouterState state) {
+  final email = state.params['email'] ?? '';
+  return ForgotPasswordScreen(email: email, headerMaxExtent: 200);
+}
+
+/// User profile
+Widget profileScreen(BuildContext context) {
+  return ProfileScreen(
+    providers: const [],
+    actions: [
+      SignedOutAction((context) => context.go(Routes.home)),
+    ],
+  );
+}
+```
+
+note: this file is currently ignored from code coverage, 
+testing it would not be impossible but possibly complicated.
+
+#### add missing routes
+
+forgot password uses named routes, all other is just like before
+
+ignores are used here since calls to routes are mocked and thus never used
+
+```
+class Routes {
+  static const home = '/';
+  static const about = '/about';
+  static const login = '/login';
+  static const logout = '/logout';
+  static const profile = '/profile';
+  static const forgotPasswordName = 'forgot';
+  static const forgotPasswordPath = '/forgot/:email';
+}
+
+GoRouter router() => GoRouter(
+      routes: [
+        GoRoute(
+          path: Routes.home,
+          builder: (ctx, state) => const CounterPage(),
+        ),
+        GoRoute(
+          path: Routes.about,
+          builder: (ctx, state) => const AboutPage(), // coverage:ignore-line
+        ),
+        GoRoute(
+          path: Routes.login,
+          builder: (ctx, state) => singInScreen(ctx), // coverage:ignore-line
+        ),
+        /*
+        GoRoute(
+          path: Routes.logout,
+          builder: forgotPasswordScreen,
+        ),
+         */
+        GoRoute(
+          path: Routes.profile,
+          builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line
+        ),
+        GoRoute(
+          name: Routes.forgotPasswordName,
+          path: Routes.forgotPasswordPath,
+          builder: forgotPasswordScreen, // coverage:ignore-line
+        )
+      ],
+    );
+```
+
+#### add freezed (still experimenting with this)
+
+bloc library is fine, but need events and states to be modelled. this can lead to boilerplate code.
+
+freezed is generator which makes it easy to reduce boilerplate. 
+
+- https://pub.dev/packages/freezed
+
+we currently only need these
+
+```sh
+$ flutter pub add freezed_annotation
+$ flutter pub add --dev build_runner
+$ flutter pub add --dev freezed
+```
+
+if we want to have json serialization/deserialization we needd also
+
+```sh
+$ flutter pub add json_annotation
+$ flutter pub add --dev json_serializable
+```
+
+#### Define model
+
+This model is very simple, only one attribute, no fromJson/toJson 
+
+lib/domain/authentication/authenticated_user.dart
+
+```
+@freezed
+abstract class AuthenticatedUser with _$AuthenticatedUser {
+  const factory AuthenticatedUser({required String name}) = _AuthenticatedUser;
+}
+```
+
+#### Run generation
+
+```sh
+$ flutter pub run build_runner build
+```
+
+#### Commit generated code to git
+
+This something I did. Still: It feels somehow wrong..
+
+I would like to generate code to separate source tree and take it in use from there,
+but this is something I'll see separately later.
+
+#### Decide how to go forward
+
+1) firebase auth ui changes can be subscribed in bloc and then delivered to ui's
+
+2) one can implement whole ui logic new and do repositories & clients to firebase auth
+
+I go for the first for now, as this is only experimenting. 
+
+#### Listening firebase auth within bloc is unstable?
+
+I didn't manage to get it working usin block multiproviders & tree scopes.
+
+#### dependency injection to the rescue
+
+I hope that lazy singleton would just be nice hack and give app time to initailize all in right orger
+
+#### install get_it & injectable 
+
+add get it library and code generator for configurations
+
+```sh
+$ flutter pub add get_it
+$ flutter pub add injectable
+$ flutter pub add --dev injectable_generator
+```
+
+create configuration file & method method 
+
+- lib/core/injection.dart
+
+```
+final getIt = GetIt.instance;
+
+@InjectableInit()
+void configureDependencies() => getIt.init();
+```
+
+generate configs
+
+```sh
+$ flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+
+#### add auto generator for injections (option)
+
+- build.yaml
+
+```
+targets:
+  $default:
+    builders:
+      injectable_generator:injectable_builder:
+        options:
+          auto_register: true
+          # auto registers any class with a name matches the given pattern
+          class_name_pattern:
+            "Service$|Repository$|Bloc$"
+          # auto registers any class inside a file with a
+          # name matches the given pattern
+          file_name_pattern: "_service$|_repository$|_bloc$"
+```
 
 ## Flavors 🚀
 

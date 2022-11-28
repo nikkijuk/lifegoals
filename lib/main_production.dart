@@ -7,7 +7,11 @@
 
 import 'package:lifegoals/app/app.dart';
 import 'package:lifegoals/bootstrap.dart';
+import 'package:lifegoals/core/injection.dart';
 
 void main() {
+  // TODO(jnikki): should be used in other targets also
+  configureDependencies();
+
   bootstrap(() => const App());
 }

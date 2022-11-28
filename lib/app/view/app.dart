@@ -13,9 +13,6 @@ import 'package:lifegoals/l10n/l10n.dart';
 class App extends StatelessWidget {
   const App({super.key});
 
-//  bool _loggedIn = false;
-//  bool get loggedIn => _loggedIn;
-
   @override
   Widget build(BuildContext context) {
     initFirebase();

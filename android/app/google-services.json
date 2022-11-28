@@ -29,6 +29,13 @@
             {
               "client_id": "443401904437-0d5f2g7rrb9v903k53d58r73b64ngudn.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "443401904437-82dtg8jt158rgcbpcavaloh5cg0h8to1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "fi.nikkijuk.lifegoals.lifegoals"
+              }
             }
           ]
         }
