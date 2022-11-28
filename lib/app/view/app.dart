@@ -6,6 +6,8 @@
 // https://opensource.org/licenses/MIT.
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/l10n/l10n.dart';
@@ -17,7 +19,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     initFirebase();
 
-    return MaterialApp.router(
+    final app = MaterialApp.router(
       theme: ThemeData(
         appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
         colorScheme: ColorScheme.fromSwatch(
@@ -27,6 +29,13 @@ class App extends StatelessWidget {
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
       routerConfig: router(),
+    );
+
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+      ],
+      child: app,
     );
   }
 }

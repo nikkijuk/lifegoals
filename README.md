@@ -48,6 +48,22 @@ or
 $ very_good test --coverage --min-coverage 100
 ```
 
+#### Generate dependency configurations
+
+just once
+
+```sh
+$ flutter packages pub run build_runner build --delete-conflicting-outputs
+```
+
+generate, stay watching changes and regenerating
+
+```sh
+$ flutter packages pub run build_runner watch --delete-conflicting-outputs
+```
+
+and remember: after that you need always add ignores to generated config file to pass build.
+
 ## Ignores needed to generated classes
 
 #### firebase config
@@ -60,6 +76,8 @@ lib/firebase_options.dart
 // coverage:ignore-file
 // ignore_for_file: no_default_cases
 ```
+
+note: you need to add these only after *flutterfire configure*
 
 #### injectable config
 
@@ -612,7 +630,7 @@ $ flutter pub add --dev build_runner
 $ flutter pub add --dev freezed
 ```
 
-if we want to have json serialization/deserialization we needd also
+if we want to have json serialization/deserialization we need also
 
 ```sh
 $ flutter pub add json_annotation
@@ -727,6 +745,15 @@ getit definitions need to be either shared with all tests or setup / dispose nee
 Alternative test setup build would be usage of *flutter_test_config.dart*. Please see more from official docs.
 
 - https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
+
+#### Blocs & Dependency injection?
+
+Blocs lifecycle and access to it is controlled by widgets it's connected with. 
+
+In this world of DI you basically have one copy of something created by your DI mechanism. 
+
+I'm trying to find middle way here, since it seems to me that even if domain layer might need
+DI / services locators / etc.. presentation layer lives very differently.
 
 ## Flavors 🚀
 

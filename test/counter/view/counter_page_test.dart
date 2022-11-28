@@ -58,6 +58,7 @@ void main() {
         verifyNever(() => mockGoRouter.go(Routes.home));
       });
 
+      // TODO(jnikki): this test should react on authentication state
       testWidgets('is redirected when profile button is tapped',
           (tester) async {
         final mockGoRouter = MockGoRouter();

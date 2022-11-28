@@ -10,7 +10,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:injectable/injectable.dart';
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
@@ -35,7 +34,7 @@ class CounterView extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocProvider<AuthenticationBloc>(
-      create: (_) => getIt<AuthenticationBloc>(),
+      create: (_) => BlocProvider.of<AuthenticationBloc>(context),
       child: Scaffold(
         appBar: AppBar(title: Text(l10n.counterAppBarTitle)),
         body: const Center(child: CounterText()),
@@ -72,7 +71,7 @@ class CounterView extends StatelessWidget {
             const SizedBox(height: 8),
             BlocBuilder<AuthenticationBloc, AuthenticationStatus>(
               builder: (context, state) {
-                return (state != AuthenticationStatus.unauthenticated)
+                return true // (state.index == AuthenticationStatus.authenticated.index)
                     ? FloatingActionButton(
                         onPressed: () => context.go(Routes.profile),
                         heroTag: 'profile',
