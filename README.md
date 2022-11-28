@@ -68,6 +68,7 @@ add to the start of the file
 lib/core/injection.config.dart
 
 ```
+// coverage:ignore-file
 // ignore_for_file: unnecessary_lambdas
 // ignore_for_file: lines_longer_than_80_chars
 // ignore_for_file: comment_references
@@ -705,6 +706,27 @@ targets:
           # name matches the given pattern
           file_name_pattern: "_service$|_repository$|_bloc$"
 ```
+
+#### add setup and teardown to tests
+
+Each test that needs to use injected resources needs setup & teardown methods.
+
+setUpAll & tearDownAll are run before all tests in test file and after all tests have been executed.
+
+```
+void main() {
+  setUpAll(configureDependencies);
+
+  tearDownAll(getIt.reset);
+```
+
+NOTE: teardown is not needed if tests are executed one by one, but vgv combines cleverly
+tests together so that they are faster to execute, which also means that once initialized
+getit definitions need to be either shared with all tests or setup / dispose needs to be done per test.
+
+Alternative test setup build would be usage of *flutter_test_config.dart*. Please see more from official docs.
+
+- https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
 
 ## Flavors 🚀
 
