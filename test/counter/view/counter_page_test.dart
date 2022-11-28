@@ -9,6 +9,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
@@ -18,6 +19,10 @@ import '../../helpers/helpers.dart';
 import '../../helpers/routing.dart';
 
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
+
+class MockAuthencationBloc
+    extends MockBloc<AuthenticationEvent, AuthenticationStatus>
+    implements AuthenticationBloc {}
 
 void main() {
   setUpAll(configureDependencies);
@@ -37,7 +42,11 @@ void main() {
       testWidgets('is redirected when about button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
-        await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+          AuthenticationBloc(),
+        );
 
         await tester.tap(find.byIcon(Icons.info));
         await tester.pumpAndSettle();
@@ -49,7 +58,11 @@ void main() {
       testWidgets('is redirected when login button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
-        await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+          AuthenticationBloc(),
+        );
 
         await tester.tap(find.byIcon(Icons.login));
         await tester.pumpAndSettle();
@@ -63,7 +76,23 @@ void main() {
           (tester) async {
         final mockGoRouter = MockGoRouter();
 
-        await tester.pumpMockRouterApp(const CounterPage(), mockGoRouter);
+        final mockAuthenticationBloc = MockAuthencationBloc();
+
+        // TODO(jnikki): handling of initial state is blurry
+        // but results are what count, or??
+
+        // Stub the state stream
+        whenListen(
+          mockAuthenticationBloc,
+          Stream.fromIterable([AuthenticationStatus.authenticated]),
+          initialState: AuthenticationStatus.authenticated,
+        );
+
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+          mockAuthenticationBloc,
+        );
 
         await tester.tap(find.byIcon(Icons.verified_user));
         await tester.pumpAndSettle();

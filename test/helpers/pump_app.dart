@@ -55,7 +55,11 @@ extension PumpRealRouterApp on WidgetTester {
 
 extension PumpMockRouterApp on WidgetTester {
   /// pumpMockRouterApp can be used when mocked routing is needed in test
-  Future<void> pumpMockRouterApp(Widget widget, MockGoRouter mockGoRouter) {
+  Future<void> pumpMockRouterApp(
+    Widget widget,
+    MockGoRouter mockGoRouter,
+    AuthenticationBloc bloc,
+  ) {
     initFirebase();
 
     final app = MaterialApp(
@@ -66,7 +70,7 @@ extension PumpMockRouterApp on WidgetTester {
 
     final fullApp = MultiBlocProvider(
       providers: [
-        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+        BlocProvider<AuthenticationBloc>(create: (_) => bloc),
       ],
       child: app,
     );
