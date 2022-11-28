@@ -9,16 +9,14 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/core/appconfig.dart';
+import 'package:lifegoals/core/injection.dart';
 
 void main() {
+  setUpAll(configureDependencies);
+
   group(
     'AuthenticationBloc',
     () {
-      setUpAll(() async {
-        await initFirebase();
-      });
-
       test('initial state is unknown user', () {
         expect(
           AuthenticationBloc().state,
@@ -43,6 +41,6 @@ void main() {
         ],
       );
     },
-    skip: true,
+    //skip: true,
   );
 }

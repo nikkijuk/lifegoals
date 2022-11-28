@@ -72,7 +72,7 @@ class CounterView extends StatelessWidget {
             const SizedBox(height: 8),
             BlocBuilder<AuthenticationBloc, AuthenticationStatus>(
               builder: (context, state) {
-                return (state == AuthenticationStatus.authenticated)
+                return (state != AuthenticationStatus.unauthenticated)
                     ? FloatingActionButton(
                         onPressed: () => context.go(Routes.profile),
                         heroTag: 'profile',

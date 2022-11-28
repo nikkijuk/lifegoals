@@ -9,6 +9,7 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:mocktail/mocktail.dart';
@@ -19,6 +20,8 @@ import '../../helpers/routing.dart';
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 
 void main() {
+  setUpAll(configureDependencies);
+
   group(
     'CounterPageRouting',
     () {
@@ -66,7 +69,7 @@ void main() {
         verifyNever(() => mockGoRouter.go(Routes.home));
       });
     },
-    skip: true,
+    //skip: true,
   );
 
   group(
@@ -77,7 +80,7 @@ void main() {
         expect(find.byType(CounterView), findsOneWidget);
       });
     },
-    skip: true,
+    //skip: true,
   );
 
   group(
@@ -129,6 +132,6 @@ void main() {
         verify(() => counterCubit.decrement()).called(1);
       });
     },
-    skip: true,
+    //skip: true,
   );
 }
