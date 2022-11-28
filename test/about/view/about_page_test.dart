@@ -18,6 +18,8 @@ import '../../helpers/routing.dart';
 void main() {
   setUpAll(configureDependencies);
 
+  tearDownAll(getIt.reset);
+
   group('AboutPage', () {
     testWidgets('renders AboutView', (tester) async {
       await tester.pumpApp(const AboutPage());

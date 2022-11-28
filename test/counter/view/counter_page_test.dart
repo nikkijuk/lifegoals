@@ -22,6 +22,8 @@ class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 void main() {
   setUpAll(configureDependencies);
 
+  tearDownAll(getIt.reset);
+
   group(
     'CounterPageRouting',
     () {

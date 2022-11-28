@@ -13,6 +13,8 @@ import 'package:lifegoals/counter/counter.dart';
 void main() {
   setUpAll(configureDependencies);
 
+  tearDownAll(getIt.reset);
+
   group('App', () {
     testWidgets(
       'renders CounterPage',

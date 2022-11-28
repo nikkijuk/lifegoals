@@ -14,6 +14,8 @@ import 'package:lifegoals/core/injection.dart';
 void main() {
   setUpAll(configureDependencies);
 
+  tearDownAll(getIt.reset);
+
   group(
     'AuthenticationBloc',
     () {
