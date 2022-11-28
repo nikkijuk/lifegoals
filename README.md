@@ -19,6 +19,7 @@ Flutter lifegoals app
 - I thought to use firebase auth ui, but are now uncertain if it makes sense to broke modularization of architecture just for it
 - Firebase auth UI ties you to single cloud provider, and changing it later would be harder than necessary
 - Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
+- Get_it and Inject seemed also to work, but I'm still experimenting with them
 
 ## Command you need repeatedly while experimenting
 
@@ -56,13 +57,15 @@ just once
 $ flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
 
+or
+
 generate, stay watching changes and regenerating
 
 ```sh
 $ flutter packages pub run build_runner watch --delete-conflicting-outputs
 ```
 
-and remember: after that you need always add ignores to generated config file to pass build.
+and remember: after that you need always add ignores to generated config file to pass Github build.
 
 ## Ignores needed to generated classes
 
@@ -93,6 +96,9 @@ lib/core/injection.config.dart
 // ignore_for_file: cascade_invocations
 // ignore_for_file: require_trailing_commas
 ```
+
+note: injections configuration is overwritten always when you change injectable annotations or
+create class which triggers autogeneration (proposed basic configuration: bloc, repository, service).
 
 ## How to repeat creating this app
 
@@ -289,7 +295,9 @@ GoRouter router() => GoRouter(
 
 #### take router config in use
 
-use router constructor https://api.flutter.dev/flutter/material/MaterialApp/MaterialApp.router.html
+use router constructor 
+
+- https://api.flutter.dev/flutter/material/MaterialApp/MaterialApp.router.html
 
 lib/app/view/app.dart
 
@@ -500,7 +508,7 @@ so please also configure firebase to allow this authentication method.
 
 #### Create needed screens for sigup / login, forgot password and profile
 
-Each screen needs function which creates in when go router is asking to create it
+Each screen needs function which creates it when go router is asking to create widgets for route
 
 lib/core/appconfig.dart
 
@@ -595,12 +603,6 @@ GoRouter router() => GoRouter(
           path: Routes.login,
           builder: (ctx, state) => singInScreen(ctx), // coverage:ignore-line
         ),
-        /*
-        GoRoute(
-          path: Routes.logout,
-          builder: forgotPasswordScreen,
-        ),
-         */
         GoRoute(
           path: Routes.profile,
           builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line
@@ -673,15 +675,21 @@ I go for the first for now, as this is only experimenting.
 
 #### Listening firebase auth within bloc is unstable?
 
-I didn't manage to get it working usin block multiproviders & tree scopes.
+I did have problems to get it working using bloc multiproviders & tree scopes. 
+
+Still, following presented best practices of bloc library worked at the end.
 
 #### dependency injection to the rescue
 
-I hope that lazy singleton would just be nice hack and give app time to initailize all in right orger
+I hoped that lazy singleton would be nice hack and give app time to initialize all in right order.
+
+sadly: not. either blocks were closed prematurely or firebase was not initialized correctly.
+
+This wasn't really use case for DI in Flutter, but DI is good for something else, so: experiment it.
 
 #### install get_it & injectable 
 
-add get it library and code generator for configurations
+add get_it and injectable libraries and code generator for configurations
 
 ```sh
 $ flutter pub add get_it
@@ -706,6 +714,9 @@ generate configs
 $ flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
 
+Note: At start generation didn't work for me. I needed to add some annotation and not rely
+on automatic rules (build.yaml) only and then it start to work.
+
 #### add auto generator for injections (option)
 
 - build.yaml
@@ -725,7 +736,9 @@ targets:
           file_name_pattern: "_service$|_repository$|_bloc$"
 ```
 
-#### add setup and teardown to tests
+#### add setup and teardown to tests for di
+
+Dependency injection rules need to be loaded to memory, but they can be loaded only once.
 
 Each test that needs to use injected resources needs setup & teardown methods.
 
@@ -742,9 +755,98 @@ NOTE: teardown is not needed if tests are executed one by one, but vgv combines 
 tests together so that they are faster to execute, which also means that once initialized
 getit definitions need to be either shared with all tests or setup / dispose needs to be done per test.
 
-Alternative test setup build would be usage of *flutter_test_config.dart*. Please see more from official docs.
+Alternative test setup build could be usage of *flutter_test_config.dart*. Please see more from official docs.
 
 - https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
+
+#### add mocking of authentication bloc to tests
+
+Create mocked authentication bloc class
+
+```
+class MockAuthencationBloc
+    extends MockBloc<AuthenticationEvent, AuthenticationStatus>
+    implements AuthenticationBloc {}
+```
+
+now we need to 
+
+- create instance of mocked bloc
+- define what happens when someone interacts with it (here: reads initial state)
+- pass it to pumpMockRouterApp, which is changed to support mocked authentication state
+
+```
+     testWidgets('is redirected when profile button is tapped',
+          (tester) async {
+        final mockGoRouter = MockGoRouter();
+
+        final mockAuthenticationBloc = MockAuthencationBloc();
+
+        // TODO(jnikki): handling of initial state is blurry
+
+        // Stub the state stream
+        whenListen(
+          mockAuthenticationBloc,
+          Stream.fromIterable([AuthenticationStatus.authenticated]),
+          initialState: AuthenticationStatus.authenticated,
+        );
+
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+          mockAuthenticationBloc,
+        );
+
+        await tester.tap(find.byIcon(Icons.verified_user));
+        await tester.pumpAndSettle();
+
+        verify(() => mockGoRouter.go(Routes.profile)).called(1);
+        verifyNever(() => mockGoRouter.go(Routes.home));
+      });
+```
+
+Our extension for testing mocked apps has been grown meanwhile
+
+parameter
+
+- we still have widget as parameter
+- and allow called to pass in mocked router 
+- but we have also authentication bloc as parameter
+
+logic has similarities to real app
+
+- we initialize firebase
+- we create material app which has routing rules
+- we create provider for authentication bloc above material app
+- then we pump widget up
+
+```
+extension PumpMockRouterApp on WidgetTester {
+  /// pumpMockRouterApp can be used when mocked routing is needed in test
+  /// Mocking authentication bloc allows changing easily user state
+  Future<void> pumpMockRouterApp(
+    Widget widget,
+    MockGoRouter mockGoRouter,
+    AuthenticationBloc bloc,
+  ) {
+    initFirebase();
+
+    final app = MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
+    );
+
+    final fullApp = MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(create: (_) => bloc),
+      ],
+      child: app,
+    );
+
+    return pumpWidget(fullApp);
+  }
+```
 
 #### Blocs & Dependency injection?
 
@@ -752,16 +854,17 @@ Blocs lifecycle and access to it is controlled by widgets it's connected with.
 
 - Bloc defined using BlocProvider above MaterialApp is global
 - Global Bloc is shared to whole Presentation layer using buildContext
-- BuildContext can be passed using callbacks to further logic, which is quite handly 
+- BuildContext can be passed using callbacks to further logic, which is quite handy 
 
-In this world of DI you basically have one copy of something created by your DI mechanism. 
+With DI you often have one copy (single instance) of something 
+created by your DI mechanism and inject it somewhere else. 
 
 - Blocks can have repository injected to them
 - Repository might have storage client injected
 - Now we can have in test different storage client as during production
 
 I'm trying to find middle way here, since it seems to me that even if domain layer might need
-DI / services locators / etc.. presentation layer lives very differently.
+DI / services locators / etc.. presentation layer lives very differently based on bloc and widget / element tree.
 
 ## Flavors 🚀
 
