@@ -35,7 +35,7 @@ dev_dependencies:
     sdk: flutter
   # new version of build runner isn't compatible with other libraries
   freezed: ^2.2.0
-  injectable_generator: ^2.0.1
+  injectable_generator: ^2.1.2
   json_serializable: ^6.5.4
   very_good_analysis: ^3.1.0
 
