@@ -10,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/authentication/bloc/authentication_event.dart';
+import 'package:lifegoals/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
@@ -21,7 +23,7 @@ import '../../helpers/routing.dart';
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 
 class MockAuthencationBloc
-    extends MockBloc<AuthenticationEvent, AuthenticationStatus>
+    extends MockBloc<AuthenticationEvent, AuthenticationState>
     implements AuthenticationBloc {}
 
 void main() {
@@ -82,8 +84,8 @@ void main() {
         // Stub the state stream
         whenListen(
           mockAuthenticationBloc,
-          Stream.fromIterable([AuthenticationStatus.authenticated]),
-          initialState: AuthenticationStatus.authenticated,
+          Stream.fromIterable([const Authenticated()]),
+          initialState: const Authenticated(),
         );
 
         await tester.pumpMockRouterApp(

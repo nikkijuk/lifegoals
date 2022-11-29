@@ -8,8 +8,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/l10n/l10n.dart';
@@ -26,7 +26,6 @@ class CounterPage extends StatelessWidget {
   }
 }
 
-@injectable
 class CounterView extends StatelessWidget {
   const CounterView({super.key});
 
@@ -64,16 +63,15 @@ class CounterView extends StatelessWidget {
             child: const Icon(Icons.login),
           ),
           const SizedBox(height: 8),
-          BlocBuilder<AuthenticationBloc, AuthenticationStatus>(
-            builder: (context, state) {
-              return (state.index == AuthenticationStatus.authenticated.index)
-                  ? FloatingActionButton(
-                      onPressed: () => context.go(Routes.profile),
-                      heroTag: 'profile',
-                      child: const Icon(Icons.verified_user),
-                    )
-                  : const SizedBox(height: 8);
-            },
+          BlocBuilder<AuthenticationBloc, AuthenticationState>(
+            builder: (context, state) => state.maybeWhen(
+              authenticated: () => FloatingActionButton(
+                onPressed: () => context.go(Routes.profile),
+                heroTag: 'profile',
+                child: const Icon(Icons.verified_user),
+              ),
+              orElse: () => const SizedBox(height: 8),
+            ),
           ),
         ],
       ),

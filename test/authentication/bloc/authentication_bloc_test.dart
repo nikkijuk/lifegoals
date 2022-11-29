@@ -2,6 +2,8 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/authentication/bloc/authentication_event.dart';
+import 'package:lifegoals/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/core/injection.dart';
 
 void main() {
@@ -15,25 +17,22 @@ void main() {
       test('initial state is unknown user', () {
         expect(
           AuthenticationBloc().state,
-          equals(AuthenticationStatus.unknown),
+          equals(const Unknown()),
         );
       });
 
-      blocTest<AuthenticationBloc, AuthenticationStatus>(
+      blocTest<AuthenticationBloc, AuthenticationState>(
         'emits [1] when increment is called',
         build: AuthenticationBloc.new,
-        act: (bloc) => bloc.add(LogIn()),
-        expect: () => [AuthenticationStatus.authenticated],
+        act: (bloc) => bloc.add(const LogIn()),
+        expect: () => [const Authenticated()],
       );
 
-      blocTest<AuthenticationBloc, AuthenticationStatus>(
+      blocTest<AuthenticationBloc, AuthenticationState>(
         'emits [-1] when decrement is called',
         build: AuthenticationBloc.new,
-        act: (bloc) => bloc.add(LogOut()),
-        expect: () => [
-          AuthenticationStatus.unauthenticated,
-          AuthenticationStatus.unknown
-        ],
+        act: (bloc) => bloc.add(const LogOut()),
+        expect: () => [const Unauthenticated(), const Unknown()],
       );
     },
     //skip: true,

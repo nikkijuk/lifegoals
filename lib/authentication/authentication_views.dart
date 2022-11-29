@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/authentication/bloc/authentication_event.dart';
 import 'package:lifegoals/core/navigation.dart';
 
 // TODO(jnikki): this file would really need some tests
@@ -22,7 +23,7 @@ Widget singInScreen(BuildContext context) {
         final user = state.user;
         if (user != null) {
           _showVerifyEmailMessage(context, user);
-          BlocProvider.of<AuthenticationBloc>(context).add(LogIn());
+          BlocProvider.of<AuthenticationBloc>(context).add(const LogIn());
         }
         context.go(Routes.home);
       }),
@@ -31,7 +32,7 @@ Widget singInScreen(BuildContext context) {
         if (user != null) {
           user.updateDisplayName(user.email!.split('@')[0]);
           _showVerifyEmailMessage(context, user);
-          BlocProvider.of<AuthenticationBloc>(context).add(LogIn());
+          BlocProvider.of<AuthenticationBloc>(context).add(const LogIn());
         }
         context.go(Routes.home);
       }),
@@ -64,7 +65,7 @@ Widget profileScreen(BuildContext context) {
     actions: [
       SignedOutAction(
         (context) {
-          BlocProvider.of<AuthenticationBloc>(context).add(LogOut());
+          BlocProvider.of<AuthenticationBloc>(context).add(const LogOut());
           context.go(Routes.home);
         },
       ),
