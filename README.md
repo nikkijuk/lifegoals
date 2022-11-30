@@ -10,6 +10,17 @@ Flutter lifegoals app
 
 ---
 
+# Current state
+
+Current code has been modularized with attemp to keep core and features separate. 
+Within user facing features there is further modularization for presentation logic 
+and shared data layer services which can be reused by several user facing services.
+
+![modularization goal](doc/assets/lifegoals_modularization.png)
+
+Note: this approach doesn't yet have needed clarity, so it's fuzzy and is just a part of learning
+process of mine. None should take it as best practice.
+
 # Reflections
 
 - VGV Cli creates with Github good development environment really fast

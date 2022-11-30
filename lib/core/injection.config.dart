@@ -17,6 +17,7 @@ import 'package:injectable/injectable.dart' as _i2;
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart' as _i3;
 import 'package:lifegoals/data/authentication/firebase_authentication_repository.dart'
     as _i4;
+import 'package:lifegoals/scanner/bloc/scanner_bloc.dart' as _i5;
 
 /// ignore_for_file: unnecessary_lambdas
 /// ignore_for_file: lines_longer_than_80_chars
@@ -34,6 +35,7 @@ extension GetItInjectableX on _i1.GetIt {
     gh.factory<_i3.AuthenticationBloc>(() => _i3.AuthenticationBloc());
     gh.factory<_i4.FirebaseAuthenticationRepository>(
         () => _i4.FirebaseAuthenticationRepository());
+    gh.factory<_i5.ScannerBloc>(() => _i5.ScannerBloc());
     return this;
   }
 }

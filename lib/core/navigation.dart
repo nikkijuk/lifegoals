@@ -2,10 +2,12 @@ import 'package:go_router/go_router.dart';
 import 'package:lifegoals/about/view/about_page.dart';
 import 'package:lifegoals/authentication/authentication_views.dart';
 import 'package:lifegoals/counter/counter.dart';
+import 'package:lifegoals/scanner/view/scanner_page.dart';
 
 class Routes {
   static const home = '/';
   static const about = '/about';
+  static const scanner = '/scanner';
   static const login = '/login';
   static const logout = '/logout';
   static const profile = '/profile';
@@ -23,6 +25,10 @@ GoRouter router() => GoRouter(
         GoRoute(
           path: Routes.about,
           builder: (ctx, state) => const AboutPage(), // coverage:ignore-line
+        ),
+        GoRoute(
+          path: Routes.scanner,
+          builder: (ctx, state) => const ScannerPage(), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.login,

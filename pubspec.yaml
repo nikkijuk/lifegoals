@@ -25,6 +25,7 @@ dependencies:
   injectable: ^2.1.0
   intl: ^0.17.0
   json_annotation: ^4.7.0
+  mobile_scanner: ^2.1.0
   mocktail: ^0.3.0
 
 dev_dependencies:
