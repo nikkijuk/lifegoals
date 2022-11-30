@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/about/view/about_page.dart';
-import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:mocktail/mocktail.dart';
@@ -24,11 +23,7 @@ void main() {
       testWidgets('is redirected when button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
-        await tester.pumpMockRouterApp(
-          const AboutPage(),
-          mockGoRouter,
-          AuthenticationBloc(),
-        );
+        await tester.pumpMockRouterApp(const AboutPage(), mockGoRouter);
 
         await tester.tap(find.byIcon(Icons.arrow_back));
         await tester.pumpAndSettle();

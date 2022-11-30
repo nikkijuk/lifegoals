@@ -41,13 +41,27 @@ void main() {
         expect(find.byType(BackButton), findsNothing);
       });
 
+      testWidgets('is redirected when camera button is tapped', (tester) async {
+        final mockGoRouter = MockGoRouter();
+
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+        );
+
+        await tester.tap(find.byIcon(Icons.camera));
+        await tester.pumpAndSettle();
+
+        verify(() => mockGoRouter.go(Routes.scanner)).called(1);
+        verifyNever(() => mockGoRouter.go(Routes.home));
+      });
+
       testWidgets('is redirected when about button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
         await tester.pumpMockRouterApp(
           const CounterPage(),
           mockGoRouter,
-          AuthenticationBloc(),
         );
 
         await tester.tap(find.byIcon(Icons.info));
@@ -63,7 +77,6 @@ void main() {
         await tester.pumpMockRouterApp(
           const CounterPage(),
           mockGoRouter,
-          AuthenticationBloc(),
         );
 
         await tester.tap(find.byIcon(Icons.login));
@@ -88,10 +101,10 @@ void main() {
           initialState: const Authenticated(),
         );
 
-        await tester.pumpMockRouterApp(
+        await tester.pumpMockRouterAppWithProvider(
           const CounterPage(),
           mockGoRouter,
-          mockAuthenticationBloc,
+          BlocProvider<AuthenticationBloc>.value(value: mockAuthenticationBloc),
         );
 
         await tester.tap(find.byIcon(Icons.verified_user));

@@ -28,6 +28,27 @@ extension PumpApp on WidgetTester {
 
     return pumpWidget(fullApp);
   }
+
+  /// pumpApp can be used when routing is not needed in test
+  Future<void> pumpAppWithProvider(Widget widget, BlocProvider provider) {
+    initFirebase();
+
+    final app = MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: widget,
+    );
+
+    final fullApp = MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+        provider,
+      ],
+      child: app,
+    );
+
+    return pumpWidget(fullApp);
+  }
 }
 
 extension PumpRealRouterApp on WidgetTester {
@@ -59,7 +80,6 @@ extension PumpMockRouterApp on WidgetTester {
   Future<void> pumpMockRouterApp(
     Widget widget,
     MockGoRouter mockGoRouter,
-    AuthenticationBloc bloc,
   ) {
     initFirebase();
 
@@ -71,7 +91,30 @@ extension PumpMockRouterApp on WidgetTester {
 
     final fullApp = MultiBlocProvider(
       providers: [
-        BlocProvider<AuthenticationBloc>(create: (_) => bloc),
+        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+      ],
+      child: app,
+    );
+
+    return pumpWidget(fullApp);
+  }
+
+  Future<void> pumpMockRouterAppWithProvider(
+    Widget widget,
+    MockGoRouter mockGoRouter,
+    BlocProvider provider,
+  ) {
+    initFirebase();
+
+    final app = MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
+    );
+
+    final fullApp = MultiBlocProvider(
+      providers: [
+        provider,
       ],
       child: app,
     );

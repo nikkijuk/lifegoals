@@ -22,14 +22,14 @@ void main() {
       });
 
       blocTest<AuthenticationBloc, AuthenticationState>(
-        'emits [1] when increment is called',
+        'emits [Authenticated] when [LoIn] happens}',
         build: AuthenticationBloc.new,
         act: (bloc) => bloc.add(const LogIn()),
         expect: () => [const Authenticated()],
       );
 
       blocTest<AuthenticationBloc, AuthenticationState>(
-        'emits [-1] when decrement is called',
+        'emits [Unauthenticated, Unknown] when [LogOut] happens}',
         build: AuthenticationBloc.new,
         act: (bloc) => bloc.add(const LogOut()),
         expect: () => [const Unauthenticated(), const Unknown()],
