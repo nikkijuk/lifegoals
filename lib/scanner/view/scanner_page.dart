@@ -69,18 +69,23 @@ class ScannerView extends StatelessWidget {
         //allowDuplicates: false,
         controller: cameraController,
         onDetect: (barcode, args) {
-          if (barcode.rawValue == null) {
-            debugPrint('Failed to scan Barcode');
-            context.read<ScannerBloc>().add(const ReadFailed());
-          } else {
-            final code = barcode.rawValue!;
-            debugPrint('Barcode found! $code');
-            context.read<ScannerBloc>().add(ReadSucceeded(code));
-          }
+          final code = barcode.rawValue;
+          handleReadBarcode(context, code);
         },
       ),
       bottomNavigationBar: const ScannedCode(),
     );
+  }
+
+  void handleReadBarcode(BuildContext context, String? code) {
+    switch (code) {
+      case null:
+        context.read<ScannerBloc>().add(const ReadFailed());
+        break;
+      default:
+        context.read<ScannerBloc>().add(ReadSucceeded(code!));
+        break;
+    }
   }
 }
 

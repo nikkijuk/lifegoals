@@ -877,6 +877,131 @@ created by your DI mechanism and inject it somewhere else.
 I'm trying to find middle way here, since it seems to me that even if domain layer might need
 DI / services locators / etc.. presentation layer lives very differently based on bloc and widget / element tree.
 
+#### Adding barcode scanner
+
+I added barcode scanner just to see how to add one more function
+
+- https://pub.dev/packages/mobile_scanner
+
+
+
+Adding was simply, define ui with mobile scanner and display for code and add callback handler for barcode coming from mobile scanner. 
+
+Here ui snippet
+
+```
+      body: MobileScanner(
+        controller: cameraController,
+        onDetect: (barcode, args) {
+          final code = barcode.rawValue;
+          handleReadBarcode(context, code);
+        },
+      ),
+      bottomNavigationBar: const ScannedCode(),
+    );
+  }
+```
+
+here how to give read barcode to bloc
+
+```
+ void handleReadBarcode(BuildContext context, String? code) {
+    switch (code) {
+      case null:
+        context.read<ScannerBloc>().add(const ReadFailed());
+        break;
+      default:
+        context.read<ScannerBloc>().add(ReadSucceeded(code!));
+        break;
+    }
+  }
+```
+
+And ui component which repains when bloc state changes
+
+```
+class ScannedCode extends StatelessWidget {
+  const ScannedCode({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocBuilder<ScannerBloc, ScannerState>(
+      builder: (context, state) => state.maybeWhen(
+        found: Text.new,
+        orElse: () => const Text('N/A'),
+      ),
+    );
+  }
+}
+```
+
+With android it functioned without any changes to native shell, with ios rights need to be added.
+
+plist.info
+
+```
+<key>NSCameraUsageDescription</key>
+<string>This app needs camera access to scan QR codes</string>
+```
+
+Tricky part was setting up testing. I used high amount of time to mock needed infrastructure.
+
+This is variant where bloc is directly mocked to return requested state.
+
+```
+      testWidgets('code is shown when barcode is read', (tester) async {
+        final ScannerBloc mockScannerBloc = MockScannerBloc();
+
+        when(() => mockScannerBloc.state).thenReturn(const Found('123'));
+
+        await tester.pumpAppWithProvider(
+          const ScannerView(),
+          BlocProvider<ScannerBloc>(
+            create: (_) => mockScannerBloc,
+          ),
+        );
+
+        await tester.pumpAndSettle();
+
+        expect(find.text('123'), findsOneWidget);
+      });
+```
+
+Here is needed helper method to setup app for testing
+
+```
+  Future<void> pumpAppWithProvider(Widget widget, BlocProvider provider) {
+    initFirebase();
+
+    final app = MaterialApp(
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      home: widget,
+    );
+
+    final fullApp = MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+        provider,
+      ],
+      child: app,
+    );
+
+    return pumpWidget(fullApp);
+  }
+}
+```
+
+It seemed to me that at least some of my problems were up to not using types correctly, 
+for example when building widgets *BlocProvider<ScannerBloc>*  seemed to need 
+type of bloc or otherwise bloc couldn't be found from tree.
+
+Note that what I have done here is just to give one fully built provider to 
+method that I have extended from previous helper methods. 
+It seems to me that currently it's nicer to have many simple methods than try to write
+test method which can handle lot of needs and is starting to be complex. 
+so: copy & paste coding allowed, cleanup happens maybe at some point. 
+
 ## Flavors 🚀
 
 This project contains 3 flavors:
