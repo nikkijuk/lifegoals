@@ -20,7 +20,7 @@ void main() {
     });
 
     group('AboutPageRouting', () {
-      testWidgets('is redirected when button is tapped', (tester) async {
+      testWidgets('is redirected when back button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 
         await tester.pumpMockRouterApp(const AboutPage(), mockGoRouter);

@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/core/injection.dart';
+import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/scanner/bloc/scanner_bloc.dart';
 import 'package:lifegoals/scanner/bloc/scanner_event.dart';
 import 'package:lifegoals/scanner/bloc/scanner_state.dart';
@@ -11,6 +12,7 @@ import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
+import '../../helpers/routing.dart';
 
 class MockScannerBloc extends MockBloc<ScannerEvent, ScannerState>
     implements ScannerBloc {}
@@ -94,4 +96,18 @@ void main() {
     },
     //skip: true,
   );
+
+  group('ScannerPageRouting', () {
+    testWidgets('is redirected when back button is tapped', (tester) async {
+      final mockGoRouter = MockGoRouter();
+
+      await tester.pumpMockRouterApp(const ScannerPage(), mockGoRouter);
+
+      await tester.tap(find.byIcon(Icons.arrow_back));
+      await tester.pumpAndSettle();
+
+      verify(() => mockGoRouter.go(Routes.home)).called(1);
+      verifyNever(() => mockGoRouter.go(Routes.scanner));
+    });
+  });
 }
