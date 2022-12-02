@@ -11,6 +11,7 @@ import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/l10n/l10n.dart';
+import 'package:logging/logging.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
@@ -18,6 +19,7 @@ class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     initFirebase();
+    initLogging(level: Level.ALL);
 
     final app = MaterialApp.router(
       theme: ThemeData(

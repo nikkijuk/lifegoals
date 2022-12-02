@@ -11,9 +11,9 @@ dependencies:
   bloc: ^8.1.0
   cloud_firestore: ^4.1.0
   equatable: ^2.0.5
-  firebase_auth: ^4.1.4
+  firebase_auth: ^4.1.5
   firebase_core: ^2.3.0
-  firebase_ui_auth: ^1.1.0
+  firebase_ui_auth: ^1.1.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -25,6 +25,7 @@ dependencies:
   injectable: ^2.1.0
   intl: ^0.17.0
   json_annotation: ^4.7.0
+  logging: ^1.1.0
   mobile_scanner: ^2.1.0
   mocktail: ^0.3.0
 

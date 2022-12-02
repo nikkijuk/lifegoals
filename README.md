@@ -944,6 +944,12 @@ plist.info
 <string>This app needs camera access to scan QR codes</string>
 ```
 
+And there seems to be dependency conflict at ios because of Firebase / ML Toolkit, so; 
+I haven't really managed to test iOS implementation, but I guess that after some tweaking
+it would work
+
+- https://issuetracker.google.com/issues/254418199?pli=1#comment48
+
 Tricky part was setting up testing. I used high amount of time to mock needed infrastructure.
 
 This is variant where bloc is directly mocked to return requested state.

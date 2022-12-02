@@ -5,9 +5,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/scanner/bloc/scanner_bloc.dart';
 import 'package:lifegoals/scanner/bloc/scanner_event.dart';
 import 'package:lifegoals/scanner/bloc/scanner_state.dart';
+import 'package:logging/logging.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 
-MobileScannerController cameraController = MobileScannerController();
+final MobileScannerController cameraController = MobileScannerController();
+
+final log = Logger('ScannerPage');
 
 class ScannerPage extends StatelessWidget {
   const ScannerPage({super.key});
@@ -80,9 +83,11 @@ class ScannerView extends StatelessWidget {
   void handleReadBarcode(BuildContext context, String? code) {
     switch (code) {
       case null:
+        log.warning('Failed to read barcode');
         context.read<ScannerBloc>().add(const ReadFailed());
         break;
       default:
+        log.warning("Successfully read barcode '$code'");
         context.read<ScannerBloc>().add(ReadSucceeded(code!));
         break;
     }
