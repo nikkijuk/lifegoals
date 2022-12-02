@@ -33,56 +33,56 @@ class ScannerView extends StatelessWidget {
   Widget build(BuildContext context) {
     //final l10n = context.l10n;
     return Scaffold(
-        appBar: AppBar(
-          title: const Text('Mobile Scanner'),
-          actions: [
-            IconButton(
-              color: Colors.white,
-              icon: ValueListenableBuilder(
-                valueListenable: cameraController.torchState,
-                builder: (context, state, child) {
-                  switch (state) {
-                    case TorchState.off:
-                      return const Icon(Icons.flash_off, color: Colors.grey);
-                    case TorchState.on:
-                      return const Icon(Icons.flash_on, color: Colors.yellow);
-                  }
-                },
-              ),
-              iconSize: 32,
-              onPressed: cameraController.toggleTorch,
+      appBar: AppBar(
+        title: const Text('Mobile Scanner'),
+        actions: [
+          IconButton(
+            color: Colors.white,
+            icon: ValueListenableBuilder(
+              valueListenable: cameraController.torchState,
+              builder: (context, state, child) {
+                switch (state) {
+                  case TorchState.off:
+                    return const Icon(Icons.flash_off, color: Colors.grey);
+                  case TorchState.on:
+                    return const Icon(Icons.flash_on, color: Colors.yellow);
+                }
+              },
             ),
-            IconButton(
-              color: Colors.white,
-              icon: ValueListenableBuilder(
-                valueListenable: cameraController.cameraFacingState,
-                builder: (context, state, child) {
-                  switch (state) {
-                    case CameraFacing.front:
-                      return const Icon(Icons.camera_front);
-                    case CameraFacing.back:
-                      return const Icon(Icons.camera_rear);
-                  }
-                },
-              ),
-              iconSize: 32,
-              onPressed: cameraController.switchCamera,
+            iconSize: 32,
+            onPressed: cameraController.toggleTorch,
+          ),
+          IconButton(
+            color: Colors.white,
+            icon: ValueListenableBuilder(
+              valueListenable: cameraController.cameraFacingState,
+              builder: (context, state, child) {
+                switch (state) {
+                  case CameraFacing.front:
+                    return const Icon(Icons.camera_front);
+                  case CameraFacing.back:
+                    return const Icon(Icons.camera_rear);
+                }
+              },
             ),
-          ],
-        ),
-        body: MobileScanner(
-          //allowDuplicates: false,
-          controller: cameraController,
-          onDetect: (barcode, args) {
-            final code = barcode.rawValue;
-            handleReadBarcode(context, code);
-          },
-        ),
-        bottomNavigationBar: const ScannedCode(),
-        bottomSheet: ElevatedButton(
-          onPressed: () => context.go(Routes.home),
-          child: const Icon(Icons.arrow_back),
-        ),
+            iconSize: 32,
+            onPressed: cameraController.switchCamera,
+          ),
+        ],
+      ),
+      body: MobileScanner(
+        //allowDuplicates: false,
+        controller: cameraController,
+        onDetect: (barcode, args) {
+          final code = barcode.rawValue;
+          handleReadBarcode(context, code);
+        },
+      ),
+      bottomNavigationBar: const ScannedCode(),
+      bottomSheet: ElevatedButton(
+        onPressed: () => context.go(Routes.home),
+        child: const Icon(Icons.arrow_back),
+      ),
     );
   }
 
