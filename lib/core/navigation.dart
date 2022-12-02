@@ -3,6 +3,7 @@ import 'package:lifegoals/about/view/about_page.dart';
 import 'package:lifegoals/authentication/authentication_views.dart';
 import 'package:lifegoals/counter/counter.dart';
 import 'package:lifegoals/scanner/view/scanner_page.dart';
+import 'package:lifegoals/todo/view/todos_page.dart';
 
 class Routes {
   static const home = '/';
@@ -11,6 +12,7 @@ class Routes {
   static const login = '/login';
   static const logout = '/logout';
   static const profile = '/profile';
+  static const todos = '/todos';
   static const forgotPasswordName = 'forgot';
   static const forgotPasswordPath = '/forgot/:email';
 }
@@ -37,6 +39,10 @@ GoRouter router() => GoRouter(
         GoRoute(
           path: Routes.profile,
           builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line
+        ),
+        GoRoute(
+          path: Routes.todos,
+          builder: (ctx, state) => const TodosPage(), // coverage:ignore-line
         ),
         GoRoute(
           name: Routes.forgotPasswordName,

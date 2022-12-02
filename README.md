@@ -23,14 +23,23 @@ process of mine. None should take it as best practice.
 
 # Reflections
 
-- VGV Cli creates with Github good development environment really fast
-- Bloc seems to me easy to use and especially test
-- I hope Freezed helps to save some boilerplate code from Blocs events and states
-- Go router seems to be solid choice - easy api, well documented - only 100% code coverage is challenging
-- I thought to use firebase auth ui, but are now uncertain if it makes sense to broke modularization of architecture just for it
+- VGV Cli creates with Github good development environment really fast, practices are solid.
+- Bloc seems to me easy to use and especially test, async logic and subscribing to streams feels complex. 
+- Freezed saves boilerplate at Blocs events and states, but it's generator, and if generated code doesn't work or compile it's hard to debug. 
+- Go router works well - easy api, well documented - 100% code coverage is challenging, and testing generally
+- Firebase auth ui is easy to use, but breaks modularization of architecture, as logic is embedded within ready components
 - Firebase auth UI ties you to single cloud provider, and changing it later would be harder than necessary
 - Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
-- Get_it and Inject seemed also to work, but I'm still experimenting with them
+- Get_it and Inject seemed also to work, but I'm still experimenting with them, Bloc has different dependency handling
+- Firebase and qr/barcode scanner components have problems with ios pods - resul: ios is currently blocked
+
+# Copyrights
+
+During course of testing these question of licensing generated code came up.
+VGV clarified this issue in very elegant way. They dropped licencing terms from generated code,
+which allows developers to set their own copyright notices in code if they wish.
+
+https://github.com/VeryGoodOpenSource/very_good_cli/issues/210#issuecomment-1335791403
 
 ## Command you need repeatedly while experimenting
 

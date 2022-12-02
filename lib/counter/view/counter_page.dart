@@ -58,6 +58,12 @@ class CounterView extends StatelessWidget {
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
+            onPressed: () => context.go(Routes.todos),
+            heroTag: 'todos',
+            child: const Icon(Icons.task),
+          ),
+          const SizedBox(height: 8),
+          FloatingActionButton(
             onPressed: () => context.go(Routes.about),
             heroTag: 'about',
             child: const Icon(Icons.info),

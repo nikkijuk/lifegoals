@@ -5,12 +5,13 @@
 // license that can be found in the LICENSE file or at
 // https://opensource.org/licenses/MIT.
 
+import 'package:flutter/cupertino.dart';
 import 'package:lifegoals/app/app.dart';
 import 'package:lifegoals/bootstrap.dart';
 import 'package:lifegoals/core/injection.dart';
 
 void main() {
-  // TODO(jnikki): should be used in other targets also
+  WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
 
   bootstrap(() => const App());
