@@ -9,6 +9,7 @@ void initLogging({Level level = Level.INFO}) {
   Logger.root.level = level;
   Logger.root.onRecord.listen((record) {
     // TODO(jnikki): should be replaced with something more useful
+    // ignore: avoid_print
     print('${record.level.name}: ${record.time}: ${record.message}');
   });
 }

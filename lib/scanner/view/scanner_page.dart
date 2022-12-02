@@ -48,7 +48,7 @@ class ScannerView extends StatelessWidget {
               },
             ),
             iconSize: 32,
-            onPressed: () => cameraController.toggleTorch(),
+            onPressed: cameraController.toggleTorch,
           ),
           IconButton(
             color: Colors.white,
@@ -64,7 +64,7 @@ class ScannerView extends StatelessWidget {
               },
             ),
             iconSize: 32,
-            onPressed: () => cameraController.switchCamera(),
+            onPressed: cameraController.switchCamera,
           ),
         ],
       ),
