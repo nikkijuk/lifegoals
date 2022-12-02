@@ -11,7 +11,7 @@ import 'package:intl/intl.dart';
 // https://github.com/flutter/flutter/issues/31182
 // https://github.com/rrousselGit/freezed/issues/428
 
-final DateFormat df =  DateFormat('yyyy-MM-dd\THH:mm:ss\+\O\0\0');
+final DateFormat df = DateFormat('yyyy-MM-dd\THH:mm:ss\+\O\0\0');
 
 class ServerDateTimeConverter implements JsonConverter<DateTime?, String?> {
   const ServerDateTimeConverter();
