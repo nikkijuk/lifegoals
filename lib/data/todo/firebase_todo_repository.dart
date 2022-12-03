@@ -1,11 +1,18 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:injectable/injectable.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 
+@injectable
 class FirebaseTodoRepository implements TodoRepository {
-  final todoCollection = FirebaseFirestore.instance.collection('todos');
+  FirebaseTodoRepository(this._instance) {
+    todoCollection = _instance.collection('todos');
+  }
+
+  late final FirebaseFirestore _instance; // = FirebaseFirestore.instance;
+  late CollectionReference<Map<String, dynamic>> todoCollection;
 
   @override
   Future<void> addTodo(Todo todo) {

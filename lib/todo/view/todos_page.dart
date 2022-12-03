@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
@@ -15,7 +16,8 @@ class TodosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TodoBloc(FirebaseTodoRepository()),
+      create: (_) =>
+          TodoBloc(FirebaseTodoRepository(FirebaseFirestore.instance)),
       child: const TodosView(),
     );
   }

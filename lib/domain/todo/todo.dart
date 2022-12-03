@@ -1,3 +1,5 @@
+// coverage:ignore-file
+
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 import 'package:lifegoals/core/jsontools.dart';
@@ -21,8 +23,9 @@ class Todo with _$Todo {
   // Added constructor. Must not have any parameter
   //const Todo._();
 
-  factory Todo.fromJson(Map<String, dynamic> json) =>
-      _$TodoFromJson(json); // coverage:ignore-line
+  // This code is not used direclty, for which reason code coverage test fails
+  // set ignore to whole file as formatting breaks this line to two and ..
+  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
 
   //Todo complete() => copyWith(isCompleted: true);
   //Todo incomplete() => copyWith(isCompleted: false);
