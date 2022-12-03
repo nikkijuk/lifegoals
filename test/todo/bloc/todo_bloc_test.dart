@@ -15,11 +15,11 @@ void main() {
   setUpAll(configureDependencies);
 
   final todo = Todo(
-      id: '1',
-      title: 'title',
-      description: 'description',
-      isCompleted: false,
-      dueDate: DateTime.now(),
+    id: '1',
+    title: 'title',
+    description: 'description',
+    isCompleted: false,
+    dueDate: DateTime.now(),
   );
   final todos = [todo];
   late TodoRepository mockRepository;
