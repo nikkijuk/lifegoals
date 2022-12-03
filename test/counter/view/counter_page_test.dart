@@ -56,6 +56,21 @@ void main() {
         verifyNever(() => mockGoRouter.go(Routes.home));
       });
 
+      testWidgets('is redirected when todos button is tapped', (tester) async {
+        final mockGoRouter = MockGoRouter();
+
+        await tester.pumpMockRouterApp(
+          const CounterPage(),
+          mockGoRouter,
+        );
+
+        await tester.tap(find.byIcon(Icons.task));
+        await tester.pumpAndSettle();
+
+        verify(() => mockGoRouter.go(Routes.todos)).called(1);
+        verifyNever(() => mockGoRouter.go(Routes.home));
+      });
+
       testWidgets('is redirected when about button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
 

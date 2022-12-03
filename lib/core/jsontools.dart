@@ -1,3 +1,4 @@
+// coverage:ignore-file
 // ignore_for_file: unnecessary_string_escapes
 
 import 'package:freezed_annotation/freezed_annotation.dart';
