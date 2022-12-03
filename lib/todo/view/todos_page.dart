@@ -36,7 +36,7 @@ class TodosView extends StatelessWidget {
           BlocBuilder<TodoBloc, TodoState>(
             builder: (context, state) {
               return state.when(
-                empty: () => FloatingActionButton(
+                uninitialized: () => FloatingActionButton(
                   onPressed: () =>
                       context.read<TodoBloc>().add(const Subscribe()),
                   heroTag: 'load',
@@ -46,7 +46,7 @@ class TodosView extends StatelessWidget {
                 loading: () => const Expanded(
                   child: Center(child: CircularProgressIndicator()),
                 ),
-                loaded: (todos) =>
+                active: (todos) =>
                     _buildTodoListContainerWidget(context, todos),
               );
             },

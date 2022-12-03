@@ -21,8 +21,8 @@ class Todo with _$Todo {
   // Added constructor. Must not have any parameter
   //const Todo._();
 
-  // coverage:ignore-line
-  factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
+  factory Todo.fromJson(Map<String, dynamic> json) =>
+      _$TodoFromJson(json); // coverage:ignore-line
 
   //Todo complete() => copyWith(isCompleted: true);
   //Todo incomplete() => copyWith(isCompleted: false);

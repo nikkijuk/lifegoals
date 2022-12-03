@@ -6,8 +6,8 @@ part 'todo_state.freezed.dart';
 
 @freezed
 abstract class TodoState with _$TodoState {
-  const factory TodoState.empty() = Empty;
+  const factory TodoState.uninitialized() = Uninitialized;
   const factory TodoState.error() = Error;
   const factory TodoState.loading() = Loading;
-  const factory TodoState.loaded(List<Todo> todos) = Loaded;
+  const factory TodoState.active(List<Todo> todos) = Active;
 }

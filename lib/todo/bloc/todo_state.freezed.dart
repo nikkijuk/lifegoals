@@ -18,51 +18,51 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$TodoState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() empty,
+    required TResult Function() uninitialized,
     required TResult Function() error,
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos) loaded,
+    required TResult Function(List<Todo> todos) active,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? empty,
+    TResult? Function()? uninitialized,
     TResult? Function()? error,
     TResult? Function()? loading,
-    TResult? Function(List<Todo> todos)? loaded,
+    TResult? Function(List<Todo> todos)? active,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
+    TResult Function()? uninitialized,
     TResult Function()? error,
     TResult Function()? loading,
-    TResult Function(List<Todo> todos)? loaded,
+    TResult Function(List<Todo> todos)? active,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Empty value) empty,
+    required TResult Function(Uninitialized value) uninitialized,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(Active value) active,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Empty value)? empty,
+    TResult? Function(Uninitialized value)? uninitialized,
     TResult? Function(Error value)? error,
     TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
+    TResult? Function(Active value)? active,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Empty value)? empty,
+    TResult Function(Uninitialized value)? uninitialized,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(Active value)? active,
     required TResult orElse(),
   }) =>
       throw _privateConstructorUsedError;
@@ -86,32 +86,35 @@ class _$TodoStateCopyWithImpl<$Res, $Val extends TodoState>
 }
 
 /// @nodoc
-abstract class _$$EmptyCopyWith<$Res> {
-  factory _$$EmptyCopyWith(_$Empty value, $Res Function(_$Empty) then) =
-      __$$EmptyCopyWithImpl<$Res>;
+abstract class _$$UninitializedCopyWith<$Res> {
+  factory _$$UninitializedCopyWith(
+          _$Uninitialized value, $Res Function(_$Uninitialized) then) =
+      __$$UninitializedCopyWithImpl<$Res>;
 }
 
 /// @nodoc
-class __$$EmptyCopyWithImpl<$Res> extends _$TodoStateCopyWithImpl<$Res, _$Empty>
-    implements _$$EmptyCopyWith<$Res> {
-  __$$EmptyCopyWithImpl(_$Empty _value, $Res Function(_$Empty) _then)
+class __$$UninitializedCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$Uninitialized>
+    implements _$$UninitializedCopyWith<$Res> {
+  __$$UninitializedCopyWithImpl(
+      _$Uninitialized _value, $Res Function(_$Uninitialized) _then)
       : super(_value, _then);
 }
 
 /// @nodoc
 
-class _$Empty implements Empty {
-  const _$Empty();
+class _$Uninitialized implements Uninitialized {
+  const _$Uninitialized();
 
   @override
   String toString() {
-    return 'TodoState.empty()';
+    return 'TodoState.uninitialized()';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$Empty);
+        (other.runtimeType == runtimeType && other is _$Uninitialized);
   }
 
   @override
@@ -120,36 +123,36 @@ class _$Empty implements Empty {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() empty,
+    required TResult Function() uninitialized,
     required TResult Function() error,
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos) loaded,
+    required TResult Function(List<Todo> todos) active,
   }) {
-    return empty();
+    return uninitialized();
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? empty,
+    TResult? Function()? uninitialized,
     TResult? Function()? error,
     TResult? Function()? loading,
-    TResult? Function(List<Todo> todos)? loaded,
+    TResult? Function(List<Todo> todos)? active,
   }) {
-    return empty?.call();
+    return uninitialized?.call();
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
+    TResult Function()? uninitialized,
     TResult Function()? error,
     TResult Function()? loading,
-    TResult Function(List<Todo> todos)? loaded,
+    TResult Function(List<Todo> todos)? active,
     required TResult orElse(),
   }) {
-    if (empty != null) {
-      return empty();
+    if (uninitialized != null) {
+      return uninitialized();
     }
     return orElse();
   }
@@ -157,43 +160,43 @@ class _$Empty implements Empty {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Empty value) empty,
+    required TResult Function(Uninitialized value) uninitialized,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(Active value) active,
   }) {
-    return empty(this);
+    return uninitialized(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Empty value)? empty,
+    TResult? Function(Uninitialized value)? uninitialized,
     TResult? Function(Error value)? error,
     TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
+    TResult? Function(Active value)? active,
   }) {
-    return empty?.call(this);
+    return uninitialized?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Empty value)? empty,
+    TResult Function(Uninitialized value)? uninitialized,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(Active value)? active,
     required TResult orElse(),
   }) {
-    if (empty != null) {
-      return empty(this);
+    if (uninitialized != null) {
+      return uninitialized(this);
     }
     return orElse();
   }
 }
 
-abstract class Empty implements TodoState {
-  const factory Empty() = _$Empty;
+abstract class Uninitialized implements TodoState {
+  const factory Uninitialized() = _$Uninitialized;
 }
 
 /// @nodoc
@@ -231,10 +234,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() empty,
+    required TResult Function() uninitialized,
     required TResult Function() error,
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos) loaded,
+    required TResult Function(List<Todo> todos) active,
   }) {
     return error();
   }
@@ -242,10 +245,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? empty,
+    TResult? Function()? uninitialized,
     TResult? Function()? error,
     TResult? Function()? loading,
-    TResult? Function(List<Todo> todos)? loaded,
+    TResult? Function(List<Todo> todos)? active,
   }) {
     return error?.call();
   }
@@ -253,10 +256,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
+    TResult Function()? uninitialized,
     TResult Function()? error,
     TResult Function()? loading,
-    TResult Function(List<Todo> todos)? loaded,
+    TResult Function(List<Todo> todos)? active,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -268,10 +271,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Empty value) empty,
+    required TResult Function(Uninitialized value) uninitialized,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(Active value) active,
   }) {
     return error(this);
   }
@@ -279,10 +282,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Empty value)? empty,
+    TResult? Function(Uninitialized value)? uninitialized,
     TResult? Function(Error value)? error,
     TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
+    TResult? Function(Active value)? active,
   }) {
     return error?.call(this);
   }
@@ -290,10 +293,10 @@ class _$Error implements Error {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Empty value)? empty,
+    TResult Function(Uninitialized value)? uninitialized,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(Active value)? active,
     required TResult orElse(),
   }) {
     if (error != null) {
@@ -343,10 +346,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() empty,
+    required TResult Function() uninitialized,
     required TResult Function() error,
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos) loaded,
+    required TResult Function(List<Todo> todos) active,
   }) {
     return loading();
   }
@@ -354,10 +357,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? empty,
+    TResult? Function()? uninitialized,
     TResult? Function()? error,
     TResult? Function()? loading,
-    TResult? Function(List<Todo> todos)? loaded,
+    TResult? Function(List<Todo> todos)? active,
   }) {
     return loading?.call();
   }
@@ -365,10 +368,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
+    TResult Function()? uninitialized,
     TResult Function()? error,
     TResult Function()? loading,
-    TResult Function(List<Todo> todos)? loaded,
+    TResult Function(List<Todo> todos)? active,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -380,10 +383,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Empty value) empty,
+    required TResult Function(Uninitialized value) uninitialized,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(Active value) active,
   }) {
     return loading(this);
   }
@@ -391,10 +394,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Empty value)? empty,
+    TResult? Function(Uninitialized value)? uninitialized,
     TResult? Function(Error value)? error,
     TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
+    TResult? Function(Active value)? active,
   }) {
     return loading?.call(this);
   }
@@ -402,10 +405,10 @@ class _$Loading implements Loading {
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Empty value)? empty,
+    TResult Function(Uninitialized value)? uninitialized,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(Active value)? active,
     required TResult orElse(),
   }) {
     if (loading != null) {
@@ -420,18 +423,18 @@ abstract class Loading implements TodoState {
 }
 
 /// @nodoc
-abstract class _$$LoadedCopyWith<$Res> {
-  factory _$$LoadedCopyWith(_$Loaded value, $Res Function(_$Loaded) then) =
-      __$$LoadedCopyWithImpl<$Res>;
+abstract class _$$ActiveCopyWith<$Res> {
+  factory _$$ActiveCopyWith(_$Active value, $Res Function(_$Active) then) =
+      __$$ActiveCopyWithImpl<$Res>;
   @useResult
   $Res call({List<Todo> todos});
 }
 
 /// @nodoc
-class __$$LoadedCopyWithImpl<$Res>
-    extends _$TodoStateCopyWithImpl<$Res, _$Loaded>
-    implements _$$LoadedCopyWith<$Res> {
-  __$$LoadedCopyWithImpl(_$Loaded _value, $Res Function(_$Loaded) _then)
+class __$$ActiveCopyWithImpl<$Res>
+    extends _$TodoStateCopyWithImpl<$Res, _$Active>
+    implements _$$ActiveCopyWith<$Res> {
+  __$$ActiveCopyWithImpl(_$Active _value, $Res Function(_$Active) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -439,7 +442,7 @@ class __$$LoadedCopyWithImpl<$Res>
   $Res call({
     Object? todos = null,
   }) {
-    return _then(_$Loaded(
+    return _then(_$Active(
       null == todos
           ? _value._todos
           : todos // ignore: cast_nullable_to_non_nullable
@@ -450,8 +453,8 @@ class __$$LoadedCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$Loaded implements Loaded {
-  const _$Loaded(final List<Todo> todos) : _todos = todos;
+class _$Active implements Active {
+  const _$Active(final List<Todo> todos) : _todos = todos;
 
   final List<Todo> _todos;
   @override
@@ -462,14 +465,14 @@ class _$Loaded implements Loaded {
 
   @override
   String toString() {
-    return 'TodoState.loaded(todos: $todos)';
+    return 'TodoState.active(todos: $todos)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$Loaded &&
+            other is _$Active &&
             const DeepCollectionEquality().equals(other._todos, _todos));
   }
 
@@ -480,42 +483,42 @@ class _$Loaded implements Loaded {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
-      __$$LoadedCopyWithImpl<_$Loaded>(this, _$identity);
+  _$$ActiveCopyWith<_$Active> get copyWith =>
+      __$$ActiveCopyWithImpl<_$Active>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() empty,
+    required TResult Function() uninitialized,
     required TResult Function() error,
     required TResult Function() loading,
-    required TResult Function(List<Todo> todos) loaded,
+    required TResult Function(List<Todo> todos) active,
   }) {
-    return loaded(todos);
+    return active(todos);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? empty,
+    TResult? Function()? uninitialized,
     TResult? Function()? error,
     TResult? Function()? loading,
-    TResult? Function(List<Todo> todos)? loaded,
+    TResult? Function(List<Todo> todos)? active,
   }) {
-    return loaded?.call(todos);
+    return active?.call(todos);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? empty,
+    TResult Function()? uninitialized,
     TResult Function()? error,
     TResult Function()? loading,
-    TResult Function(List<Todo> todos)? loaded,
+    TResult Function(List<Todo> todos)? active,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(todos);
+    if (active != null) {
+      return active(todos);
     }
     return orElse();
   }
@@ -523,46 +526,46 @@ class _$Loaded implements Loaded {
   @override
   @optionalTypeArgs
   TResult map<TResult extends Object?>({
-    required TResult Function(Empty value) empty,
+    required TResult Function(Uninitialized value) uninitialized,
     required TResult Function(Error value) error,
     required TResult Function(Loading value) loading,
-    required TResult Function(Loaded value) loaded,
+    required TResult Function(Active value) active,
   }) {
-    return loaded(this);
+    return active(this);
   }
 
   @override
   @optionalTypeArgs
   TResult? mapOrNull<TResult extends Object?>({
-    TResult? Function(Empty value)? empty,
+    TResult? Function(Uninitialized value)? uninitialized,
     TResult? Function(Error value)? error,
     TResult? Function(Loading value)? loading,
-    TResult? Function(Loaded value)? loaded,
+    TResult? Function(Active value)? active,
   }) {
-    return loaded?.call(this);
+    return active?.call(this);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeMap<TResult extends Object?>({
-    TResult Function(Empty value)? empty,
+    TResult Function(Uninitialized value)? uninitialized,
     TResult Function(Error value)? error,
     TResult Function(Loading value)? loading,
-    TResult Function(Loaded value)? loaded,
+    TResult Function(Active value)? active,
     required TResult orElse(),
   }) {
-    if (loaded != null) {
-      return loaded(this);
+    if (active != null) {
+      return active(this);
     }
     return orElse();
   }
 }
 
-abstract class Loaded implements TodoState {
-  const factory Loaded(final List<Todo> todos) = _$Loaded;
+abstract class Active implements TodoState {
+  const factory Active(final List<Todo> todos) = _$Active;
 
   List<Todo> get todos;
   @JsonKey(ignore: true)
-  _$$LoadedCopyWith<_$Loaded> get copyWith =>
+  _$$ActiveCopyWith<_$Active> get copyWith =>
       throw _privateConstructorUsedError;
 }
