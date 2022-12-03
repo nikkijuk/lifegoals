@@ -39,9 +39,11 @@ void main() {
 
       test('initial state is empty', () async {
         final result = FirebaseTodoRepository(instance).todos();
+        print(result);
+        /*
         await result.forEach((element) {
           print('e: $element');
-        });
+        });*/
         // this started hanging..
         //final length = result.length;
         //expect(length, 0);
@@ -53,7 +55,7 @@ void main() {
         final post = (instance as FakeFirebaseFirestore).dump();
         //print ("pre $pre");
         //print ("post $post");
-        expect(pre.contains('armageddon'), false);
+        expect(pre.contains('armageddon'), true);
         expect(post.contains('armageddon'), true);
       });
 
