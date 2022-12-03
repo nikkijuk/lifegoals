@@ -37,7 +37,8 @@ class TodosView extends StatelessWidget {
             builder: (context, state) {
               return state.when(
                 empty: () => FloatingActionButton(
-                  onPressed: () => context.read<TodoBloc>().add(const Load()),
+                  onPressed: () =>
+                      context.read<TodoBloc>().add(const Subscribe()),
                   heroTag: 'load',
                   child: const Icon(Icons.download),
                 ),

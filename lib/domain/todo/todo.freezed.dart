@@ -23,7 +23,9 @@ mixin _$Todo {
   String get id => throw _privateConstructorUsedError;
   String get title => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
-  bool get isCompleted => throw _privateConstructorUsedError;
+  bool get isCompleted =>
+      throw _privateConstructorUsedError; // NOTE: dueDate field is "String" in firebase
+// I simply didn't manage to get right types to function
   @ServerDateTimeConverter()
   DateTime get dueDate => throw _privateConstructorUsedError;
 
@@ -163,6 +165,8 @@ class _$_Todo implements _Todo {
   final String description;
   @override
   final bool isCompleted;
+// NOTE: dueDate field is "String" in firebase
+// I simply didn't manage to get right types to function
   @override
   @ServerDateTimeConverter()
   final DateTime dueDate;
@@ -223,7 +227,8 @@ abstract class _Todo implements Todo {
   String get description;
   @override
   bool get isCompleted;
-  @override
+  @override // NOTE: dueDate field is "String" in firebase
+// I simply didn't manage to get right types to function
   @ServerDateTimeConverter()
   DateTime get dueDate;
   @override

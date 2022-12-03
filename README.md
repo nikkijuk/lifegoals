@@ -23,14 +23,40 @@ process of mine. None should take it as best practice.
 
 # Reflections
 
+## CLI tooling
+
 - VGV Cli creates with Github good development environment really fast, practices are solid.
-- Bloc seems to me easy to use and especially test, async logic and subscribing to streams feels complex. 
-- Freezed saves boilerplate at Blocs events and states, but it's generator, and if generated code doesn't work or compile it's hard to debug. 
-- Go router works well - easy api, well documented - 100% code coverage is challenging, and testing generally
-- Firebase auth ui is easy to use, but breaks modularization of architecture, as logic is embedded within ready components
-- Firebase auth UI ties you to single cloud provider, and changing it later would be harder than necessary
+- VGV Core template creates out of box integrations for code format, static analysis and code coverage check.
+
+## State management
+
+- Bloc seems to me easy to use and especially test, async logic and subscribing to streams feels complex.
+- Bloc lifecycle needs to be controlled by my code. When I messed it Blocs weren't there, just as expected.
+- Blocs can have async long running functionality like subscription to streams - but to return data from them can't happen by emitting directly, since method that started the process has already returned.
+
+## Routing
+
+- Go router works well - easy api, well documented - 100% code coverage is challenging, and testing generally.
+
+## Missing language features: Data classes & Unions 
+
+- Freezed saves boilerplate at Blocs events and states, but it's generator, and if generated code doesn't work or compile it's hard to debug.
+- Freezed shouldn't be blamed here, since it's just generator, if world outside of it isn't ok it simply doesn't know it.
+- Developer is in charge here. It's easy to forgot regeneration, and refactoring isn't that neat. 
+
+## Cloud integration
+
+- Firebase auth ui is easy to use, but breaks modularization of architecture, as cloud access is embedded within 3rd party components
+- Firebase auth UI ties you to single cloud provider, and changing it later might be harder than necessary.
 - Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
-- Get_it and Inject seemed also to work, but I'm still experimenting with them, Bloc has different dependency handling
+
+## Dependency injection
+
+- Get_it and Inject seemed also to work, but I'm still experimenting with them.
+- Bloc has it's own dependency handling, which doesn't intuitively match to Get_id & inject.
+
+## Host platform hassle
+
 - Firebase and qr/barcode scanner components have problems with ios pods - resul: ios is currently blocked
 
 # Copyrights
@@ -1016,6 +1042,36 @@ method that I have extended from previous helper methods.
 It seems to me that currently it's nicer to have many simple methods than try to write
 test method which can handle lot of needs and is starting to be complex. 
 so: copy & paste coding allowed, cleanup happens maybe at some point. 
+
+#### Logging
+
+There's plenty of logging libraries present. This felt decent to me.
+
+```sh
+$ flutter pub add logging
+```
+
+To actually see logs it needs to be defined which log levels are shown and how. 
+For now I use very simple implementation.
+
+```
+void initLogging({Level level = Level.INFO}) {
+  Logger.root.level = level;
+  Logger.root.onRecord.listen((record) {
+    // TODO(jnikki): should be replaced with something more useful
+    // ignore: avoid_print
+    print('${record.level.name}: ${record.time}: ${record.message}');
+  });
+}
+```
+
+To log there needs to be log object defined. Just use it to access Loger.
+
+```
+final log = Logger('MyClassName');
+```
+
+#### Firestore access
 
 ## Flavors 🚀
 
