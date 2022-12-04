@@ -49,6 +49,18 @@ void main() {
         //expect(length, 0);
       });
 
+      test('initial state is empty', () async {
+        final result = FirebaseTodoRepository(instance).todos();
+        print(result);
+        /*
+        await result.forEach((element) {
+          print('e: $element');
+        });*/
+        // this started hanging..
+        //final length = result.length;
+        //expect(length, 0);
+      });
+
       test('add to todos', () async {
         final pre = (instance as FakeFirebaseFirestore).dump();
         await FirebaseTodoRepository(instance).addTodo(todo);
@@ -64,6 +76,25 @@ void main() {
         final post = (instance as FakeFirebaseFirestore).dump();
         //print ("pre $pre");
         print('post $post');
+        //expect (pre.contains("armageddon"), false);
+        //expect (post.contains("armageddon"), true);
+      });
+
+      test('delete to todos', () async {
+        await FirebaseTodoRepository(instance).deleteTodo(todo);
+        final post = (instance as FakeFirebaseFirestore).dump();
+        //print ("pre $pre");
+        print('post $post');
+        //expect (pre.contains("armageddon"), false);
+        //expect (post.contains("armageddon"), true);
+      });
+
+      test('update to todos', () async {
+        // bummer.. if ID handling is wrong update doesn't work
+        //await FirebaseTodoRepository(instance).updateTodo(todo);
+        //final post = (instance as FakeFirebaseFirestore).dump();
+        //print ("pre $pre");
+        //print('post $post');
         //expect (pre.contains("armageddon"), false);
         //expect (post.contains("armageddon"), true);
       });

@@ -8,32 +8,44 @@ import 'package:lifegoals/domain/todo/todo_repository.dart';
 @injectable
 class FirebaseTodoRepository implements TodoRepository {
   FirebaseTodoRepository(this._instance) {
-    todoCollection = _instance.collection('todos');
+    // Create an instance of a collection withConverter.
+    // there might be some limitations on this, but ..
+    // https://github.com/firebase/flutterfire/issues/7264
+    collection = _instance.collection('todos').withConverter<Todo>(
+          fromFirestore: (snapshot, _) => Todo.fromJson(snapshot.data()!),
+          toFirestore: (todo, _) => todo.toJson(),
+        );
   }
 
-  late final FirebaseFirestore _instance; // = FirebaseFirestore.instance;
-  late CollectionReference<Map<String, dynamic>> todoCollection;
+  late final FirebaseFirestore _instance;
+  late CollectionReference<Todo> collection;
 
   @override
   Future<void> addTodo(Todo todo) {
-    return todoCollection.add(todo.toJson());
+    return collection.add(todo);
   }
 
   @override
   Future<void> deleteTodo(Todo todo) async {
-    return todoCollection.doc(todo.id).delete();
+    return collection.doc(todo.id).delete();
   }
 
   @override
   Stream<Iterable<Todo>> todos() {
-    final snapshots = todoCollection.snapshots();
+    final snapshots = collection.snapshots();
     return snapshots.map((event) {
-      return event.docs.map((e) => Todo.fromJson(e.data()));
+      return event.docs.map((e) => e.data());
     });
   }
 
   @override
-  Future<void> updateTodo(Todo update) {
-    return todoCollection.doc(update.id).update(update.toJson());
+  Future<void> updateTodo(Todo todo) {
+    return collection.doc(todo.id).set(todo);
+  }
+
+  @override
+  Todo findTodo(String id) {
+    // TODO(jnikki): implement findTodo
+    throw UnimplementedError();
   }
 }
