@@ -21,16 +21,6 @@ class FirebaseTodoRepository implements TodoRepository {
   late CollectionReference<Todo> collection;
 
   @override
-  Future<void> addTodo(Todo todo) {
-    return collection.add(todo);
-  }
-
-  @override
-  Future<void> deleteTodo(Todo todo) async {
-    return collection.doc(todo.id).delete();
-  }
-
-  @override
   Stream<Iterable<Todo>> todos() {
     final snapshots = collection.snapshots();
     return snapshots.map((event) {
@@ -39,13 +29,47 @@ class FirebaseTodoRepository implements TodoRepository {
   }
 
   @override
-  Future<void> updateTodo(Todo todo) {
-    return collection.doc(todo.id).set(todo);
+  Todo addTodo(Todo todo) {
+    // Returns a `DocumentReference` with the provided path.
+    // If no [path] is provided, an auto-generated ID is used.
+    final ref = collection.doc();
+
+    final newTodo = todo.copyWith(id: ref.id);
+
+    // Sets data on the document, overwriting any existing data.
+    ref.set(newTodo);
+
+    return newTodo;
   }
 
   @override
-  Todo findTodo(String id) {
-    // TODO(jnikki): implement findTodo
-    throw UnimplementedError();
+  Future<void> deleteTodo(Todo todo) async {
+    final ref = collection.doc(todo.id);
+
+    // Deletes the current document from the collection.
+    return ref.delete();
+    /*
+    .then(
+          (doc) => print("Document deleted"),
+          onError: (e) => print("Error updating document $e"),
+        );
+     */
+  }
+
+  @override
+  Future<void> updateTodo(Todo todo) {
+    final ref = collection.doc(todo.id);
+
+    // Sets data on the document, overwriting any existing data.
+    return ref.set(todo);
+  }
+
+  @override
+  Future<Todo?> findTodo(String id) async {
+    final ref = collection.doc(id);
+
+    // Reads the document referenced
+    final snapshot = await ref.get();
+    return snapshot.data();
   }
 }

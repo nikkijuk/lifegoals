@@ -38,7 +38,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   FutureOr<void> _add(Add event, Emitter<TodoState> emit) async {
-    await _todoRepository.addTodo(event.todo);
+    _todoRepository.addTodo(event.todo);
   }
 
   FutureOr<void> _update(Update event, Emitter<TodoState> emit) async {

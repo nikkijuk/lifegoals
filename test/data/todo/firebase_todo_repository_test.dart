@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:async';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
@@ -13,17 +15,15 @@ void main() {
   setUpAll(() async {
     configureDependencies();
     WidgetsFlutterBinding.ensureInitialized();
-    //await Firebase.initializeApp();
   });
 
   final todo = Todo(
-    id: '1',
+    id: '',
     title: 'moderate',
     description: 'armageddon',
     isCompleted: false,
     dueDate: DateTime.now(),
   );
-  //final todos = [todo];
 
   tearDownAll(getIt.reset);
 
@@ -34,69 +34,77 @@ void main() {
     () {
       setUp(() async {
         instance = FakeFirebaseFirestore();
-        await instance.collection('todos').add(todo.toJson());
       });
 
       test('initial state is empty', () async {
-        final result = FirebaseTodoRepository(instance).todos();
-        print(result);
-        /*
-        await result.forEach((element) {
-          print('e: $element');
-        });*/
-        // this started hanging..
-        //final length = result.length;
-        //expect(length, 0);
+        final repository = FirebaseTodoRepository(instance);
+        final stream = repository.todos();
+        StreamSubscription<Iterable<Todo>>? subscription;
+        subscription = stream.listen((event) {
+          expect(event.length, 0);
+          subscription?.cancel();
+        });
       });
 
-      test('initial state is empty', () async {
-        final result = FirebaseTodoRepository(instance).todos();
-        print(result);
-        /*
-        await result.forEach((element) {
-          print('e: $element');
-        });*/
-        // this started hanging..
-        //final length = result.length;
-        //expect(length, 0);
+      test('initial state is not empty', () async {
+        final repository = FirebaseTodoRepository(instance)..addTodo(todo);
+        final stream = repository.todos();
+        StreamSubscription<Iterable<Todo>>? subscription;
+        subscription = stream.listen((event) {
+          event.toList().forEach((todo) => print('found $todo'));
+          expect(event.length, 1);
+          subscription?.cancel();
+        });
       });
 
-      test('add to todos', () async {
+      test('add todos', () async {
         final pre = (instance as FakeFirebaseFirestore).dump();
-        await FirebaseTodoRepository(instance).addTodo(todo);
+        final repository = FirebaseTodoRepository(instance);
+        final newTodo = repository.addTodo(todo);
         final post = (instance as FakeFirebaseFirestore).dump();
-        //print ("pre $pre");
-        //print ("post $post");
-        expect(pre.contains('armageddon'), true);
+        expect(pre.contains('armageddon'), false);
         expect(post.contains('armageddon'), true);
+        final foundTodo = await repository.findTodo(newTodo.id);
+        print('found $foundTodo.');
+        expect(foundTodo != null, true);
       });
 
-      test('update to todos', () async {
-        await FirebaseTodoRepository(instance).addTodo(todo);
+      test('update todos', () async {
+        final repository = FirebaseTodoRepository(instance);
+        final newTodo = repository.addTodo(todo);
+        final pre = (instance as FakeFirebaseFirestore).dump();
+        await repository.updateTodo(newTodo.copyWith(description: 'bug'));
         final post = (instance as FakeFirebaseFirestore).dump();
-        //print ("pre $pre");
+        print('pre $pre');
         print('post $post');
-        //expect (pre.contains("armageddon"), false);
-        //expect (post.contains("armageddon"), true);
+        expect(pre.contains('armageddon'), true);
+        expect(post.contains('armageddon'), false);
+        expect(post.contains('bug'), true);
       });
 
-      test('delete to todos', () async {
-        await FirebaseTodoRepository(instance).deleteTodo(todo);
-        final post = (instance as FakeFirebaseFirestore).dump();
-        //print ("pre $pre");
-        print('post $post');
-        //expect (pre.contains("armageddon"), false);
-        //expect (post.contains("armageddon"), true);
-      });
+      test('delete todos', () async {
+        final repository = FirebaseTodoRepository(instance);
+        final newTodo = repository.addTodo(todo);
+        final pre = (instance as FakeFirebaseFirestore).dump();
+        await repository.deleteTodo(newTodo);
+        final foundTodo = await repository.findTodo(newTodo.id);
+        print('found $foundTodo.');
+        expect(foundTodo, null);
+        print('pre $pre');
+        expect(pre.contains('armageddon'), true);
 
-      test('update to todos', () async {
-        // bummer.. if ID handling is wrong update doesn't work
-        //await FirebaseTodoRepository(instance).updateTodo(todo);
+        // dump doesn't seem to be in sync
+        // todo which can't be retrieved is still seen on dump
         //final post = (instance as FakeFirebaseFirestore).dump();
-        //print ("pre $pre");
         //print('post $post');
-        //expect (pre.contains("armageddon"), false);
-        //expect (post.contains("armageddon"), true);
+        //expect (post.contains("armageddon"), false);
+      });
+
+      test('find todo', () async {
+        final repository = FirebaseTodoRepository(instance);
+        final newTodo = repository.addTodo(todo);
+        final foundTodo = await repository.findTodo(newTodo.id);
+        expect(foundTodo != null, true);
       });
     },
     //skip: true,

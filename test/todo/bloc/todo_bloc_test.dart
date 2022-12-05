@@ -34,7 +34,7 @@ void main() {
         when(mockRepository.todos).thenAnswer(
           (_) => Stream<Iterable<Todo>>.fromIterable([todos]),
         );
-        when(() => mockRepository.addTodo(todo)).thenAnswer((_) async {});
+        when(() => mockRepository.addTodo(todo)).thenAnswer((_) => todo);
         when(() => mockRepository.deleteTodo(todo)).thenAnswer((_) async {});
         when(() => mockRepository.updateTodo(todo)).thenAnswer((_) async {});
       });
