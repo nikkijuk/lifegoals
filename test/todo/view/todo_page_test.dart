@@ -20,7 +20,21 @@ final todo = Todo(
   isCompleted: false,
   dueDate: DateTime.now(),
 );
-final todos = [todo];
+final todo2 = Todo(
+  id: '2',
+  title: 'bauhaus',
+  description: 'in the flat field',
+  isCompleted: true,
+  dueDate: DateTime.now(),
+);
+final todo3 = Todo(
+  id: '3',
+  title: '',
+  description: '',
+  isCompleted: true,
+  dueDate: DateTime.now(),
+);
+final todos = [todo, todo2];
 
 class MockTodoRepository extends Mock implements TodoRepository {}
 
@@ -37,10 +51,32 @@ void main() {
   group('TodoPage', () {
     setUp(() {});
 
-    testWidgets('renders TodoView', (tester) async {
+    testWidgets('renders empty TodoView', (tester) async {
       final TodoBloc mockTodoBloc = MockTodoBloc();
 
-      //when(() => mockTodoBloc.state).thenReturn(Active(todos));
+      when(() => mockTodoBloc.state).thenReturn(const Uninitialized());
+
+      final provider = BlocProvider<TodoBloc>(create: (_) => mockTodoBloc);
+
+      await tester.pumpAppWithProvider(const TodosView(), provider);
+
+      expect(find.byType(FloatingActionButton), findsOneWidget);
+    });
+
+    testWidgets('renders loading TodoView', (tester) async {
+      final TodoBloc mockTodoBloc = MockTodoBloc();
+
+      when(() => mockTodoBloc.state).thenReturn(const Loading());
+
+      final provider = BlocProvider<TodoBloc>(create: (_) => mockTodoBloc);
+
+      await tester.pumpAppWithProvider(const TodosView(), provider);
+
+      expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    });
+
+    testWidgets('renders filled TodoView', (tester) async {
+      final TodoBloc mockTodoBloc = MockTodoBloc();
 
       // Stub the state stream
       whenListen(
