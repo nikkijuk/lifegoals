@@ -17,6 +17,7 @@ class TodosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
+          // TODO(jnikki): remove hardcoding
           TodoBloc(FirebaseTodoRepository(FirebaseFirestore.instance)),
       child: const TodosView(),
     );
