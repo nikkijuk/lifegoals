@@ -75,6 +75,18 @@ void main() {
       expect(find.byType(CircularProgressIndicator), findsOneWidget);
     });
 
+    testWidgets('renders error TodoView', (tester) async {
+      final TodoBloc mockTodoBloc = MockTodoBloc();
+
+      when(() => mockTodoBloc.state).thenReturn(const Error());
+
+      final provider = BlocProvider<TodoBloc>(create: (_) => mockTodoBloc);
+
+      await tester.pumpAppWithProvider(const TodosView(), provider);
+
+      expect(find.text('An error has occurred!'), findsOneWidget);
+    });
+
     testWidgets('renders filled TodoView', (tester) async {
       final TodoBloc mockTodoBloc = MockTodoBloc();
 

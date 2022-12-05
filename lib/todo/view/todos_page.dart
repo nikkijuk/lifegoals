@@ -10,6 +10,7 @@ import 'package:logging/logging.dart';
 
 final log = Logger('TodosPage');
 
+// coverage:ignore-start
 class TodosPage extends StatelessWidget {
   const TodosPage({super.key});
 
@@ -17,12 +18,13 @@ class TodosPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (_) =>
-          // TODO(jnikki): remove hardcoding
+          // TODO(jnikki): remove hardcoding - needs proper dependency injection
           TodoBloc(FirebaseTodoRepository(FirebaseFirestore.instance)),
       child: const TodosView(),
     );
   }
 }
+// coverage:ignore-end
 
 class TodosView extends StatelessWidget {
   const TodosView({super.key});
@@ -127,13 +129,13 @@ class TodosView extends StatelessWidget {
           ),
         ),
       ),
-      onTap: () => {},
+      onTap: () => {}, // coverage:ignore-line
     );
   }
 
   Widget _buildCheckedIcon(BuildContext context, Todo todo) {
     return InkResponse(
-      onTap: () => {},
+      onTap: () => {}, // coverage:ignore-line
       splashColor: Colors.transparent,
       child: const Icon(Icons.done, size: 24, color: Colors.lightGreen),
     );
@@ -141,7 +143,7 @@ class TodosView extends StatelessWidget {
 
   Widget _buildUncheckedIcon(BuildContext context, Todo todo) {
     return InkResponse(
-      onTap: () => {},
+      onTap: () => {}, // coverage:ignore-line
       splashColor: Colors.transparent,
       child: const Icon(
         Icons.radio_button_off_rounded,
@@ -152,6 +154,7 @@ class TodosView extends StatelessWidget {
   }
 
   Widget _buildErrorWidget() {
+    // TODO(jnikki): Localization
     return const Center(child: Text('An error has occurred!'));
   }
 }
