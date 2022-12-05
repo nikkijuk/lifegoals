@@ -6,9 +6,6 @@ import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/todo/bloc/todo_bloc.dart';
 import 'package:lifegoals/todo/bloc/todo_event.dart';
 import 'package:lifegoals/todo/bloc/todo_state.dart';
-import 'package:logging/logging.dart';
-
-final log = Logger('TodosPage');
 
 // coverage:ignore-start
 class TodosPage extends StatelessWidget {
