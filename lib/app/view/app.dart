@@ -41,7 +41,7 @@ class App extends StatelessWidget {
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<TodoRepository>(
-            create: (_) => FirebaseTodoRepository(FirebaseFirestore.instance),
+          create: (_) => FirebaseTodoRepository(FirebaseFirestore.instance),
         ),
       ],
       child: blocProviders,
