@@ -1,15 +1,13 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
+// coverage:ignore-file
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
 import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
+import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 import 'package:logging/logging.dart';
 
@@ -33,11 +31,20 @@ class App extends StatelessWidget {
       routerConfig: router(),
     );
 
-    return MultiBlocProvider(
+    final blocProviders = MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
       ],
       child: app,
+    );
+
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<TodoRepository>(
+            create: (_) => FirebaseTodoRepository(FirebaseFirestore.instance),
+        ),
+      ],
+      child: blocProviders,
     );
   }
 }
