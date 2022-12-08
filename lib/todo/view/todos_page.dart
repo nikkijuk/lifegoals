@@ -13,7 +13,7 @@ class TodosPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => TodoBloc(RepositoryProvider.of<TodoRepository>(context)),
+      create: (_) => TodoBloc(context.read<TodoRepository>()),
       child: const TodosView(),
     );
   }

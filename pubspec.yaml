@@ -22,7 +22,7 @@ dependencies:
     sdk: flutter
   freezed_annotation: ^2.2.0
   get_it: ^7.2.0
-  go_router: ^5.2.1
+  go_router: ^5.2.2
   injectable: ^2.1.0
   intl: ^0.17.0
   json_annotation: ^4.7.0
@@ -32,13 +32,13 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.0
-  # new version of build runner isn't compatible with other libraries
+  # new versions of build runner + freezed aren't compatible with other libraries
   build_runner: ^2.3.0
   flutter_test:
     sdk: flutter
-  # new version of build runner isn't compatible with other libraries
+  # new versions of freezed + build runner aren't compatible with other libraries
   freezed: ^2.2.0
-  injectable_generator: ^2.1.2
+  injectable_generator: ^2.1.3
   json_serializable: ^6.5.4
   very_good_analysis: ^3.1.0
 
