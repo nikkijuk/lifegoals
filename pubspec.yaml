@@ -14,7 +14,7 @@ dependencies:
   fake_cloud_firestore: ^2.0.1
   firebase_auth: ^4.1.5
   firebase_core: ^2.3.0
-  firebase_ui_auth: ^1.1.1
+  firebase_ui_auth: ^1.1.2
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
