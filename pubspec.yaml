@@ -9,7 +9,7 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
-  cloud_firestore: ^4.1.0
+  cloud_firestore: ^4.2.0
   equatable: ^2.0.5
   fake_cloud_firestore: ^2.0.1
   firebase_auth: ^4.1.5
