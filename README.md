@@ -1133,14 +1133,17 @@ example: When "read" event happens "found" state should be emitted
       );
 ```
 
+This is all actually really cool. 
+Easy to read simple syntax for building bloc, initiating action on it and checking resulting state.
+
 #### Mocking blocks
 
 Block can be mocked
 
 - https://pub.dev/documentation/bloc_test/latest/bloc_test/MockBloc-class.html
 
-Testing features, which use blocks, can be done by injecting mocked blocks to feature
-by replacing bloc which wraps pages widgets with mocked one.
+Testing features which use blocks can be done by injecting mocked blocks to feature and
+by replacing bloc that wraps pages widgets with mocked one.
 
 Mocking seems simple, but care needs to be given to type definitions, 
 or otherwise one starts to have difficulties which manifest themselves with
@@ -1232,7 +1235,7 @@ and to me repository doesn't naturally feel like being top level component which
 Creating app definitions starts to look like this
 - Outer scope: Repository definitions with MultiRepositoryProvider
 - First embedded scope: Bloc definitions with MultiBlocProvider 
-- Second embedded scope: App itsels
+- Second embedded scope: App itself
 
 ```
 final app = MaterialApp.router(
@@ -1309,6 +1312,11 @@ https://bloclibrary.dev/#/architecture?id=data-layer
 
 And, while this works and is propably completely ok for most apps, 
 I wonder if it's best way to when modularity of app is important architectural requirement.
+
+On the other hand, Blocs libraries architectural ideas are solid, so repositories have clear role within
+described architecture.
+
+- https://bloclibrary.dev/#/architecture?id=data-layer
 
 #### Firestore access
 
