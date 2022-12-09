@@ -1071,6 +1071,245 @@ To log there needs to be log object defined. Just use it to access Loger.
 final log = Logger('MyClassName');
 ```
 
+#### Launcher icons
+
+I was tempted to try replacing launcher icons, but decided to postpone it for later
+
+- https://pub.dev/packages/flutter_launcher_icons
+
+There's dall-e generated icon in repository and definitions at pubspec.yaml,
+but this doesn't cover flavors, so I reserve time later to do this properly
+
+```
+flutter_icons:
+  image_path: "assets/icon.png"
+  android: true
+  ios: true
+```
+
+It is completely possible to try generation out of box, but like said,
+results are not useful in this particular project.
+
+```sh
+$ flutter pub run flutter_launcher_icons
+```
+
+#### Bloc: provide & consume
+
+it is well documented how to setup bloc provider and consume it
+
+- https://bloclibrary.dev/#/recipesflutterblocaccess?id=ui
+
+Example
+- Inject bloc to widget tree using BlocProvider<MyBloc>
+- Pick bloc from widget tree using BlocConsumer<MyBloc, MyBlocState> 
+
+Typically you can 
+- Use MyTaskPage to create provider and wrap MyTaskWidget as it's child
+- MyTaskWidget declares ui, and is able to pick up provided blocs
+
+We might want to divide app to features, in which case we have
+- Applications core, shared functionality like navigation, etc.
+- Features, local pages and widgets for limited functionality
+
+There might be blocs on app level (global) and page level (local) and everywhere between. 
+
+Limiting scope is useful, since it creates boundaries for testing.
+
+#### Testing blocs
+
+Testing blocks in isolation is straightforward using  bloc_test
+
+- https://pub.dev/packages/bloc_test
+
+example: When "read" event happens "found" state should be emitted
+
+```
+      blocTest<ScannerBloc, ScannerState>(
+        'emits [Found(123)] when [ReadSucceeded(123)] happens}',
+        build: ScannerBloc.new,
+        act: (bloc) => bloc.add(const ReadSucceeded('123')),
+        expect: () => [const Found('123')],
+      );
+```
+
+#### Mocking blocks
+
+Block can be mocked
+
+- https://pub.dev/documentation/bloc_test/latest/bloc_test/MockBloc-class.html
+
+Testing features, which use blocks, can be done by injecting mocked blocks to feature
+by replacing bloc which wraps pages widgets with mocked one.
+
+Mocking seems simple, but care needs to be given to type definitions, 
+or otherwise one starts to have difficulties which manifest themselves with
+hard to understand error messages or as wrong mock functionality.
+
+Defining mock using proper types for events and states 
+
+```
+class MockScannerBloc extends MockBloc<ScannerEvent, ScannerState>
+    implements ScannerBloc {}
+```
+
+Mocks needs to be set up before tests methods run
+
+```
+  group('test', () {
+    late ScannerBloc bloc;
+
+    setUp(() {
+      bloc = MockScannerBloc();
+    });
+```
+
+Just mocking single methods of bloc is possible.
+
+Note: pumpWidget is custom help method which is part of project.
+
+```
+    testWidgets('code found', (tester) async {
+      when(() => bloc.state).thenReturn(const Found('123'));
+
+      await tester.pumpWidget(
+        BlocProvider.value(
+          value: bloc,
+          child: const MaterialApp(home: ScannerView()),
+        ),
+      );
+
+      expect(find.text('123'), findsOneWidget);
+    });
+  });
+```
+
+But it's also possible to stub state stream and not mock methods.
+
+- https://pub.dev/documentation/bloc_test/latest/bloc_test/whenListen.html
+
+```
+      testWidgets('code is not shown before barcode is read', (tester) async {
+        final ScannerBloc mockScannerBloc = MockScannerBloc();
+
+        // Stub the state stream
+        whenListen(
+          mockScannerBloc,
+          Stream<ScannerState>.fromIterable([const Inactive()]),
+          initialState: const Inactive(),
+        );
+
+        final provider =
+            BlocProvider<ScannerBloc>(create: (_) => mockScannerBloc);
+
+        await tester.pumpAppWithProvider(
+          const ScannerView(),
+          provider,
+        );
+
+        await tester.pumpAndSettle();
+        expect(find.text('N/A'), findsOneWidget);
+      });
+```
+
+All that is fanncy, and makes testing possible, 
+but it's still hard to grasp at the very start and writing good tests can take some time.
+
+#### Bloc dependency management
+
+Bloc library knows two types of components to inject / provide
+
+- Blocks can be provided with MultiBlocProvider or BlocProvider
+- Repositories can be provided with MultiRepositoryProvider or RepositoryProvider
+
+Reporitories are define as 
+
+- It is used as a dependency injection (DI) widget so that a single instance of a repository can be provided to multiple widgets within a subtree.
+
+For me this is bit restricting, since first it provides restrictive naming convention (everything is either bloc or repository),
+and to me repository doesn't naturally feel like being top level component which is defined app level and injected to blocks when they are created.
+
+Creating app definitions starts to look like this
+- Outer scope: Repository definitions with MultiRepositoryProvider
+- First embedded scope: Bloc definitions with MultiBlocProvider 
+- Second embedded scope: App itsels
+
+```
+final app = MaterialApp.router(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+        colorScheme: ColorScheme.fromSwatch(
+          accentColor: const Color(0xFF13B9FF),
+        ),
+      ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: router(),
+    );
+
+    final blocProviders = MultiBlocProvider(
+      providers: [
+        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+      ],
+      child: app,
+    );
+
+    return MultiRepositoryProvider(
+      providers: [
+        RepositoryProvider<TodoRepository>(
+          create: (_) => FirebaseTodoRepository(FirebaseFirestore.instance),
+        ),
+      ],
+      child: blocProviders,
+    );
+
+```
+
+But why all this: well, whem creating local blocks within feature 
+it's possible to get repository from global widget tree.
+
+Dependency injection implemented: well done.. 
+now it's possible to change repository definitions and as long as 
+widget tree contains real or mocked provider running in production
+or testing with widget test just works.
+
+Here we see TodosPage which is just wrapper for TodosView, and actual tests 
+can use TodosView directly. So, now you don't get 100% code coverage,
+but are pretty close anyway.
+
+```
+class TodosPage extends StatelessWidget {
+  const TodosPage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => TodoBloc(context.read<TodoRepository>()),
+      child: const TodosView(),
+    );
+  }
+}
+
+class TodosView extends StatelessWidget {
+  const TodosView({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+```
+
+See repository related class docs
+
+- https://pub.dev/documentation/flutter_bloc/latest/flutter_bloc/RepositoryProvider-class.html
+- https://pub.dev/documentation/flutter_bloc/latest/flutter_bloc/MultiRepositoryProvider-class.html
+
+This all corresponds nicely to architecture presented at bloc library documentation
+
+https://bloclibrary.dev/#/architecture?id=data-layer
+
+And, while this works and is propably completely ok for most apps, 
+I wonder if it's best way to when modularity of app is important architectural requirement.
+
 #### Firestore access
 
 ## Flavors 🚀
