@@ -273,7 +273,7 @@ packages:
       name: firebase_auth_platform_interface
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.11.3"
+    version: "6.11.4"
   firebase_auth_web:
     dependency: transitive
     description:
@@ -426,7 +426,7 @@ packages:
       name: go_router
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "5.2.3"
+    version: "5.2.4"
   graphs:
     dependency: transitive
     description:
@@ -868,4 +868,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.18.0 <3.0.0"
-  flutter: ">=3.3.7"
+  flutter: ">=3.3.9"
