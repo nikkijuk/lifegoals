@@ -23,6 +23,9 @@ class FirebaseTodoRepository implements TodoRepository {
   @override
   Stream<Iterable<Todo>> todos() {
     final snapshots = collection.snapshots();
+
+    // TODO(jnikki): do we need to dispose this stream
+    // Returns subscription to stream
     return snapshots.map((event) {
       return event.docs.map((e) => e.data());
     });
@@ -39,6 +42,9 @@ class FirebaseTodoRepository implements TodoRepository {
     // Sets data on the document, overwriting any existing data.
     ref.set(newTodo);
 
+    // TODO(jnikki): are we messing our life & exception handling here?
+    // we return directly updated todo, but at that moment update operation
+    // might not have been executed yet as set returns  Future<void>
     return newTodo;
   }
 
@@ -48,12 +54,6 @@ class FirebaseTodoRepository implements TodoRepository {
 
     // Deletes the current document from the collection.
     return ref.delete();
-    /*
-    .then(
-          (doc) => print("Document deleted"),
-          onError: (e) => print("Error updating document $e"),
-        );
-     */
   }
 
   @override

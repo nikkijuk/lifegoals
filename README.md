@@ -1320,6 +1320,203 @@ described architecture.
 
 #### Firestore access
 
+As a good citizen one needs to have
+
+- interface for repository
+- firebase implementation
+- and mocks for testing
+
+#### Repository interface
+
+Dart doesn't really have interfaces. What to do? 
+
+*Dart has no interface keyword. Instead, all classes implicitly define an interface.*
+- https://dart.dev/samples#interfaces-and-abstract-classes
+
+Simply: we do abstract class
+
+```
+abstract class TodoRepository {
+  Stream<Iterable<Todo>> todos();
+
+  Future<Todo?> findTodo(String id);
+
+  Todo addTodo(Todo todo);
+
+  Future<void> updateTodo(Todo todo);
+
+  Future<void> deleteTodo(Todo todo);
+}
+```
+
+This definition might still be wrong. Some methods return future, or stream, but not all.
+
+Future and Streams are giving you promise of value which is returned async. 
+
+addTodo is synchronous, and I'm not exactly sure if it's good thing.
+
+#### Firestore mock
+
+Mocks are the easy part, as we use fake_cloud_firestore, 
+which means we can skip mocking our own code and instead 
+replace firestore connection with mock implementation.
+
+- https://pub.dev/packages/fake_cloud_firestore/example
+
+#### Creating firestore repository
+
+When building repository we pass firestore instance 
+to repository using constructor injection.
+
+```
+class FirebaseTodoRepository implements TodoRepository {
+  FirebaseTodoRepository(this._instance) {
+    // Create an instance of a collection withConverter.
+    // there might be some limitations on this, but ..
+    // https://github.com/firebase/flutterfire/issues/7264
+    collection = _instance.collection('todos').withConverter<Todo>(
+          fromFirestore: (snapshot, _) => Todo.fromJson(snapshot.data()!),
+          toFirestore: (todo, _) => todo.toJson(),
+        );
+  }
+
+  late final FirebaseFirestore _instance;
+  late CollectionReference<Todo> collection;
+```
+
+We have used here withConverter to define 
+serialization and de-serialization using methods 
+Freezed has generated to us for json conversation.
+
+Important: now model used by firebase needs to compatible with 
+one generated, and we need to take care that data stays consistent.
+
+#### Implementing firestore access
+
+I don't feel confident with reactive streams, firestore and async error handling yet,
+so this example is about to be altered later when I have more understanding
+
+Methods are commented lightly, and show where there's still uncertainty from my side.
+
+```
+  @override
+  Stream<Iterable<Todo>> todos() {
+    final snapshots = collection.snapshots();
+
+    // TODO(jnikki): do we need to dispose this stream
+    // Returns subscription to stream
+    return snapshots.map((event) {
+      return event.docs.map((e) => e.data());
+    });
+  }
+
+  @override
+  Todo addTodo(Todo todo) {
+    // Returns a `DocumentReference` with the provided path.
+    // If no [path] is provided, an auto-generated ID is used.
+    final ref = collection.doc();
+
+    final newTodo = todo.copyWith(id: ref.id);
+
+    // Sets data on the document, overwriting any existing data.
+    ref.set(newTodo);
+
+    // TODO(jnikki): are we messing our life & exception handling here?
+    // we return directly updated todo, but at that moment update operation
+    // might not have been executed yet as set returns  Future<void>
+    return newTodo;
+  }
+
+  @override
+  Future<void> deleteTodo(Todo todo) async {
+    final ref = collection.doc(todo.id);
+
+    // Deletes the current document from the collection.
+    return ref.delete();
+  }
+
+  @override
+  Future<void> updateTodo(Todo todo) {
+    final ref = collection.doc(todo.id);
+
+    // Sets data on the document, overwriting any existing data.
+    return ref.set(todo);
+  }
+
+  @override
+  Future<Todo?> findTodo(String id) async {
+    final ref = collection.doc(id);
+
+    // Reads the document referenced
+    final snapshot = await ref.get();
+    return snapshot.data();
+  }
+}
+```
+
+#### Firestore repository tests
+
+Testing stream subscription needs
+
+- Set up fake firestore connection
+- Set up repository to be tested
+- (optional) fill fake firestore using repository (addTodo)
+- subscribe to stream (todos)
+- listen stream
+- check if stream returns excepted content
+
+```
+      setUp(() async {
+        instance = FakeFirebaseFirestore();
+      });
+
+      test('initial state is empty', () async {
+        final repository = FirebaseTodoRepository(instance);
+        final stream = repository.todos();
+        StreamSubscription<Iterable<Todo>>? subscription;
+        subscription = stream.listen((event) {
+          expect(event.length, 0);
+          subscription?.cancel();
+        });
+      });
+
+      test('initial state is not empty', () async {
+        final repository = FirebaseTodoRepository(instance)..addTodo(todo);
+        final stream = repository.todos();
+        StreamSubscription<Iterable<Todo>>? subscription;
+        subscription = stream.listen((event) {
+          event.toList().forEach((todo) => print('found $todo'));
+          expect(event.length, 1);
+          subscription?.cancel();
+        });
+      });
+```
+
+all other tests are pretty straightforward. I have used fake firestore implementation to 
+see if operation has changed state as expected, but it had bugs at time of writing this, 
+so be careful not to trust in it alone.
+
+```
+    test('delete todos', () async {
+        final repository = FirebaseTodoRepository(instance);
+        final newTodo = repository.addTodo(todo);
+        final pre = (instance as FakeFirebaseFirestore).dump();
+        await repository.deleteTodo(newTodo);
+        final foundTodo = await repository.findTodo(newTodo.id);
+        print('found $foundTodo.');
+        expect(foundTodo, null);
+        print('pre $pre');
+        expect(pre.contains('armageddon'), true);
+
+        // dump doesn't seem to be in sync
+        // todo which can't be retrieved is still seen on dump
+        //final post = (instance as FakeFirebaseFirestore).dump();
+        //print('post $post');
+        //expect (post.contains("armageddon"), false);
+      });
+
+```
+
 ## Flavors 🚀
 
 This project contains 3 flavors:
