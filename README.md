@@ -698,6 +698,8 @@ abstract class AuthenticatedUser with _$AuthenticatedUser {
 }
 ```
 
+Note: this model was never used. Simply, but not used (yet, at least)
+
 #### Run generation
 
 ```sh
@@ -780,6 +782,57 @@ targets:
           # auto registers any class inside a file with a
           # name matches the given pattern
           file_name_pattern: "_service$|_repository$|_bloc$"
+```
+
+Note: also injectable & getit aren't used (at least yet)
+
+#### So, where did it end? bloc + states + events
+
+I ended up creating events for login and logout. Events are added to block when user
+does action which should change state of user.
+
+Allowed states are unknown, authenticated and unauthenticated. For actions which should trigger action
+during logout unauthenticated is emitted during logout, and directly after that unknown.
+
+Code for whole handling is really simple, initial state is Unknown, login and logout events 
+only emit states, to which app reacts as appropriate.
+
+```
+class AuthenticationBloc
+    extends Bloc<AuthenticationEvent, AuthenticationState> {
+  AuthenticationBloc() : super(const Unknown()) {
+    on<LogIn>(_login);
+    on<LogOut>(_logout);
+  }
+
+  FutureOr<void> _login(LogIn event, Emitter<AuthenticationState> emit) {
+    emit(const Authenticated());
+  }
+
+  FutureOr<void> _logout(LogOut event, Emitter<AuthenticationState> emit) {
+    emit(const Unauthenticated());
+    emit(const Unknown());
+  }
+}
+
+```
+
+
+#### documentation: some uml 
+
+With bloc it's needed that you define states and events clearly. How about sharing thoughts as diagram?
+
+![authentication as state change diagram](doc/assets/authentication_bloc_state_changes.png)
+
+
+```
+@startuml
+	[*] -right-> unknown: start
+	unknown -down-> [*]: stop
+	unknown -right-> authenticated: log in
+	authenticated -down-> unauthenticated: logout (1)
+	unauthenticated --> unknown: logout (2)
+@enduml
 ```
 
 #### add setup and teardown to tests for di
@@ -918,8 +971,6 @@ I added barcode scanner just to see how to add one more function
 
 - https://pub.dev/packages/mobile_scanner
 
-
-
 Adding was simply, define ui with mobile scanner and display for code and add callback handler for barcode coming from mobile scanner. 
 
 Here ui snippet
@@ -952,7 +1003,7 @@ here how to give read barcode to bloc
   }
 ```
 
-And ui component which repains when bloc state changes
+And ui component which repaints when bloc state changes
 
 ```
 class ScannedCode extends StatelessWidget {

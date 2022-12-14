@@ -19,9 +19,4 @@ class AuthenticationBloc
     emit(const Unauthenticated());
     emit(const Unknown());
   }
-
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }
