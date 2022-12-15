@@ -12,9 +12,9 @@ dependencies:
   cloud_firestore: ^4.2.0
   equatable: ^2.0.5
   fake_cloud_firestore: ^2.1.0
-  firebase_auth: ^4.2.0
+  firebase_auth: ^4.2.1
   firebase_core: ^2.4.0
-  firebase_ui_auth: ^1.1.2
+  firebase_ui_auth: ^1.1.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -25,6 +25,8 @@ dependencies:
   get_it: ^7.2.0
   go_router: ^5.2.4
   injectable: ^2.1.0
+
+  # Cannot be updated because of dependency conflict
   intl: ^0.17.0
   json_annotation: ^4.7.0
   logging: ^1.1.0
