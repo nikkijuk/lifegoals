@@ -31,8 +31,11 @@ void main() {
       blocTest<AuthenticationBloc, AuthenticationState>(
         'emits [Unauthenticated, Unknown] when [LogOut] happens}',
         build: AuthenticationBloc.new,
-        act: (bloc) => bloc.add(const LogOut()),
-        expect: () => [const Unauthenticated(), const Unknown()],
+        act: (bloc) => bloc
+          ..add(const LogIn())
+          ..add(const LogOut()),
+        expect: () =>
+            [const Authenticated(), const Unauthenticated(), const Unknown()],
       );
     },
     //skip: true,

@@ -12,11 +12,19 @@ class AuthenticationBloc
   }
 
   FutureOr<void> _login(LogIn event, Emitter<AuthenticationState> emit) {
-    emit(const Authenticated());
+    state.maybeWhen(
+      unknown: () => emit(const Authenticated()),
+      orElse: () {}, // coverage:ignore-line
+    );
   }
 
   FutureOr<void> _logout(LogOut event, Emitter<AuthenticationState> emit) {
-    emit(const Unauthenticated());
-    emit(const Unknown());
+    state.maybeWhen(
+      authenticated: () {
+        emit(const Unauthenticated());
+        emit(const Unknown());
+      },
+      orElse: () {}, // coverage:ignore-line
+    );
   }
 }
