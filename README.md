@@ -12,9 +12,9 @@ Flutter lifegoals app
 
 # Current state
 
-Current code has been modularized with attemp to keep core and features separate. 
+Current code has been modularized with a goal to keep core and features separate. 
 Within user facing features there is further modularization for presentation logic 
-and shared data layer services which can be reused by several user facing services.
+and shared data layer services, which can be reused by several user facing services.
 
 ![modularization goal](doc/assets/lifegoals_modularization.png)
 
@@ -27,12 +27,14 @@ process of mine. None should take it as best practice.
 
 - VGV Cli creates with Github good development environment really fast, practices are solid.
 - VGV Core template creates out of box integrations for code format, static analysis and code coverage check.
+- Build runner works fine, except that when generation fails it might be hard to uderstand why it happened.
 
 ## State management
 
 - Bloc seems to me easy to use and especially test, async logic and subscribing to streams feels complex.
 - Bloc lifecycle needs to be controlled by my code. When I messed it Blocs weren't there, just as expected.
 - Blocs can have async long running functionality like subscription to streams - but to return data from them can't happen by emitting directly, since method that started the process has already returned.
+- Blocs events & states are tedious to implement cleanly and benefit a lot from usage of Freezed.
 
 ## Routing
 
@@ -44,24 +46,29 @@ process of mine. None should take it as best practice.
 - Freezed shouldn't be blamed here, since it's just generator, if world outside of it isn't ok it simply doesn't know it.
 - Developer is in charge here. It's easy to forgot regeneration, and refactoring isn't that neat. 
 
-## Cloud integration
+## Cloud integration: authentication
 
 - Firebase auth ui is easy to use, but breaks modularization of architecture, as cloud access is embedded within 3rd party components
 - Firebase auth UI ties you to single cloud provider, and changing it later might be harder than necessary.
 - Decision to use or not to use Firebase Auth ui boils down to question if one wants to invest on cloud independent solution
 
+## Cloud integration: firestore noSql database
+
+- Cloud Firestore is cool. I just don't yet manage to handle stream subscription cleanly.
+
 ## Dependency injection
 
-- Get_it and Inject seemed also to work, but I'm still experimenting with them.
-- Bloc has it's own dependency handling, which doesn't intuitively match to Get_id & inject.
+- Injectable & Get_it have a programming model, which seems good to me.
+- Bloc has it's own dependency handling, which doesn't intuitively match to Injectable & Get_it.
+- I'm still experimenting to find how to combine (if at all) these two models.
 
 ## Host platform hassle
 
-- Firebase and qr/barcode scanner components have problems with ios pods - resul: ios is currently blocked
+- Firebase and qr/barcode scanner components have problems with ios pods - result: ios is currently blocked
 
-# Copyrights
+## Copyrights
 
-During course of testing these question of licensing generated code came up.
+During course of testing VGV's plugins question of licenses in generated code came up.
 VGV clarified this issue in very elegant way. They dropped licencing terms from generated code,
 which allows developers to set their own copyright notices in code if they wish.
 
@@ -552,7 +559,7 @@ Future<void> initFirebase() async {
 Now you have *EmailAuthProvider()* in use, 
 so please also configure firebase to allow this authentication method.
 
-#### Create needed screens for sigup / login, forgot password and profile
+#### Create needed screens for signup / login, forgot password and profile
 
 Each screen needs function which creates it when go router is asking to create widgets for route
 
@@ -662,80 +669,7 @@ GoRouter router() => GoRouter(
     );
 ```
 
-#### add freezed (still experimenting with this)
-
-bloc library is fine, but need events and states to be modelled. this can lead to boilerplate code.
-
-freezed is generator which makes it easy to reduce boilerplate. 
-
-- https://pub.dev/packages/freezed
-
-we currently only need these
-
-```sh
-$ flutter pub add freezed_annotation
-$ flutter pub add --dev build_runner
-$ flutter pub add --dev freezed
-```
-
-if we want to have json serialization/deserialization we need also
-
-```sh
-$ flutter pub add json_annotation
-$ flutter pub add --dev json_serializable
-```
-
-#### Define model
-
-This model is very simple, only one attribute, no fromJson/toJson 
-
-lib/domain/authentication/authenticated_user.dart
-
-```
-@freezed
-abstract class AuthenticatedUser with _$AuthenticatedUser {
-  const factory AuthenticatedUser({required String name}) = _AuthenticatedUser;
-}
-```
-
-Note: this model was never used. Simply, but not used (yet, at least)
-
-#### Run generation
-
-```sh
-$ flutter pub run build_runner build
-```
-
-#### Commit generated code to git
-
-This something I did. Still: It feels somehow wrong..
-
-I would like to generate code to separate source tree and take it in use from there,
-but this is something I'll see separately later.
-
-#### Decide how to go forward
-
-1) firebase auth ui changes can be subscribed in bloc and then delivered to ui's
-
-2) one can implement whole ui logic new and do repositories & clients to firebase auth
-
-I go for the first for now, as this is only experimenting. 
-
-#### Listening firebase auth within bloc is unstable?
-
-I did have problems to get it working using bloc multiproviders & tree scopes. 
-
-Still, following presented best practices of bloc library worked at the end.
-
-#### dependency injection to the rescue
-
-I hoped that lazy singleton would be nice hack and give app time to initialize all in right order.
-
-sadly: not. either blocks were closed prematurely or firebase was not initialized correctly.
-
-This wasn't really use case for DI in Flutter, but DI is good for something else, so: experiment it.
-
-#### install get_it & injectable 
+#### install get_it & injectable (experimenting)
 
 add get_it and injectable libraries and code generator for configurations
 
@@ -745,7 +679,7 @@ $ flutter pub add injectable
 $ flutter pub add --dev injectable_generator
 ```
 
-create configuration file & method method 
+create configuration file & method method
 
 - lib/core/injection.dart
 
@@ -763,7 +697,7 @@ $ flutter packages pub run build_runner build --delete-conflicting-outputs
 ```
 
 Note: At start generation didn't work for me. I needed to add some annotation and not rely
-on automatic rules (build.yaml) only and then it start to work.
+on automatic rules (build.yaml) only and then it started to work.
 
 #### add auto generator for injections (option)
 
@@ -786,15 +720,99 @@ targets:
 
 Note: also injectable & getit aren't used (at least yet)
 
-#### So, where did it end? bloc + states + events
+#### add freezed
 
-I ended up creating events for login and logout. Events are added to block when user
-does action which should change state of user.
+bloc library is fine, but needs events and states to be implemented as classes. 
+Handwritten equality, toString & other needed code can lead to lot of boilerplate code, 
+which is tedious to keep up during development.
+
+freezed is generator which makes it easy to reduce boilerplate. 
+
+- https://pub.dev/packages/freezed
+
+we currently only need these
+
+```sh
+$ flutter pub add freezed_annotation
+$ flutter pub add --dev build_runner
+$ flutter pub add --dev freezed
+```
+
+as we want to have option to json serialization/deserialization we need also
+
+```sh
+$ flutter pub add json_annotation
+$ flutter pub add --dev json_serializable
+```
+
+Json serialization comes really handy when we start using Cloud Firestore to access noSql cloud database.
+
+#### Authentication: events + states
+
+I created events for login and logout. Events are added to block when user
+does action which should change state of authenticated session (create or revoke users authenticated session).
+
+```
+@freezed
+abstract class AuthenticationEvent with _$AuthenticationEvent {
+  const factory AuthenticationEvent.login() = LogIn;
+  const factory AuthenticationEvent.logout() = LogOut;
+}
+```
 
 Allowed states are unknown, authenticated and unauthenticated. For actions which should trigger action
 during logout unauthenticated is emitted during logout, and directly after that unknown.
 
-Code for whole handling is really simple, initial state is Unknown, login and logout events 
+```
+@freezed
+abstract class AuthenticationState with _$AuthenticationState {
+  const factory AuthenticationState.unknown() = Unknown;
+  const factory AuthenticationState.authenticated() = Authenticated;
+  const factory AuthenticationState.unauthenticated() = Unauthenticated;
+}
+```
+
+All events and states use mixin, which is generated by Freezed. 
+Code is generated to separate class, which keeps event and state classes clean and readable.
+
+#### Commit generated code to git
+
+Freezed generates files for you. They follow naming convention <my_file>.freezed.dart. 
+<my_file> is name of source file which contains @freezed annotated classes.
+
+I don't know if it would be possible to do generation at CI/CD pipeline, 
+but now I only know that they can be just pushed to Git, even if it feels somehow wrong.
+
+I would like to generate code to separate source tree and take it in use from there,
+but this is something I'll see separately later.
+
+#### documenting bloc logic
+
+With bloc it's mandatory to define states and events clearly. After this logic is simple.
+
+How about sharing thoughts as diagram? State diagram comes here handy.
+
+![authentication as state change diagram](doc/assets/authentication_bloc_state_changes.png)
+
+Below is plantuml text presentation of authentication blocs logic.
+
+```
+@startuml
+	[*] -right-> unknown: start
+	unknown -down-> [*]: stop
+	unknown -right-> authenticated: log in
+	authenticated -down-> unauthenticated: logout (1)
+	unauthenticated --> unknown: logout (2)
+@enduml
+```
+
+It's easy to see from state diagram which state changes are allowed, which events trigger
+state changes, and so it will become evident how 
+bloc is used (contract) and how it should work (implementation of contract).
+
+#### implementing bloc logic
+
+Code for authentication bloc is really simple, initial state is Unknown, login and logout events 
 only emit states, to which app reacts as appropriate.
 
 ```
@@ -806,34 +824,43 @@ class AuthenticationBloc
   }
 
   FutureOr<void> _login(LogIn event, Emitter<AuthenticationState> emit) {
-    emit(const Authenticated());
+    state.maybeWhen(
+      unknown: () => emit(const Authenticated()),
+      orElse: () {}, // coverage:ignore-line
+    );
   }
 
   FutureOr<void> _logout(LogOut event, Emitter<AuthenticationState> emit) {
-    emit(const Unauthenticated());
-    emit(const Unknown());
+    state.maybeWhen(
+      authenticated: () {
+        emit(const Unauthenticated());
+        emit(const Unknown());
+      },
+      orElse: () {}, // coverage:ignore-line
+    );
   }
 }
-
 ```
 
+It's important to understand that this code is taking in account current state, and 
+state changes only happen if they are valid according current state of bloc.
 
-#### documentation: some uml 
+Error handling is not implemented, it could be easily added to "orElse" handler.
 
-With bloc it's needed that you define states and events clearly. How about sharing thoughts as diagram?
+See example of using when from documentation
 
-![authentication as state change diagram](doc/assets/authentication_bloc_state_changes.png)
+- https://pub.dev/packages/freezed#using-pattern-matching-to-read-non-shared-properties
 
+#### authentication bloc testing
 
-```
-@startuml
-	[*] -right-> unknown: start
-	unknown -down-> [*]: stop
-	unknown -right-> authenticated: log in
-	authenticated -down-> unauthenticated: logout (1)
-	unauthenticated --> unknown: logout (2)
-@enduml
-```
+Authentication bloc can be tested like any other bloc. 
+
+It is important to note, that to test logout one needs first to do login. 
+This is because one doesn't only need to fire event, but bloc needs to have right state
+or it doesn't act accordingly.
+
+I have done some experiments with dependency injection, even if it's not really in use,
+so we need to load dependency injection definitions in memory.
 
 #### add setup and teardown to tests for di
 
@@ -1369,7 +1396,7 @@ described architecture.
 
 - https://bloclibrary.dev/#/architecture?id=data-layer
 
-#### Firestore access
+#### Cloud Firestore access
 
 As a good citizen one needs to have
 
@@ -1406,7 +1433,7 @@ Future and Streams are giving you promise of value which is returned async.
 
 addTodo is synchronous, and I'm not exactly sure if it's good thing.
 
-#### Firestore mock
+#### Cloud Firestore mock
 
 Mocks are the easy part, as we use fake_cloud_firestore, 
 which means we can skip mocking our own code and instead 
