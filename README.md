@@ -1431,19 +1431,15 @@ abstract class TodoRepository {
 
   Future<Todo?> findTodo(String id);
 
-  Todo addTodo(Todo todo);
-
-  Future<void> updateTodo(Todo todo);
+  Future<void> saveTodo(Todo todo);
 
   Future<void> deleteTodo(Todo todo);
 }
 ```
 
-This definition might still be wrong. Some methods return future, or stream, but not all.
+Methods return future or stream.  
 
-Future and Streams are giving you promise of value which is returned async. 
-
-addTodo is synchronous, and I'm not exactly sure if it's good thing.
+Future and Streams are giving you promise of value which is returned async.
 
 #### Cloud Firestore mock
 
@@ -1493,28 +1489,9 @@ Methods are commented lightly, and show where there's still uncertainty from my 
   Stream<Iterable<Todo>> todos() {
     final snapshots = collection.snapshots();
 
-    // TODO(jnikki): do we need to dispose this stream
-    // Returns subscription to stream
     return snapshots.map((event) {
       return event.docs.map((e) => e.data());
     });
-  }
-
-  @override
-  Todo addTodo(Todo todo) {
-    // Returns a `DocumentReference` with the provided path.
-    // If no [path] is provided, an auto-generated ID is used.
-    final ref = collection.doc();
-
-    final newTodo = todo.copyWith(id: ref.id);
-
-    // Sets data on the document, overwriting any existing data.
-    ref.set(newTodo);
-
-    // TODO(jnikki): are we messing our life & exception handling here?
-    // we return directly updated todo, but at that moment update operation
-    // might not have been executed yet as set returns  Future<void>
-    return newTodo;
   }
 
   @override
@@ -1526,7 +1503,7 @@ Methods are commented lightly, and show where there's still uncertainty from my 
   }
 
   @override
-  Future<void> updateTodo(Todo todo) {
+  Future<void> saveTodo(Todo todo) {
     final ref = collection.doc(todo.id);
 
     // Sets data on the document, overwriting any existing data.
@@ -1544,13 +1521,16 @@ Methods are commented lightly, and show where there's still uncertainty from my 
 }
 ```
 
+Note that I have combined insert & update operation to one save, which relies on 
+identity of todo to be present in id field.
+
 #### Firestore repository tests
 
 Testing stream subscription needs
 
 - Set up fake firestore connection
 - Set up repository to be tested
-- (optional) fill fake firestore using repository (addTodo)
+- (optional) fill fake firestore using repository (saveTodo)
 - subscribe to stream (todos)
 - listen stream
 - check if stream returns excepted content
@@ -1571,7 +1551,8 @@ Testing stream subscription needs
       });
 
       test('initial state is not empty', () async {
-        final repository = FirebaseTodoRepository(instance)..addTodo(todo);
+        final repository = FirebaseTodoRepository(instance);
+        await repository.saveTodo(todo);
         final stream = repository.todos();
         StreamSubscription<Iterable<Todo>>? subscription;
         subscription = stream.listen((event) {
@@ -1587,12 +1568,12 @@ see if operation has changed state as expected, but it had bugs at time of writi
 so be careful not to trust in it alone.
 
 ```
-    test('delete todos', () async {
+      test('delete todos', () async {
         final repository = FirebaseTodoRepository(instance);
-        final newTodo = repository.addTodo(todo);
+        await repository.saveTodo(todo);
         final pre = (instance as FakeFirebaseFirestore).dump();
-        await repository.deleteTodo(newTodo);
-        final foundTodo = await repository.findTodo(newTodo.id);
+        await repository.deleteTodo(todo);
+        final foundTodo = await repository.findTodo(todo.id);
         print('found $foundTodo.');
         expect(foundTodo, null);
         print('pre $pre');
@@ -1604,8 +1585,79 @@ so be careful not to trust in it alone.
         //print('post $post');
         //expect (post.contains("armageddon"), false);
       });
+```
+
+#### Integrating todo repository to todo bloc
+
+Todo bloc is interesting piece of code, since it does lot of stuff
+
+- let todo repository to be injected using constructor injection
+- is able to subscribe to stream provided by todo repository
+- is able to emit streamed results of todo repository as state stream
+- is able to add todos with generated id
+- is able to update todos identified by id
+- is able to delete todos identified by id
+- is able to close subscription when repository is closed
 
 ```
+class TodoBloc extends Bloc<TodoEvent, TodoState> {
+  TodoBloc(this._todoRepository) : super(const Uninitialized()) {
+    on<Subscribe>(_subscribe);
+    on<Refresh>(_refresh);
+    on<Add>(_add);
+    on<Update>(_update);
+    on<Remove>(_remove);
+  }
+  final TodoRepository _todoRepository;
+  StreamSubscription<Iterable<Todo>>? _subscription;
+  final _uuid = const Uuid();
+
+  Future<FutureOr<void>> _subscribe(
+    Subscribe event,
+    Emitter<TodoState> emit,
+  ) async {
+    // subscribe can be currently done multiple times, so ..
+    if (_subscription != null) {
+      await _subscription?.cancel(); // coverage:ignore-line
+    }
+    _subscription = _todoRepository.todos().listen((event) {
+      add(Refresh(event.toList()));
+    });
+  }
+
+  Future<FutureOr<void>> _refresh(
+    Refresh event,
+    Emitter<TodoState> emit,
+  ) async {
+    emit(Active(event.todos));
+  }
+
+  FutureOr<void> _add(Add event, Emitter<TodoState> emit) async {
+    final id = _uuid.v4();
+    final todo = event.todo.copyWith(id: id);
+
+    await _todoRepository.saveTodo(todo);
+  }
+
+  FutureOr<void> _update(Update event, Emitter<TodoState> emit) async {
+    await _todoRepository.saveTodo(event.todo);
+  }
+
+  FutureOr<void> _remove(Remove event, Emitter<TodoState> emit) async {
+    await _todoRepository.deleteTodo(event.todo);
+  }
+
+  @override
+  Future<void> close() {
+    _subscription?.cancel();
+    return super.close();
+  }
+}
+```
+
+#### Testing todo bloc
+
+Mocking is bit tricky on todo bloc test, but otherwise it's very straightforward
 
 ## Flavors 🚀
 

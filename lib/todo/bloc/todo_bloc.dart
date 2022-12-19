@@ -1,14 +1,12 @@
 import 'dart:async';
 
 import 'package:bloc/bloc.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/todo/bloc/todo_event.dart';
 import 'package:lifegoals/todo/bloc/todo_state.dart';
 import 'package:uuid/uuid.dart';
 
-@injectable
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
   TodoBloc(this._todoRepository) : super(const Uninitialized()) {
     on<Subscribe>(_subscribe);
@@ -18,7 +16,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     on<Remove>(_remove);
   }
   final TodoRepository _todoRepository;
-  StreamSubscription<Iterable<Todo>>? subscription;
+  StreamSubscription<Iterable<Todo>>? _subscription;
   final _uuid = const Uuid();
 
   Future<FutureOr<void>> _subscribe(
@@ -26,10 +24,10 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Emitter<TodoState> emit,
   ) async {
     // subscribe can be currently done multiple times, so ..
-    if (subscription != null) {
-      await subscription?.cancel(); // coverage:ignore-line
+    if (_subscription != null) {
+      await _subscription?.cancel(); // coverage:ignore-line
     }
-    subscription = _todoRepository.todos().listen((event) {
+    _subscription = _todoRepository.todos().listen((event) {
       add(Refresh(event.toList()));
     });
   }
@@ -58,7 +56,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Future<void> close() {
-    subscription?.cancel();
+    _subscription?.cancel();
     return super.close();
   }
 }

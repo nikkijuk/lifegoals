@@ -1,11 +1,9 @@
 import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:injectable/injectable.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 
-@injectable
 class FirebaseTodoRepository implements TodoRepository {
   FirebaseTodoRepository(this._instance) {
     // Create an instance of a collection withConverter.
@@ -18,7 +16,7 @@ class FirebaseTodoRepository implements TodoRepository {
   }
 
   late final FirebaseFirestore _instance;
-  late CollectionReference<Todo> _collection;
+  late final CollectionReference<Todo> _collection;
 
   @override
   Stream<Iterable<Todo>> todos() {

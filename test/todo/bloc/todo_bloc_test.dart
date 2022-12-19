@@ -9,6 +9,16 @@ import 'package:lifegoals/todo/bloc/todo_event.dart';
 import 'package:lifegoals/todo/bloc/todo_state.dart';
 import 'package:mocktail/mocktail.dart';
 
+final todo = Todo(
+  id: '1',
+  title: 'title',
+  description: 'description',
+  isCompleted: false,
+  dueDate: DateTime.now(),
+);
+
+final todos = [todo];
+
 class MockTodoRepository extends Mock implements TodoRepository {}
 
 class TodoFake extends Fake implements Todo {}
@@ -19,14 +29,6 @@ void main() {
     registerFallbackValue(TodoFake());
   });
 
-  final todo = Todo(
-    id: '1',
-    title: 'title',
-    description: 'description',
-    isCompleted: false,
-    dueDate: DateTime.now(),
-  );
-  final todos = [todo];
   late TodoRepository mockRepository;
 
   tearDownAll(getIt.reset);
