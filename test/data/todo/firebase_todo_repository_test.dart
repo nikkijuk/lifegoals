@@ -10,6 +10,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
+import 'package:uuid/uuid.dart';
 
 void main() {
   setUpAll(() async {
@@ -17,8 +18,10 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
   });
 
+  const _uuid = Uuid();
+
   final todo = Todo(
-    id: '',
+    id: _uuid.v4(),
     title: 'moderate',
     description: 'armageddon',
     isCompleted: false,
@@ -47,7 +50,7 @@ void main() {
       });
 
       test('initial state is not empty', () async {
-        final repository = FirebaseTodoRepository(instance)..addTodo(todo);
+        final repository = FirebaseTodoRepository(instance)..saveTodo(todo);
         final stream = repository.todos();
         StreamSubscription<Iterable<Todo>>? subscription;
         subscription = stream.listen((event) {
@@ -60,20 +63,20 @@ void main() {
       test('add todos', () async {
         final pre = (instance as FakeFirebaseFirestore).dump();
         final repository = FirebaseTodoRepository(instance);
-        final newTodo = repository.addTodo(todo);
+        await repository.saveTodo(todo);
         final post = (instance as FakeFirebaseFirestore).dump();
         expect(pre.contains('armageddon'), false);
         expect(post.contains('armageddon'), true);
-        final foundTodo = await repository.findTodo(newTodo.id);
+        final foundTodo = await repository.findTodo(todo.id);
         print('found $foundTodo.');
         expect(foundTodo != null, true);
       });
 
       test('update todos', () async {
         final repository = FirebaseTodoRepository(instance);
-        final newTodo = repository.addTodo(todo);
+        repository.saveTodo(todo);
         final pre = (instance as FakeFirebaseFirestore).dump();
-        await repository.updateTodo(newTodo.copyWith(description: 'bug'));
+        await repository.saveTodo(todo.copyWith(description: 'bug'));
         final post = (instance as FakeFirebaseFirestore).dump();
         print('pre $pre');
         print('post $post');
@@ -84,10 +87,10 @@ void main() {
 
       test('delete todos', () async {
         final repository = FirebaseTodoRepository(instance);
-        final newTodo = repository.addTodo(todo);
+        repository.saveTodo(todo);
         final pre = (instance as FakeFirebaseFirestore).dump();
-        await repository.deleteTodo(newTodo);
-        final foundTodo = await repository.findTodo(newTodo.id);
+        await repository.deleteTodo(todo);
+        final foundTodo = await repository.findTodo(todo.id);
         print('found $foundTodo.');
         expect(foundTodo, null);
         print('pre $pre');
@@ -102,8 +105,8 @@ void main() {
 
       test('find todo', () async {
         final repository = FirebaseTodoRepository(instance);
-        final newTodo = repository.addTodo(todo);
-        final foundTodo = await repository.findTodo(newTodo.id);
+        repository.saveTodo(todo);
+        final foundTodo = await repository.findTodo(todo.id);
         expect(foundTodo != null, true);
       });
     },

@@ -11,8 +11,13 @@ import 'package:mocktail/mocktail.dart';
 
 class MockTodoRepository extends Mock implements TodoRepository {}
 
+class TodoFake extends Fake implements Todo {}
+
 void main() {
-  setUpAll(configureDependencies);
+  setUpAll(() {
+    configureDependencies();
+    registerFallbackValue(TodoFake());
+  });
 
   final todo = Todo(
     id: '1',
@@ -34,9 +39,10 @@ void main() {
         when(mockRepository.todos).thenAnswer(
           (_) => Stream<Iterable<Todo>>.fromIterable([todos]),
         );
-        when(() => mockRepository.addTodo(todo)).thenAnswer((_) => todo);
-        when(() => mockRepository.deleteTodo(todo)).thenAnswer((_) async {});
-        when(() => mockRepository.updateTodo(todo)).thenAnswer((_) async {});
+        when(() => mockRepository.deleteTodo(any<Todo>()))
+            .thenAnswer((_) async {});
+        when(() => mockRepository.saveTodo(any<Todo>()))
+            .thenAnswer((_) async {});
       });
 
       test('initial state is not initialized', () {

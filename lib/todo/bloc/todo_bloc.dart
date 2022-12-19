@@ -6,6 +6,7 @@ import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/todo/bloc/todo_event.dart';
 import 'package:lifegoals/todo/bloc/todo_state.dart';
+import 'package:uuid/uuid.dart';
 
 @injectable
 class TodoBloc extends Bloc<TodoEvent, TodoState> {
@@ -18,6 +19,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
   final TodoRepository _todoRepository;
   StreamSubscription<Iterable<Todo>>? subscription;
+  final _uuid = const Uuid();
 
   Future<FutureOr<void>> _subscribe(
     Subscribe event,
@@ -40,11 +42,14 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   }
 
   FutureOr<void> _add(Add event, Emitter<TodoState> emit) async {
-    _todoRepository.addTodo(event.todo);
+    final id = _uuid.v4();
+    final todo = event.todo.copyWith(id: id);
+
+    await _todoRepository.saveTodo(todo);
   }
 
   FutureOr<void> _update(Update event, Emitter<TodoState> emit) async {
-    await _todoRepository.updateTodo(event.todo);
+    await _todoRepository.saveTodo(event.todo);
   }
 
   FutureOr<void> _remove(Remove event, Emitter<TodoState> emit) async {

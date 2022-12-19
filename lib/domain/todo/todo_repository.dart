@@ -7,9 +7,7 @@ abstract class TodoRepository {
 
   Future<Todo?> findTodo(String id);
 
-  Todo addTodo(Todo todo);
-
-  Future<void> updateTodo(Todo todo);
+  Future<void> saveTodo(Todo todo);
 
   Future<void> deleteTodo(Todo todo);
 }
