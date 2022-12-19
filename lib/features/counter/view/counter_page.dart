@@ -1,17 +1,10 @@
-// Copyright (c) 2022, Very Good Ventures
-// https://verygood.ventures
-//
-// Use of this source code is governed by an MIT-style
-// license that can be found in the LICENSE file or at
-// https://opensource.org/licenses/MIT.
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/core/navigation.dart';
-import 'package:lifegoals/counter/counter.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
+import 'package:lifegoals/features/counter/cubit/counter_cubit.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
 class CounterPage extends StatelessWidget {

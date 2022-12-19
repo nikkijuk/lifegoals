@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
-import 'package:lifegoals/todo/bloc/todo_bloc.dart';
-import 'package:lifegoals/todo/bloc/todo_event.dart';
-import 'package:lifegoals/todo/bloc/todo_state.dart';
+import 'package:lifegoals/features/todo/bloc/todo_bloc.dart';
+import 'package:lifegoals/features/todo/bloc/todo_event.dart';
+import 'package:lifegoals/features/todo/bloc/todo_state.dart';
 
 // coverage:ignore-start
 class TodosPage extends StatelessWidget {

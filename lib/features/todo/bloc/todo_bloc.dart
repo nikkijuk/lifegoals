@@ -3,8 +3,8 @@ import 'dart:async';
 import 'package:bloc/bloc.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
-import 'package:lifegoals/todo/bloc/todo_event.dart';
-import 'package:lifegoals/todo/bloc/todo_state.dart';
+import 'package:lifegoals/features/todo/bloc/todo_event.dart';
+import 'package:lifegoals/features/todo/bloc/todo_state.dart';
 import 'package:uuid/uuid.dart';
 
 class TodoBloc extends Bloc<TodoEvent, TodoState> {

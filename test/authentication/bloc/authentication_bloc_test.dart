@@ -1,10 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/authentication/bloc/authentication_event.dart';
-import 'package:lifegoals/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/core/injection.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
 
 void main() {
   setUpAll(configureDependencies);

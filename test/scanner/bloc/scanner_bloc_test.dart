@@ -1,9 +1,9 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/core/injection.dart';
-import 'package:lifegoals/scanner/bloc/scanner_bloc.dart';
-import 'package:lifegoals/scanner/bloc/scanner_event.dart';
-import 'package:lifegoals/scanner/bloc/scanner_state.dart';
+import 'package:lifegoals/features/scanner/bloc/scanner_bloc.dart';
+import 'package:lifegoals/features/scanner/bloc/scanner_event.dart';
+import 'package:lifegoals/features/scanner/bloc/scanner_state.dart';
 
 void main() {
   setUpAll(configureDependencies);

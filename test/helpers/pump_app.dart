@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
 import 'routing.dart';

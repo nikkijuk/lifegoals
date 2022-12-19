@@ -5,10 +5,10 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
-import 'package:lifegoals/todo/bloc/todo_bloc.dart';
-import 'package:lifegoals/todo/bloc/todo_event.dart';
-import 'package:lifegoals/todo/bloc/todo_state.dart';
-import 'package:lifegoals/todo/view/todos_page.dart';
+import 'package:lifegoals/features/todo/bloc/todo_bloc.dart';
+import 'package:lifegoals/features/todo/bloc/todo_event.dart';
+import 'package:lifegoals/features/todo/bloc/todo_state.dart';
+import 'package:lifegoals/features/todo/view/todos_page.dart';
 import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';

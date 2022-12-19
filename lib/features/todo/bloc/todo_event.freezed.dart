@@ -248,6 +248,7 @@ class _$Refresh implements Refresh {
   final List<Todo> _todos;
   @override
   List<Todo> get todos {
+    if (_todos is EqualUnmodifiableListView) return _todos;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_todos);
   }

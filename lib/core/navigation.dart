@@ -1,9 +1,9 @@
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/about/view/about_page.dart';
-import 'package:lifegoals/authentication/authentication_views.dart';
-import 'package:lifegoals/counter/counter.dart';
-import 'package:lifegoals/scanner/view/scanner_page.dart';
-import 'package:lifegoals/todo/view/todos_page.dart';
+import 'package:lifegoals/features/about/view/about_page.dart';
+import 'package:lifegoals/features/authentication/authentication_views.dart';
+import 'package:lifegoals/features/counter/view/counter_page.dart';
+import 'package:lifegoals/features/scanner/view/scanner_page.dart';
+import 'package:lifegoals/features/todo/view/todos_page.dart';
 
 class Routes {
   static const home = '/';
