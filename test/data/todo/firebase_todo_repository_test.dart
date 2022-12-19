@@ -18,10 +18,10 @@ void main() {
     WidgetsFlutterBinding.ensureInitialized();
   });
 
-  const _uuid = Uuid();
+  const uuid = Uuid();
 
   final todo = Todo(
-    id: _uuid.v4(),
+    id: uuid.v4(),
     title: 'moderate',
     description: 'armageddon',
     isCompleted: false,
@@ -50,7 +50,8 @@ void main() {
       });
 
       test('initial state is not empty', () async {
-        final repository = FirebaseTodoRepository(instance)..saveTodo(todo);
+        final repository = FirebaseTodoRepository(instance);
+        await repository.saveTodo(todo);
         final stream = repository.todos();
         StreamSubscription<Iterable<Todo>>? subscription;
         subscription = stream.listen((event) {
@@ -74,7 +75,7 @@ void main() {
 
       test('update todos', () async {
         final repository = FirebaseTodoRepository(instance);
-        repository.saveTodo(todo);
+        await repository.saveTodo(todo);
         final pre = (instance as FakeFirebaseFirestore).dump();
         await repository.saveTodo(todo.copyWith(description: 'bug'));
         final post = (instance as FakeFirebaseFirestore).dump();
@@ -87,7 +88,7 @@ void main() {
 
       test('delete todos', () async {
         final repository = FirebaseTodoRepository(instance);
-        repository.saveTodo(todo);
+        await repository.saveTodo(todo);
         final pre = (instance as FakeFirebaseFirestore).dump();
         await repository.deleteTodo(todo);
         final foundTodo = await repository.findTodo(todo.id);
@@ -105,7 +106,7 @@ void main() {
 
       test('find todo', () async {
         final repository = FirebaseTodoRepository(instance);
-        repository.saveTodo(todo);
+        await repository.saveTodo(todo);
         final foundTodo = await repository.findTodo(todo.id);
         expect(foundTodo != null, true);
       });
