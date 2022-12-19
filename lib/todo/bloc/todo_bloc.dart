@@ -24,7 +24,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Emitter<TodoState> emit,
   ) async {
     // subscribe can be currently done multiple times, so ..
-    //await subscription?.cancel();
+    if (subscription != null) {
+      await subscription?.cancel();
+    }
     subscription = _todoRepository.todos().listen((event) {
       add(Refresh(event.toList()));
     });
