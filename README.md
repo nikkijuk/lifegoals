@@ -1416,6 +1416,38 @@ As a good citizen one needs to have
 - firebase implementation
 - and mocks for testing
 
+#### Generating database keys
+
+One can let database to generate keys or generate them in client side.
+
+I decided to use plugin *uuid* to client side generation.
+
+- https://pub.dev/packages/uuid
+
+Installation
+
+```
+$ flutter pub add uuid
+```
+
+Generation
+
+```
+// introduce generator
+var uuid = Uuid();
+
+
+// Generate a v4 (random) id
+final id = uuid.v4()
+```
+
+There's also other algorithms, but this seemed to be fitting as it creates random id's 
+using cryptography algorithm.
+
+See firebase best practices to review why using ordered keys would have been bad option.
+
+- https://firebase.google.com/docs/firestore/best-practices
+
 #### Repository interface
 
 Dart doesn't really have interfaces. What to do? 
