@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:mocktail/mocktail.dart';
@@ -9,10 +8,6 @@ import '../../helpers/helpers.dart';
 import '../../helpers/routing.dart';
 
 void main() {
-  setUpAll(configureDependencies);
-
-  tearDownAll(getIt.reset);
-
   group('AboutPage', () {
     testWidgets('renders AboutView', (tester) async {
       await tester.pumpApp(const AboutPage());

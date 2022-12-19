@@ -2,7 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/features/todo/bloc/todo_bloc.dart';
@@ -41,12 +40,7 @@ class MockTodoRepository extends Mock implements TodoRepository {}
 class MockTodoBloc extends MockBloc<TodoEvent, TodoState> implements TodoBloc {}
 
 void main() {
-  setUpAll(() {
-    WidgetsFlutterBinding.ensureInitialized();
-    configureDependencies();
-  });
-
-  tearDownAll(getIt.reset);
+  setUpAll(WidgetsFlutterBinding.ensureInitialized);
 
   group('TodoPage', () {
     setUp(() {});

@@ -2,7 +2,6 @@ import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
@@ -21,10 +20,6 @@ class MockAuthencationBloc
     implements AuthenticationBloc {}
 
 void main() {
-  setUpAll(configureDependencies);
-
-  tearDownAll(getIt.reset);
-
   group(
     'CounterPageRouting',
     () {

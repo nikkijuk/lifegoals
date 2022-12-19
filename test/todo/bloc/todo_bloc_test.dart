@@ -1,6 +1,5 @@
 import 'package:bloc_test/bloc_test.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/features/todo/bloc/todo_bloc.dart';
@@ -24,13 +23,10 @@ class TodoFake extends Fake implements Todo {}
 
 void main() {
   setUpAll(() {
-    configureDependencies();
     registerFallbackValue(TodoFake());
   });
 
   late TodoRepository mockRepository;
-
-  tearDownAll(getIt.reset);
 
   group(
     'TodoBloc',

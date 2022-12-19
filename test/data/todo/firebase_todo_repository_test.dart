@@ -6,15 +6,12 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fake_cloud_firestore/fake_cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:lifegoals/core/injection.dart';
 import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
 import 'package:lifegoals/domain/todo/todo.dart';
 import 'package:uuid/uuid.dart';
 
 void main() {
   setUpAll(() async {
-    configureDependencies();
     WidgetsFlutterBinding.ensureInitialized();
   });
 
@@ -27,8 +24,6 @@ void main() {
     isCompleted: false,
     dueDate: DateTime.now(),
   );
-
-  tearDownAll(getIt.reset);
 
   late FirebaseFirestore instance;
 
