@@ -27,18 +27,30 @@ process of mine. None should take it as best practice.
 
 - VGV Cli creates with Github good development environment really fast, practices are solid.
 - VGV Core template creates out of box integrations for code format, static analysis and code coverage check.
-- Build runner works fine, except that when generation fails it might be hard to uderstand why it happened.
+
+## Code quality
+
+- There's constant tension to add code coverage, make linter happy and following own style.
+- It's easy to forgot formatting dart code before pushing code to git
 
 ## State management
 
 - Bloc seems to me easy to use and especially test, async logic and subscribing to streams feels complex.
 - Bloc lifecycle needs to be controlled by my code. When I messed it Blocs weren't there, just as expected.
+
+## Using reactive streams
+
 - Blocs can have async long running functionality like subscription to streams - but to return data from them can't happen by emitting directly, since method that started the process has already returned.
+
+## Code generation
+
+- Build runner works fine, except that when generation fails it might be hard to understand why it happened.
 - Blocs events & states are tedious to implement cleanly and benefit a lot from usage of Freezed.
 
 ## Routing
 
-- Go router works well - easy api, well documented - 100% code coverage is challenging, and testing generally.
+- Go router works well - easy api, well documented.
+- Go router makes 100% code coverage challenging, and testing generally needs some extra attention.
 
 ## Missing language features: Data classes & Unions 
 
