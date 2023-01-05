@@ -21,6 +21,18 @@ and shared data layer services, which can be reused by several user facing servi
 Note: this approach doesn't yet have needed clarity, so it's fuzzy and is just a part of learning
 process of mine. None should take it as best practice.
 
+# Decision records
+
+- [adr template](doc/arch/adr/adr-0000-template.md)
+- [adr 0001: record important decisions using markdown](doc/arch/adr/adr-0001-record-decisions-using-adr-template.md)
+- [adr 0002: use same adr template for recording all decisions](doc/arch/adr/adr-0002-use-uniform-adr-template.md)
+- [adr 0003: follow "advice process" while doing decisions](doc/arch/adr/adr-0003-follow-advice-process.md)
+- [adr 0004: use opinionated vgv core app template](doc/arch/adr/adr-0004-choose-app-template.md)
+- [adr 0005: use bloc library for state management](doc/arch/adr/adr-0005-define-state-managament-approach.md)
+- [adr 0006: use arb files and gen-l10n for localization](doc/arch/adr/adr-0006-define-localization-approach.md)
+- [adr 0007: use go router for navigation](doc/arch/adr/adr-0007-define-navigation-mechanism.md)
+- [adr 0008: use agv analyze to define code conventions](doc/arch/adr/adr-0008-define-linting-rules.md)
+
 # Reflections
 
 ## CLI tooling
@@ -1690,6 +1702,28 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 #### Testing todo bloc
 
 Mocking is bit tricky on todo bloc test, but otherwise it's very straightforward
+
+#### firestore security rules
+
+At some point unauthenticated access is not ok anymore, and at that point
+firestore security rules need to be defined.
+
+Authentication rules are documented at https://firebase.google.com/docs/rules/rules-and-auth
+
+Simplest rule is this: user needs to be authenticated.
+
+```
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if
+      		request.auth != null;
+    }
+  }
+}
+```
+
 
 ## Flavors 🚀
 

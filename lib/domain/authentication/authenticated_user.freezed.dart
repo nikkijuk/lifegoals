@@ -16,7 +16,10 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$AuthenticatedUser {
+  String get id => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
+  String get email => throw _privateConstructorUsedError;
+  String get photoUrl => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   $AuthenticatedUserCopyWith<AuthenticatedUser> get copyWith =>
@@ -29,7 +32,7 @@ abstract class $AuthenticatedUserCopyWith<$Res> {
           AuthenticatedUser value, $Res Function(AuthenticatedUser) then) =
       _$AuthenticatedUserCopyWithImpl<$Res, AuthenticatedUser>;
   @useResult
-  $Res call({String name});
+  $Res call({String id, String name, String email, String photoUrl});
 }
 
 /// @nodoc
@@ -45,12 +48,27 @@ class _$AuthenticatedUserCopyWithImpl<$Res, $Val extends AuthenticatedUser>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
+    Object? email = null,
+    Object? photoUrl = null,
   }) {
     return _then(_value.copyWith(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -64,7 +82,7 @@ abstract class _$$_AuthenticatedUserCopyWith<$Res>
       __$$_AuthenticatedUserCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({String name});
+  $Res call({String id, String name, String email, String photoUrl});
 }
 
 /// @nodoc
@@ -78,12 +96,27 @@ class __$$_AuthenticatedUserCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? id = null,
     Object? name = null,
+    Object? email = null,
+    Object? photoUrl = null,
   }) {
     return _then(_$_AuthenticatedUser(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
       name: null == name
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      email: null == email
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String,
+      photoUrl: null == photoUrl
+          ? _value.photoUrl
+          : photoUrl // ignore: cast_nullable_to_non_nullable
               as String,
     ));
   }
@@ -92,14 +125,24 @@ class __$$_AuthenticatedUserCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_AuthenticatedUser implements _AuthenticatedUser {
-  const _$_AuthenticatedUser({required this.name});
+  const _$_AuthenticatedUser(
+      {required this.id, this.name = '', this.email = '', this.photoUrl = ''});
 
   @override
+  final String id;
+  @override
+  @JsonKey()
   final String name;
+  @override
+  @JsonKey()
+  final String email;
+  @override
+  @JsonKey()
+  final String photoUrl;
 
   @override
   String toString() {
-    return 'AuthenticatedUser(name: $name)';
+    return 'AuthenticatedUser(id: $id, name: $name, email: $email, photoUrl: $photoUrl)';
   }
 
   @override
@@ -107,11 +150,15 @@ class _$_AuthenticatedUser implements _AuthenticatedUser {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_AuthenticatedUser &&
-            (identical(other.name, name) || other.name == name));
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.name, name) || other.name == name) &&
+            (identical(other.email, email) || other.email == email) &&
+            (identical(other.photoUrl, photoUrl) ||
+                other.photoUrl == photoUrl));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, name);
+  int get hashCode => Object.hash(runtimeType, id, name, email, photoUrl);
 
   @JsonKey(ignore: true)
   @override
@@ -122,11 +169,20 @@ class _$_AuthenticatedUser implements _AuthenticatedUser {
 }
 
 abstract class _AuthenticatedUser implements AuthenticatedUser {
-  const factory _AuthenticatedUser({required final String name}) =
-      _$_AuthenticatedUser;
+  const factory _AuthenticatedUser(
+      {required final String id,
+      final String name,
+      final String email,
+      final String photoUrl}) = _$_AuthenticatedUser;
 
   @override
+  String get id;
+  @override
   String get name;
+  @override
+  String get email;
+  @override
+  String get photoUrl;
   @override
   @JsonKey(ignore: true)
   _$$_AuthenticatedUserCopyWith<_$_AuthenticatedUser> get copyWith =>

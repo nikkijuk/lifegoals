@@ -4,5 +4,10 @@ part 'authenticated_user.freezed.dart';
 
 @freezed
 abstract class AuthenticatedUser with _$AuthenticatedUser {
-  const factory AuthenticatedUser({required String name}) = _AuthenticatedUser;
+  const factory AuthenticatedUser({
+    required String id,
+    @Default('') String name,
+    @Default('') String email,
+    @Default('') String photoUrl,
+  }) = _AuthenticatedUser;
 }

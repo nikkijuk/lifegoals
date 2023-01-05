@@ -18,19 +18,19 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$AuthenticationEvent {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() login,
+    required TResult Function(AuthenticatedUser user) login,
     required TResult Function() logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
+    TResult? Function(AuthenticatedUser user)? login,
     TResult? Function()? logout,
   }) =>
       throw _privateConstructorUsedError;
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
+    TResult Function(AuthenticatedUser user)? login,
     TResult Function()? logout,
     required TResult orElse(),
   }) =>
@@ -78,6 +78,10 @@ class _$AuthenticationEventCopyWithImpl<$Res, $Val extends AuthenticationEvent>
 abstract class _$$LogInCopyWith<$Res> {
   factory _$$LogInCopyWith(_$LogIn value, $Res Function(_$LogIn) then) =
       __$$LogInCopyWithImpl<$Res>;
+  @useResult
+  $Res call({AuthenticatedUser user});
+
+  $AuthenticatedUserCopyWith<$Res> get user;
 }
 
 /// @nodoc
@@ -86,54 +90,86 @@ class __$$LogInCopyWithImpl<$Res>
     implements _$$LogInCopyWith<$Res> {
   __$$LogInCopyWithImpl(_$LogIn _value, $Res Function(_$LogIn) _then)
       : super(_value, _then);
+
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? user = null,
+  }) {
+    return _then(_$LogIn(
+      null == user
+          ? _value.user
+          : user // ignore: cast_nullable_to_non_nullable
+              as AuthenticatedUser,
+    ));
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthenticatedUserCopyWith<$Res> get user {
+    return $AuthenticatedUserCopyWith<$Res>(_value.user, (value) {
+      return _then(_value.copyWith(user: value));
+    });
+  }
 }
 
 /// @nodoc
 
 class _$LogIn implements LogIn {
-  const _$LogIn();
+  const _$LogIn(this.user);
+
+  @override
+  final AuthenticatedUser user;
 
   @override
   String toString() {
-    return 'AuthenticationEvent.login()';
+    return 'AuthenticationEvent.login(user: $user)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other.runtimeType == runtimeType && other is _$LogIn);
+        (other.runtimeType == runtimeType &&
+            other is _$LogIn &&
+            (identical(other.user, user) || other.user == user));
   }
 
   @override
-  int get hashCode => runtimeType.hashCode;
+  int get hashCode => Object.hash(runtimeType, user);
+
+  @JsonKey(ignore: true)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$LogInCopyWith<_$LogIn> get copyWith =>
+      __$$LogInCopyWithImpl<_$LogIn>(this, _$identity);
 
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() login,
+    required TResult Function(AuthenticatedUser user) login,
     required TResult Function() logout,
   }) {
-    return login();
+    return login(user);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
+    TResult? Function(AuthenticatedUser user)? login,
     TResult? Function()? logout,
   }) {
-    return login?.call();
+    return login?.call(user);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
+    TResult Function(AuthenticatedUser user)? login,
     TResult Function()? logout,
     required TResult orElse(),
   }) {
     if (login != null) {
-      return login();
+      return login(user);
     }
     return orElse();
   }
@@ -171,7 +207,11 @@ class _$LogIn implements LogIn {
 }
 
 abstract class LogIn implements AuthenticationEvent {
-  const factory LogIn() = _$LogIn;
+  const factory LogIn(final AuthenticatedUser user) = _$LogIn;
+
+  AuthenticatedUser get user;
+  @JsonKey(ignore: true)
+  _$$LogInCopyWith<_$LogIn> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -210,7 +250,7 @@ class _$LogOut implements LogOut {
   @override
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
-    required TResult Function() login,
+    required TResult Function(AuthenticatedUser user) login,
     required TResult Function() logout,
   }) {
     return logout();
@@ -219,7 +259,7 @@ class _$LogOut implements LogOut {
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
-    TResult? Function()? login,
+    TResult? Function(AuthenticatedUser user)? login,
     TResult? Function()? logout,
   }) {
     return logout?.call();
@@ -228,7 +268,7 @@ class _$LogOut implements LogOut {
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
-    TResult Function()? login,
+    TResult Function(AuthenticatedUser user)? login,
     TResult Function()? logout,
     required TResult orElse(),
   }) {

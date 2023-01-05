@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
 
@@ -20,10 +21,13 @@ Widget singInScreen(BuildContext context) {
             .goNamed(Routes.forgotPasswordName, params: {'email': email ?? ''}),
       ),
       AuthStateChangeAction<SignedIn>((context, state) {
-        final user = state.user;
-        if (user != null) {
+        if (state.user != null) {
+          final user = state.user!;
           _showVerifyEmailMessage(context, user);
-          BlocProvider.of<AuthenticationBloc>(context).add(const LogIn());
+          final authenticatedUser = _createAuthenticatedUser(user);
+          BlocProvider.of<AuthenticationBloc>(context).add(
+            LogIn(authenticatedUser),
+          );
         }
         context.go(Routes.home);
       }),
@@ -32,12 +36,25 @@ Widget singInScreen(BuildContext context) {
         if (user != null) {
           user.updateDisplayName(user.email!.split('@')[0]);
           _showVerifyEmailMessage(context, user);
-          BlocProvider.of<AuthenticationBloc>(context).add(const LogIn());
+          final authenticatedUser = _createAuthenticatedUser(user);
+          BlocProvider.of<AuthenticationBloc>(context).add(
+            LogIn(authenticatedUser),
+          );
         }
         context.go(Routes.home);
       }),
     ],
   );
+}
+
+AuthenticatedUser _createAuthenticatedUser(User user) {
+  final authenticatedUser = AuthenticatedUser(
+    id: user.uid,
+    name: user.displayName ?? '',
+    email: user.email ?? '',
+    photoUrl: user.photoURL ?? '',
+  );
+  return authenticatedUser;
 }
 
 void _showVerifyEmailMessage(BuildContext context, User user) {
