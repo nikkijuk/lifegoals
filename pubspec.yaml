@@ -10,9 +10,9 @@ environment:
 dependencies:
   bloc: ^8.1.0
   cloud_firestore: ^4.2.0
-  firebase_auth: ^4.2.5
-  firebase_core: ^2.4.1
-  firebase_ui_auth: ^1.1.7
+  firebase_auth: ^4.2.1
+  firebase_core: ^2.4.0
+  firebase_ui_auth: ^1.1.3
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -34,7 +34,7 @@ dev_dependencies:
   # new versions of build runner + freezed aren't compatible with other libraries
   # see dependency overrides
   build_runner: ^2.3.3
-  fake_cloud_firestore: ^2.2.0
+  fake_cloud_firestore: ^2.1.0
   flutter_test:
     sdk: flutter
   # new versions of freezed + build runner aren't compatible with other libraries
