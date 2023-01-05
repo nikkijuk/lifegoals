@@ -10,8 +10,8 @@ import 'package:lifegoals/features/scanner/view/scanner_page.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../helpers/helpers.dart';
-import '../../helpers/routing.dart';
+import '../../../helpers/helpers.dart';
+import '../../../helpers/routing.dart';
 
 class MockScannerBloc extends MockBloc<ScannerEvent, ScannerState>
     implements ScannerBloc {}

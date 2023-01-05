@@ -10,7 +10,7 @@ import 'package:lifegoals/features/todo/bloc/todo_state.dart';
 import 'package:lifegoals/features/todo/view/todos_page.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../helpers/helpers.dart';
+import '../../../helpers/helpers.dart';
 
 final todo = Todo(
   id: '1',

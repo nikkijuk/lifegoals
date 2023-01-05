@@ -4,8 +4,8 @@ import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../helpers/helpers.dart';
-import '../../helpers/routing.dart';
+import '../../../helpers/helpers.dart';
+import '../../../helpers/routing.dart';
 
 void main() {
   group('AboutPage', () {

@@ -11,8 +11,8 @@ import 'package:lifegoals/features/counter/cubit/counter_cubit.dart';
 import 'package:lifegoals/features/counter/view/counter_page.dart';
 import 'package:mocktail/mocktail.dart';
 
-import '../../helpers/helpers.dart';
-import '../../helpers/routing.dart';
+import '../../../helpers/helpers.dart';
+import '../../../helpers/routing.dart';
 
 const authenticatedUser = AuthenticatedUser(
   id: 'id1',
