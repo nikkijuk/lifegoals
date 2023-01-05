@@ -9,12 +9,12 @@ environment:
 
 dependencies:
   bloc: ^8.1.0
-  cloud_firestore: ^4.2.0
+  cloud_firestore: ^4.3.1
   equatable: ^2.0.5
-  fake_cloud_firestore: ^2.1.0
-  firebase_auth: ^4.2.1
-  firebase_core: ^2.4.0
-  firebase_ui_auth: ^1.1.3
+  fake_cloud_firestore: ^2.2.0
+  firebase_auth: ^4.2.5
+  firebase_core: ^2.4.1
+  firebase_ui_auth: ^1.1.7
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.1
@@ -22,7 +22,7 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   freezed_annotation: ^2.2.0
-  go_router: ^5.2.4
+  go_router: ^6.0.1
 
   # Cannot be updated because of dependency conflict with flutter_localizations
   intl: ^0.17.0
@@ -36,7 +36,7 @@ dev_dependencies:
   bloc_test: ^9.1.0
   # new versions of build runner + freezed aren't compatible with other libraries
   # see dependency overrides
-  build_runner: ^2.3.2
+  build_runner: ^2.3.3
   flutter_test:
     sdk: flutter
   # new versions of freezed + build runner aren't compatible with other libraries
