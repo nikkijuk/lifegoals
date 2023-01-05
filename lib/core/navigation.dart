@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:lifegoals/features/authentication/view/authentication_views.dart';
+import 'package:lifegoals/features/authentication/view/user_signin_page.dart';
 import 'package:lifegoals/features/counter/view/counter_page.dart';
 import 'package:lifegoals/features/scanner/view/scanner_page.dart';
 import 'package:lifegoals/features/todo/view/todos_page.dart';
@@ -22,27 +23,27 @@ GoRouter router() => GoRouter(
       routes: [
         GoRoute(
           path: Routes.home,
-          builder: (ctx, state) => const CounterPage(),
+          builder: (_, __) => const CounterPage(),
         ),
         GoRoute(
           path: Routes.about,
-          builder: (ctx, state) => const AboutPage(), // coverage:ignore-line
+          builder: (_, __) => const AboutPage(), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.scanner,
-          builder: (ctx, state) => const ScannerPage(), // coverage:ignore-line
+          builder: (_, __) => const ScannerPage(), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.login,
-          builder: (ctx, state) => singInScreen(ctx), // coverage:ignore-line
+          builder: (_, __) => const UserSignInPage(), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.profile,
-          builder: (ctx, state) => profileScreen(ctx), // coverage:ignore-line
+          builder: (ctx, _) => profileScreen(ctx), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.todos,
-          builder: (ctx, state) => const TodosPage(), // coverage:ignore-line
+          builder: (_, __) => const TodosPage(), // coverage:ignore-line
         ),
         GoRoute(
           name: Routes.forgotPasswordName,
