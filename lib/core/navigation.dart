@@ -1,6 +1,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
-import 'package:lifegoals/features/authentication/view/authentication_views.dart';
+import 'package:lifegoals/features/authentication/view/forgot_password_page.dart';
+import 'package:lifegoals/features/authentication/view/user_profile_page.dart';
 import 'package:lifegoals/features/authentication/view/user_signin_page.dart';
 import 'package:lifegoals/features/counter/view/counter_page.dart';
 import 'package:lifegoals/features/scanner/view/scanner_page.dart';
@@ -39,7 +40,7 @@ GoRouter router() => GoRouter(
         ),
         GoRoute(
           path: Routes.profile,
-          builder: (ctx, _) => profileScreen(ctx), // coverage:ignore-line
+          builder: (_, __) => const UserProfilePage(), // coverage:ignore-line
         ),
         GoRoute(
           path: Routes.todos,
