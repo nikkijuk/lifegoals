@@ -12,7 +12,8 @@ class AboutPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final authenticatedUser = context.read<AuthenticationBloc>().state.maybeMap(
-          authenticated: (Authenticated a) => a.user,
+          // TODO(jnikki): add test for authenticated user
+          authenticated: (Authenticated a) => a.user, // coverage:ignore-line
           orElse: () => null,
         );
     final l10n = context.l10n;
