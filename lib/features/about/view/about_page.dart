@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
+import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
 class AboutPage extends StatelessWidget {
@@ -8,13 +11,20 @@ class AboutPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authenticatedUser = context.read<AuthenticationBloc>().state.maybeMap(
+          authenticated: (Authenticated a) => a.user,
+          orElse: () => null,
+        );
     final l10n = context.l10n;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.aboutAppBarTitle)),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <ElevatedButton>[
+          children: [
+            Text(authenticatedUser?.id ?? ''),
+            Text(authenticatedUser?.name ?? ''),
+            Text(authenticatedUser?.email ?? ''),
             ElevatedButton(
               onPressed: () => context.go(Routes.home),
               child: const Icon(Icons.arrow_back),

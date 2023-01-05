@@ -7,6 +7,8 @@ import 'package:lifegoals/features/authentication/bloc/authentication_state.dart
 import 'package:lifegoals/features/counter/cubit/counter_cubit.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 
+import 'package:lifegoals/domain/authentication/authenticated_user.dart';
+
 class CounterPage extends StatelessWidget {
   const CounterPage({super.key});
 
@@ -70,7 +72,7 @@ class CounterView extends StatelessWidget {
           const SizedBox(height: 8),
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) => state.maybeWhen(
-              authenticated: () => FloatingActionButton(
+              authenticated: (AuthenticatedUser user) => FloatingActionButton(
                 onPressed: () => context.go(Routes.profile),
                 heroTag: 'profile',
                 child: const Icon(Icons.verified_user),

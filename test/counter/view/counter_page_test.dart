@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
@@ -12,6 +13,13 @@ import 'package:mocktail/mocktail.dart';
 
 import '../../helpers/helpers.dart';
 import '../../helpers/routing.dart';
+
+const authenticatedUser = AuthenticatedUser(
+  id: 'id1',
+  name: 'user1',
+  email: 'email1',
+  photoUrl: 'photo1',
+);
 
 class MockCounterCubit extends MockCubit<int> implements CounterCubit {}
 
@@ -101,8 +109,8 @@ void main() {
         // Stub the state stream
         whenListen(
           mockAuthenticationBloc,
-          Stream.fromIterable([const Authenticated()]),
-          initialState: const Authenticated(),
+          Stream.fromIterable([const Authenticated(authenticatedUser)]),
+          initialState: const Authenticated(authenticatedUser),
         );
 
         await tester.pumpMockRouterAppWithProvider(

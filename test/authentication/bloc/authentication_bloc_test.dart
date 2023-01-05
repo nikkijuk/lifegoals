@@ -27,7 +27,7 @@ void main() {
         'emits [Authenticated] when [LoIn] happens}',
         build: AuthenticationBloc.new,
         act: (bloc) => bloc.add(const LogIn(authenticatedUser)),
-        expect: () => [const Authenticated()],
+        expect: () => [const Authenticated(authenticatedUser)],
       );
 
       blocTest<AuthenticationBloc, AuthenticationState>(
@@ -36,8 +36,11 @@ void main() {
         act: (bloc) => bloc
           ..add(const LogIn(authenticatedUser))
           ..add(const LogOut()),
-        expect: () =>
-            [const Authenticated(), const Unauthenticated(), const Unknown()],
+        expect: () => [
+          const Authenticated(authenticatedUser),
+          const Unauthenticated(),
+          const Unknown()
+        ],
       );
     },
     //skip: true,
