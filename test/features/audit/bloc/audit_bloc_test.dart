@@ -42,14 +42,13 @@ void main() {
         );
       });
 
-
       blocTest<AuditBloc, AuditState>(
         'emits [] when [Add] happens}',
         build: () => AuditBloc(mockRepository),
-        act: (bloc) => bloc.add(const Add('<data>','<desc>', authenticatedTestUser)),
+        act: (bloc) =>
+            bloc.add(const Add('<data>', '<desc>', authenticatedTestUser)),
         expect: () => [isA<Added>()],
       );
-
     },
     //skip: true,
   );
