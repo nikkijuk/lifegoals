@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
 import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/data/audit/firebase_audit_repository.dart';
 import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
+import 'package:lifegoals/domain/audit/audit_repository.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
+import 'package:lifegoals/features/audit/bloc/audit_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/l10n/l10n.dart';
 import 'package:logging/logging.dart';
@@ -34,6 +37,15 @@ class App extends StatelessWidget {
     final blocProviders = MultiBlocProvider(
       providers: [
         BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+        /*
+        BlocProvider<AuditBloc>(
+            create: (_) => AuditBloc(context.read<AuditRepository>())),
+
+         */
+        BlocProvider<AuditBloc>(
+          create: (_) =>
+              AuditBloc(FirebaseAuditRepository(FirebaseFirestore.instance)),
+        ),
       ],
       child: app,
     );
@@ -42,6 +54,9 @@ class App extends StatelessWidget {
       providers: [
         RepositoryProvider<TodoRepository>(
           create: (_) => FirebaseTodoRepository(FirebaseFirestore.instance),
+        ),
+        RepositoryProvider<AuditRepository>(
+          create: (_) => FirebaseAuditRepository(FirebaseFirestore.instance),
         ),
       ],
       child: blocProviders,

@@ -7,6 +7,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/core/navigation.dart';
 import 'package:lifegoals/domain/authentication/authenticated_user.dart';
+import 'package:lifegoals/features/audit/bloc/audit_bloc.dart';
+import 'package:lifegoals/features/audit/bloc/audit_event.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
 
@@ -28,6 +30,8 @@ Widget singInScreen(BuildContext context) {
           BlocProvider.of<AuthenticationBloc>(context).add(
             LogIn(authenticatedUser),
           );
+          BlocProvider.of<AuditBloc>(context)
+              .add(Add('logIn', user.displayName!, authenticatedUser));
         }
         context.go(Routes.home);
       }),
