@@ -5,7 +5,7 @@ import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart'
 import 'package:lifegoals/features/authentication/bloc/authentication_event.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
 
-const authenticatedUser = AuthenticatedUser(
+const authenticatedTestUser = AuthenticatedUser(
   id: 'id1',
   name: 'user1',
   email: 'email1',
@@ -26,18 +26,18 @@ void main() {
       blocTest<AuthenticationBloc, AuthenticationState>(
         'emits [Authenticated] when [LoIn] happens}',
         build: AuthenticationBloc.new,
-        act: (bloc) => bloc.add(const LogIn(authenticatedUser)),
-        expect: () => [const Authenticated(authenticatedUser)],
+        act: (bloc) => bloc.add(const LogIn(authenticatedTestUser)),
+        expect: () => [const Authenticated(authenticatedTestUser)],
       );
 
       blocTest<AuthenticationBloc, AuthenticationState>(
         'emits [Unauthenticated, Unknown] when [LogOut] happens}',
         build: AuthenticationBloc.new,
         act: (bloc) => bloc
-          ..add(const LogIn(authenticatedUser))
+          ..add(const LogIn(authenticatedTestUser))
           ..add(const LogOut()),
         expect: () => [
-          const Authenticated(authenticatedUser),
+          const Authenticated(authenticatedTestUser),
           const Unauthenticated(),
           const Unknown()
         ],
