@@ -30,10 +30,7 @@ class UserSignInView extends StatelessWidget {
     return SignInScreen(
       actions: [
         ForgotPasswordAction(
-          (context, email) => context.goNamed(
-            Routes.forgotPasswordName,
-            params: {'email': email ?? ''},
-          ),
+          (context, email) => context.go('${Routes.forgotPasswordName}$email'),
         ),
         AuthStateChangeAction<SignedIn>((context, state) {
           if (state.user != null) {
