@@ -34,7 +34,7 @@ dev_dependencies:
   # new versions of build runner + freezed aren't compatible with other libraries
   # see dependency overrides
   build_runner: ^2.3.3
-  fake_cloud_firestore: ^2.1.0
+  fake_cloud_firestore: ^2.3.0+3
   flutter_test:
     sdk: flutter
   # new versions of freezed + build runner aren't compatible with other libraries

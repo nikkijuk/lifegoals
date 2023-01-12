@@ -23,7 +23,9 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
     Subscribe event,
     Emitter<TodoState> emit,
   ) async {
-    // subscribe can be currently done multiple times, so ..
+    // subscribe can be currently done multiple times,
+    // so previous stream subscription needs to be
+    // canceled before creating new to handle resources efficiently
     if (_subscription != null) {
       await _subscription?.cancel(); // coverage:ignore-line
     }
@@ -56,6 +58,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
 
   @override
   Future<void> close() {
+    // close resource subscription when bloc is not needed anymore
     _subscription?.cancel();
     return super.close();
   }

@@ -22,8 +22,8 @@ class FirebaseTodoRepository implements TodoRepository {
   Stream<Iterable<Todo>> todos() {
     final snapshots = _collection.snapshots();
 
-    // TODO(jnikki): do we need to dispose this stream
     // Returns subscription to stream
+    // Note: Subscription needs to be closed at component which acquires it
     return snapshots.map((event) {
       return event.docs.map((e) => e.data());
     });
