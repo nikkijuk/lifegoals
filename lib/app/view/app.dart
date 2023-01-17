@@ -34,7 +34,7 @@ class App extends StatelessWidget {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
-          // TODO(jnikki): audit blocs repository injection shouldn't be hardcoded
+          // TODO(jnikki): audit blocs repository injection is hardcoded
           /*
         BlocProvider<AuditBloc>(
             create: (_) => AuditBloc(context.read<AuditRepository>())),
