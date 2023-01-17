@@ -33,7 +33,7 @@ void main() {
     () {
       testWidgets('renders CounterPage via Router as home screen',
           (tester) async {
-        await tester.pumpRealRouterApp(router());
+        await tester.pumpRealRouterApp(testRouter());
         expect(find.byType(CounterView), findsOneWidget);
         expect(find.byType(BackButton), findsNothing);
       });

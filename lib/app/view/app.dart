@@ -22,34 +22,6 @@ class App extends StatelessWidget {
     initFirebase();
     initLogging(level: Level.ALL);
 
-    final app = MaterialApp.router(
-      theme: ThemeData(
-        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
-        colorScheme: ColorScheme.fromSwatch(
-          accentColor: const Color(0xFF13B9FF),
-        ),
-      ),
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      routerConfig: router(),
-    );
-
-    final blocProviders = MultiBlocProvider(
-      providers: [
-        BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
-        /*
-        BlocProvider<AuditBloc>(
-            create: (_) => AuditBloc(context.read<AuditRepository>())),
-
-         */
-        BlocProvider<AuditBloc>(
-          create: (_) =>
-              AuditBloc(FirebaseAuditRepository(FirebaseFirestore.instance)),
-        ),
-      ],
-      child: app,
-    );
-
     return MultiRepositoryProvider(
       providers: [
         RepositoryProvider<TodoRepository>(
@@ -59,7 +31,42 @@ class App extends StatelessWidget {
           create: (_) => FirebaseAuditRepository(FirebaseFirestore.instance),
         ),
       ],
-      child: blocProviders,
+      child: MultiBlocProvider(
+        providers: [
+          BlocProvider<AuthenticationBloc>(create: (_) => AuthenticationBloc()),
+          // TODO(jnikki): audit blocs repository injection shouldn't be hardcoded
+          /*
+        BlocProvider<AuditBloc>(
+            create: (_) => AuditBloc(context.read<AuditRepository>())),
+
+         */
+          BlocProvider<AuditBloc>(
+            create: (_) =>
+                AuditBloc(FirebaseAuditRepository(FirebaseFirestore.instance)),
+          ),
+        ],
+        child: const RealApp(),
+      ),
+    );
+  }
+}
+
+// TODO(jnikki): To get context propagated right I needed class
+class RealApp extends StatelessWidget {
+  const RealApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp.router(
+      theme: ThemeData(
+        appBarTheme: const AppBarTheme(color: Color(0xFF13B9FF)),
+        colorScheme: ColorScheme.fromSwatch(
+          accentColor: const Color(0xFF13B9FF),
+        ),
+      ),
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+      routerConfig: router(context),
     );
   }
 }

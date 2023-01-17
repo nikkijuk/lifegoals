@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lifegoals/core/navigation.dart';
 
 import 'package:mocktail/mocktail.dart';
 
@@ -26,3 +27,5 @@ class MockGoRouterProvider extends StatelessWidget {
         child: child,
       );
 }
+
+GoRouter testRouter() => GoRouter(routes: routes());
