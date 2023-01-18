@@ -1747,6 +1747,18 @@ jobs:
       flutter_version: 3.3.10
 ```
 
+Documentation is at https://github.com/VeryGoodOpenSource/very_good_workflows
+
+One could consider setting minimum code coverage
+
+- https://github.com/VeryGoodOpenSource/very_good_workflows#min_coverage-1
+
+Or be forced to disable test optimization (joining test files might break them)
+
+- https://github.com/VeryGoodOpenSource/very_good_workflows#test_optimization
+
+So it's useful to see given configuration possibilities and be prepared to change them if needed.
+
 ## Flavors 🚀
 
 This project contains 3 flavors:
