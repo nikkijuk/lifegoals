@@ -1724,6 +1724,28 @@ service cloud.firestore {
 }
 ```
 
+#### Changing version used by Github
+
+For some reason VGV templates specify exact Flutter version to use. This value needs to be kept actual,
+or at some point dependency management is reporting strange errors.
+
+Please see *.github/workflows/main.yaml* and especially *flutter_version*
+
+```
+name: lifegoals
+
+on: [pull_request, push]
+
+jobs:
+  semantic-pull-request:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/semantic_pull_request.yml@v1
+
+  build:
+    uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
+    with:
+      flutter_channel: stable
+      flutter_version: 3.3.10
+```
 
 ## Flavors 🚀
 
