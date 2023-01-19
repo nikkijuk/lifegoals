@@ -210,7 +210,7 @@ packages:
       name: coverage
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.6.1"
+    version: "1.6.2"
   crypto:
     dependency: transitive
     description:
@@ -343,21 +343,21 @@ packages:
       name: firebase_ui_auth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.7"
+    version: "1.1.8"
   firebase_ui_localizations:
     dependency: transitive
     description:
       name: firebase_ui_localizations
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.0.2"
+    version: "1.1.0"
   firebase_ui_oauth:
     dependency: transitive
     description:
       name: firebase_ui_oauth
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "1.1.7"
+    version: "1.1.8"
   fixnum:
     dependency: transitive
     description:
@@ -893,7 +893,7 @@ packages:
       name: vm_service
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "9.4.0"
+    version: "10.0.0"
   watcher:
     dependency: transitive
     description:
@@ -931,4 +931,4 @@ packages:
     version: "3.1.1"
 sdks:
   dart: ">=2.18.6 <3.0.0"
-  flutter: ">=3.3.7"
+  flutter: ">=3.3.10"
