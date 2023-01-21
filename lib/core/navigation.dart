@@ -6,7 +6,6 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
@@ -34,13 +33,17 @@ GoRouter router(BuildContext ctx) => GoRouter(
       redirect: (ctx, state) {
         final state = BlocProvider.of<AuthenticationBloc>(ctx).state;
 
-        // TODO(jnikki): this rule might be completely nonsense
-        final target = state.maybeWhen(
+        // ignore: omit_local_variable_types
+        final String? target = state.maybeWhen(
+          // TODO(jnikki): authenticated => home rule is nonsense
           // always when user gets authenticated (state change happens) go home
-          authenticated: (AuthenticatedUser user) => Routes.home,
+          //authenticated: (AuthenticatedUser user) => Routes.home,
           // no need to redirect
           orElse: () => null,
         );
+
+        // TODO(jnikki): add proper logging
+        debugPrint('redirect to $target');
 
         return target;
       },
