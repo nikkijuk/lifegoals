@@ -6,6 +6,7 @@ import 'dart:async';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
+import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
@@ -16,6 +17,7 @@ import 'package:lifegoals/features/counter/view/counter_page.dart';
 import 'package:lifegoals/features/scanner/view/scanner_page.dart';
 import 'package:lifegoals/features/todo/view/todos_page.dart';
 
+// Routes as constants, so that they can used for Apps logic.
 class Routes {
   static const home = '/';
   static const about = '/about';
@@ -28,33 +30,8 @@ class Routes {
   static const forgotPassword = '/forgot/:email';
 }
 
-// redirect and finding blocs needs build context
-GoRouter router(BuildContext ctx) => GoRouter(
-      redirect: (ctx, state) {
-        final state = BlocProvider.of<AuthenticationBloc>(ctx).state;
-
-        // ignore: omit_local_variable_types
-        final String? target = state.maybeWhen(
-          // TODO(jnikki): authenticated => home rule is nonsense
-          // always when user gets authenticated (state change happens) go home
-          //authenticated: (AuthenticatedUser user) => Routes.home,
-          // no need to redirect
-          orElse: () => null,
-        );
-
-        // TODO(jnikki): add proper logging
-        debugPrint('redirect to $target');
-
-        return target;
-      },
-      refreshListenable:
-          GoRouterRefreshBloc<AuthenticationBloc, AuthenticationState>(
-        BlocProvider.of<AuthenticationBloc>(ctx),
-      ),
-      routes: routes(),
-    );
-
-// routes as simple list, so that they can be used in tests
+// routes as simple list, so that they can be used
+// for building router configuration and for tests.
 List<GoRoute> routes() => [
       GoRoute(
         path: Routes.home,
@@ -87,6 +64,38 @@ List<GoRoute> routes() => [
         ),
       )
     ];
+
+// redirect and finding blocs needs build context
+GoRouter router(BuildContext ctx) => GoRouter(
+      redirect: (ctx, state) {
+        final state = BlocProvider.of<AuthenticationBloc>(ctx).state;
+
+        // ignore: omit_local_variable_types
+        final bool? authenticated = state.maybeWhen(
+          authenticated: (AuthenticatedUser _) => true,
+          orElse: () => false,
+        );
+
+        // ignore: omit_local_variable_types
+        final String? target = state.maybeWhen(
+          // TODO(jnikki): authenticated => home rule is nonsense
+          // always when user gets authenticated (state change happens) go home
+          //authenticated: (AuthenticatedUser user) => Routes.home,
+          // no need to redirect
+          orElse: () => null,
+        );
+
+        // TODO(jnikki): add proper logging
+        debugPrint('authenticated: $authenticated, redirect target: $target');
+
+        return target;
+      },
+      refreshListenable:
+          GoRouterRefreshBloc<AuthenticationBloc, AuthenticationState>(
+        BlocProvider.of<AuthenticationBloc>(ctx),
+      ),
+      routes: routes(),
+    );
 
 // GoRouterRefreshStream is removed from Go Router v5
 // but one can easily make fork of it
