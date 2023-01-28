@@ -18,7 +18,7 @@ packages:
     source: hosted
     version: "1.0.12"
   analyzer:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: analyzer
       sha256: cd8ee83568a77f3ae6b913a36093a1c9b1264e7cb7f834d9ddd2311dade9c1f4
@@ -218,13 +218,13 @@ packages:
     source: hosted
     version: "4.4.0"
   collection:
-    dependency: "direct overridden"
+    dependency: transitive
     description:
       name: collection
-      sha256: "4a07be6cb69c84d677a6c3096fcf960cc3285a8330b4603e0d463d15d9bd934c"
+      sha256: cfc915e6923fe5ce6e153b0723c753045de46de1b4d63771530504004a45fae0
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.1"
+    version: "1.17.0"
   convert:
     dependency: transitive
     description:
@@ -265,14 +265,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.0.11"
-  device_frame:
-    dependency: transitive
-    description:
-      name: device_frame
-      sha256: afe76182aec178d171953d9b4a50a43c57c7cf3c77d8b09a48bf30c8fa04dd9d
-      url: "https://pub.dev"
-    source: hosted
-    version: "1.1.0"
   diff_match_patch:
     dependency: transitive
     description:
@@ -1018,46 +1010,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
-  widgetbook:
-    dependency: "direct main"
-    description:
-      name: widgetbook
-      sha256: c3db673a18fc27d4dad6af356b34c29b0a520cf76b6222945a4569ff13074b89
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.7"
-  widgetbook_annotation:
-    dependency: "direct main"
-    description:
-      name: widgetbook_annotation
-      sha256: fbd8a2d04e6302c1d990935de4bd5b3ff015f9d8ce8a8cdfff6317b43d9cc196
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.3"
-  widgetbook_core:
-    dependency: transitive
-    description:
-      name: widgetbook_core
-      sha256: "95cbff3d86c3a97bfc35f2dd35e3771f8a75e25d3e8b29ae9364adb7a7009966"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.4"
-  widgetbook_generator:
-    dependency: "direct dev"
-    description:
-      name: widgetbook_generator
-      sha256: "55bd6702526b022d42a586ce2b249e6ad3cb5665e9a4b78405c3bfbc9fd39ed6"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.7"
-  widgetbook_models:
-    dependency: transitive
-    description:
-      name: widgetbook_models
-      sha256: "53c76033d793d5233e07d794f8f9b1fa1fb9f3b460c504dcdcd191af5f35cb71"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0-beta.1"
   xml:
     dependency: transitive
     description:
