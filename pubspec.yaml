@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
-  flutter: 3.3.10
+  flutter: 3.7.0
 
 dependencies:
   bloc: ^8.1.0
@@ -23,7 +23,7 @@ dependencies:
   go_router: ^6.0.1
 
   # Cannot be updated because of dependency conflict with flutter_localizations
-  intl: ^0.17.0
+  intl: any
   json_annotation: ^4.8.0
   logging: ^1.1.0
   mobile_scanner: ^2.1.0

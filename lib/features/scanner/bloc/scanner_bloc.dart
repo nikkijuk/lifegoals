@@ -20,9 +20,4 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   ) {
     emit(Found(event.code));
   }
-
-  @override
-  Future<void> close() {
-    return super.close();
-  }
 }

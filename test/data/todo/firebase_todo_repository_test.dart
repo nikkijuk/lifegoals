@@ -93,7 +93,7 @@ void main() {
         expect(pre.contains('armageddon'), true);
 
         // dump doesn't seem to be in sync
-        // todo which can't be retrieved is still seen on dump
+        // object which can't be retrieved is still seen on dump
         //final post = (instance as FakeFirebaseFirestore).dump();
         //print('post $post');
         //expect (post.contains("armageddon"), false);

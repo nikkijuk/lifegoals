@@ -23,7 +23,4 @@ class Todo with _$Todo {
   // This code is not used directly, for which reason code coverage test fails
   // set ignore to whole file as formatting breaks this line to two and ..
   factory Todo.fromJson(Map<String, dynamic> json) => _$TodoFromJson(json);
-
-  // Todo complete() => copyWith(isCompleted: true);
-  // Todo incomplete() => copyWith(isCompleted: false);
 }
