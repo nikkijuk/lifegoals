@@ -1744,7 +1744,7 @@ jobs:
     uses: VeryGoodOpenSource/very_good_workflows/.github/workflows/flutter_package.yml@v1
     with:
       flutter_channel: stable
-      flutter_version: 3.3.10
+      flutter_version: 3.7.0
 ```
 
 Documentation is at https://github.com/VeryGoodOpenSource/very_good_workflows
@@ -1758,6 +1758,34 @@ Or be forced to disable test optimization (joining test files might break them)
 - https://github.com/VeryGoodOpenSource/very_good_workflows#test_optimization
 
 So it's useful to see given configuration possibilities and be prepared to change them if needed.
+
+## Ignoring linting on generated files
+
+you can analyze code quality easily
+
+```sh
+$ flutter analyze lib test 
+```
+
+but for correcting linting problems on generated files -- not a good idea..
+
+it's easy to exclude given files from analyze, and this is what I did
+
+```sh
+include: package:very_good_analysis/analysis_options.3.1.0.yaml
+
+analyzer:
+  exclude:
+    - "lib/**/*.g.dart"
+    - "lib/**/*.freezed.dart"
+    - "lib/**/*.mocks.dart"
+
+linter:
+  rules:
+    public_member_api_docs: false
+```
+
+See further options at https://dart.dev/guides/language/analysis-options
 
 ## Flavors 🚀
 
@@ -1802,7 +1830,7 @@ $ genhtml coverage/lcov.info -o coverage/
 $ open coverage/index.html
 ```
 
----
+--- 
 
 ## Working with Translations 🌐
 
