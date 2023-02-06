@@ -67,8 +67,8 @@ List<GoRoute> routes() => [
 
 // redirect and finding blocs needs build context
 GoRouter router(BuildContext ctx) => GoRouter(
-      redirect: (ctx, state) {
-        final state = BlocProvider.of<AuthenticationBloc>(ctx).state;
+      redirect: (context, state) {
+        final state = BlocProvider.of<AuthenticationBloc>(context).state;
 
         // ignore: omit_local_variable_types
         final bool? authenticated = state.maybeWhen(
@@ -137,7 +137,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
   }
 }
 
-// GoRouterRefreshBloc is funny gateway from stram to listenable
+// GoRouterRefreshBloc is funny gateway from stream to listenable
 // but now we have blocs and states typed properly
 
 class GoRouterRefreshBloc<BLOC extends BlocBase<STATE>, STATE>
