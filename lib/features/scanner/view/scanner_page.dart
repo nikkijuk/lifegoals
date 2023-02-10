@@ -73,8 +73,9 @@ class ScannerView extends StatelessWidget {
       body: MobileScanner(
         //allowDuplicates: false,
         controller: cameraController,
-        onDetect: (barcode, args) {
-          final code = barcode.rawValue;
+        onDetect: (barcode) {
+          // TODO(jnikki): now there's handling only for single code
+          final code = barcode.barcodes.first.rawValue;
           handleReadBarcode(context, code);
         },
       ),
