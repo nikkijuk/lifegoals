@@ -200,7 +200,7 @@ https://cli.vgv.dev/docs/templates/core
 
 ```sh
 # create app with very good cli
-$ very_good create lifegoals --desc “Flutter lifegoals app" --org “fi.nikkijuk.lifegoals”
+$ very_good create flutter_app lifegoals --description "Flutter lifegoals app" --org-name "fi.nikkijuk.lifegoals"
 ```
 
 #### Configure firebase
