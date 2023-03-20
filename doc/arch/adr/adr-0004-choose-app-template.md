@@ -1,4 +1,4 @@
-# Adr-0004: Use Very Good Ventures Vgv Core as App Template for Saha project
+# Adr-0004: Use Very Good Ventures Vgv Core as App Template
 
 ## Status
 
