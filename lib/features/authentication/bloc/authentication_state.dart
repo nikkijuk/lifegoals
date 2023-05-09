@@ -4,7 +4,7 @@ import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 part 'authentication_state.freezed.dart';
 
 @freezed
-abstract class AuthenticationState with _$AuthenticationState {
+class AuthenticationState with _$AuthenticationState {
   const factory AuthenticationState.unknown() = Unknown;
   const factory AuthenticationState.authenticated(AuthenticatedUser user) =
       Authenticated;

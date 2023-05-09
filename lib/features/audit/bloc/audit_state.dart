@@ -4,7 +4,7 @@ import 'package:lifegoals/domain/audit/audit_record.dart';
 part 'audit_state.freezed.dart';
 
 @freezed
-abstract class AuditState with _$AuditState {
+class AuditState with _$AuditState {
   const factory AuditState.empty() = Empty;
   const factory AuditState.added(AuditRecord record) = Added;
 }
