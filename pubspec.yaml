@@ -5,7 +5,7 @@ publish_to: none
 
 environment:
   sdk: ">=2.18.0 <3.0.0"
-  flutter: 3.7.12
+  flutter: 3.10.0
 
 dependencies:
   bloc: ^8.1.1
@@ -30,7 +30,7 @@ dependencies:
 
 dev_dependencies:
   bloc_test: ^9.1.1
-  build_runner: ^2.3.3
+  build_runner: ^2.4.2
   fake_cloud_firestore: ^2.4.1+1
   flutter_test:
     sdk: flutter
