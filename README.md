@@ -301,7 +301,7 @@ NOTE: It's ok'ish to share api key for firebase if your firebase security defini
 
 ```sh
 # format all files according to dart rules
-$ flutter format .  
+$ dart format .  
 ```
 
 Note: there's some rule ignores present, but they might not be all applied 
