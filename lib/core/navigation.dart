@@ -32,7 +32,7 @@ class Routes {
 
 // routes as simple list, so that they can be used
 // for building router configuration and for tests.
-List<GoRoute> routes() => [
+List<RouteBase> routes() => [
       GoRoute(
         path: Routes.home,
         builder: (_, __) => const CounterPage(),

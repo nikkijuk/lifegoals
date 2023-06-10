@@ -61,6 +61,8 @@ extension PumpRealRouterApp on WidgetTester {
       supportedLocales: AppLocalizations.supportedLocales,
       routeInformationParser: router.routeInformationParser,
       routerDelegate: router.routerDelegate,
+      // Required by Go Router 8.X
+      routeInformationProvider: router.routeInformationProvider,
     );
 
     final fullApp = MultiBlocProvider(
