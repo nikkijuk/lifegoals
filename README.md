@@ -31,7 +31,7 @@ process of mine. None should take it as best practice.
 - [adr 0005: use bloc library for state management](doc/arch/adr/adr-0005-define-state-managament-approach.md)
 - [adr 0006: use arb files and gen-l10n for localization](doc/arch/adr/adr-0006-define-localization-approach.md)
 - [adr 0007: use go router for navigation](doc/arch/adr/adr-0007-define-navigation-mechanism.md)
-- [adr 0008: use agv analyze to define code conventions](doc/arch/adr/adr-0008-define-linting-rules.md)
+- [adr 0008: use vgv analyze to define code conventions](doc/arch/adr/adr-0008-define-linting-rules.md)
 
 # Reflections
 
