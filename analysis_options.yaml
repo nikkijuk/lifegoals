@@ -5,6 +5,7 @@ analyzer:
     - "lib/**/*.g.dart"
     - "lib/**/*.freezed.dart"
     - "lib/**/*.mocks.dart"
+    - "lib/l10n/arb/*.dart"
     - "lib/firebase_options.dart"
 
 linter:
