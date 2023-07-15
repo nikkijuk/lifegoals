@@ -4,7 +4,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/core/appconfig.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/l10n/arb/app_localizations.dart';
+import 'package:lifegoals/l10n/app_localizations.dart';
 
 import 'routing.dart';
 
