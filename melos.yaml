@@ -30,7 +30,7 @@ scripts:
     description: Generate intl files for all packages.
     packageFilters:
       flutter: true
-      dirExists: lib/src/l10n
+      dirExists: lib/l10n
 
   # formats all dart code
   format:

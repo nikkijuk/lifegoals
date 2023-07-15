@@ -11,7 +11,7 @@ import 'package:lifegoals/domain/audit/audit_repository.dart';
 import 'package:lifegoals/domain/todo/todo_repository.dart';
 import 'package:lifegoals/features/audit/bloc/audit_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
-import 'package:lifegoals/l10n/l10n.dart';
+import 'package:lifegoals/l10n/arb/app_localizations.dart';
 import 'package:logging/logging.dart';
 
 class App extends StatelessWidget {
