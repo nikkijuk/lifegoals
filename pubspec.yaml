@@ -24,7 +24,7 @@ dependencies:
   intl: any # uses transitive dependency from flutter_localizations
   json_annotation: ^4.8.1
   logging: ^1.2.0
-  mobile_scanner: ^3.3.0
+  mobile_scanner: ^3.4.1
   uuid: ^3.0.7
 
 dev_dependencies:
