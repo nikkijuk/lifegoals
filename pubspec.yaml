@@ -5,14 +5,14 @@ publish_to: none
 
 environment:
   sdk: ">=2.18.0 <4.0.0"
-  flutter: ">=3.10.0"
+  flutter: ">=3.13.0"
 
 dependencies:
   bloc: ^8.1.2
-  cloud_firestore: ^4.8.4
-  firebase_auth: ^4.7.2
-  firebase_core: ^2.15.0
-  firebase_ui_auth: ^1.6.2
+  cloud_firestore: ^4.8.5
+  firebase_auth: ^4.7.3
+  firebase_core: ^2.15.1
+  firebase_ui_auth: ^1.6.4
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
@@ -20,11 +20,11 @@ dependencies:
   flutter_localizations:
     sdk: flutter
   freezed_annotation: ^2.4.1
-  go_router: ^10.0.0
+  go_router: ^10.1.0
   intl: any # uses transitive dependency from flutter_localizations
   json_annotation: ^4.8.1
   logging: ^1.2.0
-  mobile_scanner: ^3.3.0
+  mobile_scanner: ^3.4.1
   uuid: ^3.0.7
 
 dev_dependencies:
@@ -33,7 +33,7 @@ dev_dependencies:
   fake_cloud_firestore: ^2.4.1+1
   flutter_test:
     sdk: flutter
-  freezed: ^2.4.1
+  freezed: ^2.4.1 # 2.4.2 conflicts with ...
   #injectable_generator: ^2.1.3
   json_serializable: ^6.7.1
   melos: ^3.1.1
