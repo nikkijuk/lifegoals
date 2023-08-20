@@ -39,7 +39,7 @@ void main() {
         expect: () => [
           const Authenticated(authenticatedTestUser),
           const Unauthenticated(),
-          const Unknown()
+          const Unknown(),
         ],
       );
     },
