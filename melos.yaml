@@ -1,6 +1,10 @@
 name: lifegoals
 description: Flutter lifegoals app
 
+# configure melos to use sdk configured with fvm (can be overridden using env params for CI/CD)
+# fvm flutter sdk is configured in .fvm/fvm_config.json
+sdkPath: .fvm/flutter_sdk
+
 packages:
   - .
 
