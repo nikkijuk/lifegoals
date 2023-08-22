@@ -67,13 +67,11 @@ List<RouteBase> routes() => [
 
 // redirect and finding blocs needs build context
 GoRouter router(BuildContext ctx) => GoRouter(
-
-    // redirect is used to redirect to another route
-    // when state changes (e.g. user logs in)
-    // or when user tries to access route that requires
-    // authentication
-    redirect: (context, state) {
-
+      // redirect is used to redirect to another route
+      // when state changes (e.g. user logs in)
+      // or when user tries to access route that requires
+      // authentication
+      redirect: (context, state) {
         // find blocs current state
         final state = context.read<AuthenticationBloc>().state;
 
@@ -95,7 +93,7 @@ GoRouter router(BuildContext ctx) => GoRouter(
           // always when user gets authenticated (state change happens) go home
           //authenticated: (AuthenticatedUser user) => Routes.home,
           // no need to redirect, target is null
-        orElse: () => null,
+          orElse: () => null,
         );
 
         // TODO(jnikki): add proper logging
