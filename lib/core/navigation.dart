@@ -67,22 +67,35 @@ List<RouteBase> routes() => [
 
 // redirect and finding blocs needs build context
 GoRouter router(BuildContext ctx) => GoRouter(
-      redirect: (context, state) {
-        final state = BlocProvider.of<AuthenticationBloc>(context).state;
 
+    // redirect is used to redirect to another route
+    // when state changes (e.g. user logs in)
+    // or when user tries to access route that requires
+    // authentication
+    redirect: (context, state) {
+
+        // find blocs current state
+        final state = context.read<AuthenticationBloc>().state;
+
+        // or alternatively
+        //final state = BlocProvider.of<AuthenticationBloc>(context).state;
+
+        // evaluate state to get authentication status
+        // maybeWhen is used to handle only some states
         // ignore: omit_local_variable_types
         final bool? authenticated = state.maybeWhen(
           authenticated: (AuthenticatedUser _) => true,
           orElse: () => false,
         );
 
+        // evaluate state to get redirect target
         // ignore: omit_local_variable_types
         final String? target = state.maybeWhen(
           // TODO(jnikki): authenticated => home rule is nonsense
           // always when user gets authenticated (state change happens) go home
           //authenticated: (AuthenticatedUser user) => Routes.home,
-          // no need to redirect
-          orElse: () => null,
+          // no need to redirect, target is null
+        orElse: () => null,
         );
 
         // TODO(jnikki): add proper logging
@@ -90,10 +103,15 @@ GoRouter router(BuildContext ctx) => GoRouter(
 
         return target;
       },
+
+      // refreshListenable is used to refresh routes
+      // when state changes (e.g. user logs in) and
+      // we need to redirect to another route
       refreshListenable:
           GoRouterRefreshBloc<AuthenticationBloc, AuthenticationState>(
         BlocProvider.of<AuthenticationBloc>(ctx),
       ),
+
       routes: routes(),
     );
 
@@ -140,6 +158,7 @@ class GoRouterRefreshStream extends ChangeNotifier {
 // GoRouterRefreshBloc is funny gateway from stream to listenable
 // but now we have blocs and states typed properly
 
+/// Converts events emitted by [BlocBase] into a [Listenable]
 class GoRouterRefreshBloc<BLOC extends BlocBase<STATE>, STATE>
     extends ChangeNotifier {
   GoRouterRefreshBloc(BLOC bloc) {
