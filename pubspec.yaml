@@ -9,10 +9,10 @@ environment:
 
 dependencies:
   bloc: ^8.1.2
-  cloud_firestore: ^4.8.5
-  firebase_auth: ^4.7.3
+  cloud_firestore: ^4.9.0
+  firebase_auth: ^4.8.0
   firebase_core: ^2.15.1
-  firebase_ui_auth: ^1.6.4
+  firebase_ui_auth: ^1.6.5
   flutter:
     sdk: flutter
   flutter_bloc: ^8.1.3
