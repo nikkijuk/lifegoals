@@ -421,26 +421,26 @@ packages:
     dependency: "direct main"
     description:
       name: firebase_ui_auth
-      sha256: "12fec05263c6f844ba72949d3d002b697d6a995aead1045cb3f33ba0d1b6efb4"
+      sha256: d8d739e2116aacdd7a8863ecb00a54336dfd2643d16c59b1393ff38916436a9e
       url: "https://pub.dev"
     source: hosted
-    version: "1.6.5"
+    version: "1.7.0"
   firebase_ui_localizations:
     dependency: transitive
     description:
       name: firebase_ui_localizations
-      sha256: df0c9fc8603b576be2ae2842fa7e8e3b84d586378394f58a5f559276ff4355cd
+      sha256: "96d58534a4964cc609776af02bdcc74864cc3669af8f04f44e0afbdda55af232"
       url: "https://pub.dev"
     source: hosted
-    version: "1.5.3"
+    version: "1.6.0"
   firebase_ui_oauth:
     dependency: transitive
     description:
       name: firebase_ui_oauth
-      sha256: c4761cac5d7d9f068ea9fa1ef9c2360d08b59bd642fcffe8c5525a3a396a108e
+      sha256: ea25f17517641d0933fb74749682814391863a618a3c67d03ceb6e780f70b09d
       url: "https://pub.dev"
     source: hosted
-    version: "1.4.9"
+    version: "1.4.10"
   firebase_ui_shared:
     dependency: transitive
     description:
@@ -954,6 +954,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.10.0"
+  sprintf:
+    dependency: transitive
+    description:
+      name: sprintf
+      sha256: "1fc9ffe69d4df602376b52949af107d8f5703b77cda567c4d7d86a0693120f23"
+      url: "https://pub.dev"
+    source: hosted
+    version: "7.0.0"
   stack_trace:
     dependency: transitive
     description:
@@ -1054,10 +1062,10 @@ packages:
     dependency: "direct main"
     description:
       name: uuid
-      sha256: "648e103079f7c64a36dc7d39369cabb358d377078a051d6ae2ad3aa539519313"
+      sha256: e03928880bdbcbf496fb415573f5ab7b1ea99b9b04f669c01104d085893c3134
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.7"
+    version: "4.0.0"
   vector_graphics:
     dependency: transitive
     description:
