@@ -1,31 +1,57 @@
 name: lifegoals
 description: Flutter lifegoals app
 
+# troubleshooting
+#
+# install melos
+# $ dart pub global activate melos
+#
+# install fvm
+# $ dart pub global activate fvm
+
 # configure melos to use sdk configured with fvm (can be overridden using env params for CI/CD)
 # fvm flutter sdk is configured in .fvm/fvm_config.json
-sdkPath: .fvm/flutter_sdk
+# sdkPath: .fvm/flutter_sdk
+
+# not currently needed - check before taking in use
+# configure melos to use pubspec.yaml overrides
+#command:
+#  bootstrap:
+#    usePubspecOverrides: true
+
 
 packages:
   - .
 
 scripts:
 
+  # clean selected package
+  clean:select:
+    run: flutter clean
+    description: Clean selected package.
+    exec:
+      concurrency: 1
+    packageFilters:
+      file-exists: pubspec.yaml
+
   # clean all packages
   clean:
-    run: flutter clean
-    exec:
-      concurrency: 1
+    run: melos run clean:select --no-select
+    description: Clean all packages.
 
-  # get all dependencies
-  get:
+  # get dependencies for selected package
+  get:select:
     run: dart pub get
+    description: Get all dependencies for selected packages.
     exec:
       concurrency: 1
+    packageFilters:
+      file-exists: pubspec.yaml
 
-  # generation of all intl files
-  intl:
-    run: melos run intl:select --no-select
-    description: Run all intl generations in this project.
+  # get dependencies for all packages
+  get:
+    run: melos run get:select --no-select
+    description: Get all dependencies for all packages.
 
   # generation of intl files for all flutter packages that have l10n.yaml
   # configuration is in packages l10n.yaml
@@ -34,33 +60,59 @@ scripts:
     description: Generate intl files for all packages.
     packageFilters:
       flutter: true
-      dirExists: lib/l10n
+      dirExists: lib/src/l10n
+
+  # generation of all intl files
+  intl:
+    run: melos run intl:select --no-select
+    description: Run all intl generations in this project.
+
+  # formats code at single package
+  format:select:
+    run: melos exec dart format . --fix
+    description: Run `dart format` for selected package.
+    packageFilters:
+      file-exists: pubspec.yaml
 
   # formats all dart code
   format:
-    run: melos exec dart format . --fix
-    description: Run `dart format` for all packages.
+    run: melos run format:select --no-select
+    description: Format code in all packages.
+
+  # checks if dart code is following format - fails if not
+  format:check:select:
+    run: melos exec dart format . --output none --set-exit-if-changed
+    description: Run `dart format` checks for all packages.
+    packageFilters:
+      file-exists: pubspec.yaml
 
   # checks if dart code is following format - fails if not
   format:check:
-    run: melos exec dart format . --output none --set-exit-if-changed
-    description: Run `dart format` checks for all packages.
+    run: melos run format:check:select --no-select
+    description: Run format checks for all packages.
 
-  # runs analyze on every package
-  analyze:
+  analyze:select:
     run: |
       melos exec -c 1 -- \
-        flutter analyze .
+        flutter analyze --congratulate
     description: |
       Run `dart analyze` in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
+    packageFilters:
+      file-exists: pubspec.yaml
+
+  # runs analyze on every package
+  # just running "fvm flutter analyze" in root of project might be the way to go
+  analyze:
+    run: melos run analyze:select --no-select
+    description: Run analyze in all packages.
 
   # generate code on single package that has build runner as dependency
   generate:select:
-    run: melos exec -c 1 --depends-on="build_runner" -- "dart run build_runner build --delete-conflicting-outputs"
+    run: melos exec -c 1 -- "dart run build_runner build --delete-conflicting-outputs"
     description: Build all generated files for single Dart package in this project.
     packageFilters:
-      flutter: true
+      dependsOn: build_runner
 
   # generate code on each package that has build runner as dependency
   generate:
