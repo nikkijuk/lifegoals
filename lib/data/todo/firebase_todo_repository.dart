@@ -51,6 +51,7 @@ class FirebaseTodoRepository implements TodoRepository {
 
     // Reads the document referenced
     final snapshot = await ref.get();
+
     return snapshot.data();
   }
 }

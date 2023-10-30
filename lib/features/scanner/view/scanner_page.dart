@@ -3,7 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/core/routes.dart';
 import 'package:lifegoals/features/scanner/bloc/scanner_bloc.dart';
 import 'package:lifegoals/features/scanner/bloc/scanner_event.dart';
 import 'package:lifegoals/features/scanner/bloc/scanner_state.dart';

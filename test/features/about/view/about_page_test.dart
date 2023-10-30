@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/core/routes.dart';
 import 'package:lifegoals/features/about/view/about_page.dart';
 import 'package:mocktail/mocktail.dart';
 

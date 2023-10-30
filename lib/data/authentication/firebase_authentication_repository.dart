@@ -14,6 +14,7 @@ class FirebaseAuthenticationRepository {
       final userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await verifyEmail();
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
@@ -24,6 +25,7 @@ class FirebaseAuthenticationRepository {
     try {
       final userCredential = await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: email, password: password);
+
       return userCredential;
     } on FirebaseAuthException catch (e) {
       throw FirebaseAuthException(code: e.code, message: e.message);
@@ -37,7 +39,7 @@ class FirebaseAuthenticationRepository {
     }
   }
 
-  Future<void> signOut() async {
+  Future<void> signOut() {
     return FirebaseAuth.instance.signOut();
   }
 }

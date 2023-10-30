@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/core/routes.dart';
 
 import 'package:mocktail/mocktail.dart';
 

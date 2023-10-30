@@ -63,25 +63,27 @@ class TodosView extends StatelessWidget {
   }
 
   Widget _buildTodoListWidget(
-    BuildContext context,
+    BuildContext _,
     List<Todo> todoList,
   ) {
     if (todoList.isEmpty) {
       return const Center(child: Text('No ToDo'));
-    } else {
-      return ListView.builder(
-        padding: const EdgeInsets.all(8),
-        itemCount: todoList.length,
-        shrinkWrap: true,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (BuildContext context, int index) {
-          return _buildTodoItemCardWidget(context, todoList[index]);
-        },
-      );
     }
+
+    return ListView.builder(
+      padding: const EdgeInsets.all(8),
+      itemCount: todoList.length,
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemBuilder: (BuildContext context, int index) {
+        return _buildTodoItemCardWidget(context, todoList[index]);
+      },
+    );
   }
 
   Widget _buildTodoItemCardWidget(BuildContext context, Todo todo) {
+    final themeData = Theme.of(context);
+
     return InkWell(
       child: Card(
         child: Padding(
@@ -95,20 +97,20 @@ class TodosView extends StatelessWidget {
                   children: [
                     Text(
                       todo.title,
-                      style: Theme.of(context).textTheme.titleLarge,
+                      style: themeData.textTheme.titleLarge,
                       overflow: TextOverflow.ellipsis,
                     ),
                     Text(
                       //DateFormat('yyyy/MM/dd').format(todo.dueDate),
                       todo.dueDate.toString(),
-                      style: Theme.of(context).textTheme.bodySmall,
+                      style: themeData.textTheme.bodySmall,
                     ),
                     const SizedBox(height: 4),
                     Text(
                       todo.description.isEmpty
                           ? 'No Description'
                           : todo.description,
-                      style: Theme.of(context).textTheme.bodyMedium,
+                      style: themeData.textTheme.bodyMedium,
                       overflow: TextOverflow.ellipsis,
                     ),
                   ],
@@ -127,7 +129,7 @@ class TodosView extends StatelessWidget {
     );
   }
 
-  Widget _buildCheckedIcon(BuildContext context, Todo todo) {
+  Widget _buildCheckedIcon(BuildContext _, Todo __) {
     return InkResponse(
       onTap: () => {}, // coverage:ignore-line
       splashColor: Colors.transparent,
@@ -135,7 +137,7 @@ class TodosView extends StatelessWidget {
     );
   }
 
-  Widget _buildUncheckedIcon(BuildContext context, Todo todo) {
+  Widget _buildUncheckedIcon(BuildContext _, Todo __) {
     return InkResponse(
       onTap: () => {}, // coverage:ignore-line
       splashColor: Colors.transparent,

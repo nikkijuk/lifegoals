@@ -15,7 +15,9 @@ class AuthenticationBloc
   FutureOr<void> _login(LogIn event, Emitter<AuthenticationState> emit) {
     state.maybeWhen(
       unknown: () => emit(Authenticated(event.user)),
-      orElse: () {}, // coverage:ignore-line
+      orElse: () {
+        // TODO(jnikki): need to implement.
+      }, // coverage:ignore-line
     );
   }
 
@@ -25,7 +27,9 @@ class AuthenticationBloc
         emit(const Unauthenticated());
         emit(const Unknown());
       },
-      orElse: () {}, // coverage:ignore-line
+      orElse: () {
+        // TODO(jnikki): need to implement.
+      }, // coverage:ignore-line
     );
   }
 }

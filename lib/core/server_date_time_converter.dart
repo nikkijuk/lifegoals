@@ -21,9 +21,9 @@ class ServerDateTimeConverter implements JsonConverter<DateTime?, String?> {
   DateTime? fromJson(String? value) {
     if (value is String) {
       return DateTime.parse(value);
-    } else {
-      return DateTime.fromMillisecondsSinceEpoch(0);
     }
+
+    return DateTime.fromMillisecondsSinceEpoch(0);
   }
 
   @override

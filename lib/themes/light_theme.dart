@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:lifegoals/constants/border.dart';
-import 'package:lifegoals/constants/color.dart';
+import 'package:lifegoals/constants/border_constants.dart';
+import 'package:lifegoals/constants/color_constants.dart';
 
 ThemeData get lightTheme {
   return ThemeData(

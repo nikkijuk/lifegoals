@@ -2,7 +2,7 @@
 
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'package:lifegoals/core/jsontools.dart';
+import 'package:lifegoals/core/server_date_time_converter.dart';
 
 part 'todo.freezed.dart';
 part 'todo.g.dart'; // needed when type is serializable

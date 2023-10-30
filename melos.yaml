@@ -141,6 +141,14 @@ scripts:
       dirExists: test
     description: Generate coverage for the selected package.
 
+  metrics:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm analyze lib
+    description: |
+      Run DCM in all packages.
+       - Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
   build:all:
     run: |
       melos bootstrap

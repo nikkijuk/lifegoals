@@ -60,6 +60,7 @@ class TodoBloc extends Bloc<TodoEvent, TodoState> {
   Future<void> close() {
     // close resource subscription when bloc is not needed anymore
     _subscription?.cancel();
+
     return super.close();
   }
 }

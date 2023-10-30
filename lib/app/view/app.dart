@@ -4,7 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:lifegoals/core/appconfig.dart';
-import 'package:lifegoals/core/navigation.dart';
+import 'package:lifegoals/core/routes.dart';
 import 'package:lifegoals/data/audit/firebase_audit_repository.dart';
 import 'package:lifegoals/data/todo/firebase_todo_repository.dart';
 import 'package:lifegoals/domain/audit/audit_repository.dart';

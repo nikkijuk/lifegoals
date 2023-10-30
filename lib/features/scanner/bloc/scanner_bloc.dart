@@ -11,7 +11,7 @@ class ScannerBloc extends Bloc<ScannerEvent, ScannerState> {
   }
 
   FutureOr<void> _readFailed(ReadFailed event, Emitter<ScannerState> emit) {
-    // NOP ??
+    // TODO(jnikki): need to implement.
   }
 
   FutureOr<void> _readSucceeded(
