@@ -245,13 +245,20 @@ scripts:
       dirExists:
         - web
 
-  metrics:
+  dcm:a:
     run: |
       melos exec -c 1 --ignore="*example*" -- \
         dcm analyze lib
     description: |
       Run DCM in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  dcm:cm:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm calculate-metrics lib
+    description: |
+      Run DCM ul in all packages.
 
   dcm:ul:
     run: |
@@ -288,8 +295,7 @@ scripts:
     description: |
       Run DCM ec in all packages.
 
-
-  dcm:format:
+  dcm:fmt:
     run: |
       melos exec -c 1 --ignore="*example*" -- \
         dcm format lib test
