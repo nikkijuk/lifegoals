@@ -141,14 +141,6 @@ scripts:
       dirExists: test
     description: Generate coverage for the selected package.
 
-  metrics:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm analyze lib
-    description: |
-      Run DCM in all packages.
-       - Note: you can also rely on your IDEs Dart Analysis / Issues window.
-
   build:all:
     run: |
       melos bootstrap
@@ -253,3 +245,53 @@ scripts:
       dirExists:
         - web
 
+  metrics:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm analyze lib
+    description: |
+      Run DCM in all packages.
+       - Note: you can also rely on your IDEs Dart Analysis / Issues window.
+
+  dcm:ul:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-unused-l10n lib
+    description: |
+      Run DCM ul in all packages.
+
+  dcm:uc:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-unused-code lib
+    description: |
+      Run DCM uc in all packages.
+
+  dcm:uf:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-unused-files lib
+    description: |
+      Run DCM uc in all packages.
+
+  dcm:ec:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-exports-completeness lib
+    description: |
+      Run DCM ec in all packages.
+
+  dcm:d:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-dependencies lib test
+    description: |
+      Run DCM ec in all packages.
+
+
+  dcm:format:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm format lib test
+    description: |
+      Run DCM uc in all packages.
