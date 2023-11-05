@@ -31,12 +31,14 @@ void main() {
   group(
     'CounterPageRouting',
     () {
-      testWidgets('renders CounterPage via Router as home screen',
-          (tester) async {
-        await tester.pumpRealRouterApp(testRouter());
-        expect(find.byType(CounterView), findsOneWidget);
-        expect(find.byType(BackButton), findsNothing);
-      });
+      testWidgets(
+        'renders CounterPage via Router as home screen',
+        (tester) async {
+          await tester.pumpRealRouterApp(testRouter());
+          expect(find.byType(CounterView), findsOneWidget);
+          expect(find.byType(BackButton), findsNothing);
+        },
+      );
 
       testWidgets('is redirected when camera button is tapped', (tester) async {
         final mockGoRouter = MockGoRouter();
@@ -98,33 +100,36 @@ void main() {
         verifyNever(() => mockGoRouter.go(Routes.home));
       });
 
-      testWidgets('is redirected when profile button is tapped',
-          (tester) async {
-        final mockGoRouter = MockGoRouter();
+      testWidgets(
+        'is redirected when profile button is tapped',
+        (tester) async {
+          final mockGoRouter = MockGoRouter();
 
-        final mockAuthenticationBloc = MockAuthencationBloc();
+          final mockAuthenticationBloc = MockAuthencationBloc();
 
-        // TODO(jnikki): handling of initial state is blurry
+          // TODO(jnikki): handling of initial state is blurry
 
-        // Stub the state stream
-        whenListen(
-          mockAuthenticationBloc,
-          Stream.fromIterable([const Authenticated(authenticatedUser)]),
-          initialState: const Authenticated(authenticatedUser),
-        );
+          // Stub the state stream
+          whenListen(
+            mockAuthenticationBloc,
+            Stream.fromIterable([const Authenticated(authenticatedUser)]),
+            initialState: const Authenticated(authenticatedUser),
+          );
 
-        await tester.pumpMockRouterAppWithProvider(
-          const CounterPage(),
-          mockGoRouter,
-          BlocProvider<AuthenticationBloc>.value(value: mockAuthenticationBloc),
-        );
+          await tester.pumpMockRouterAppWithProvider(
+            const CounterPage(),
+            mockGoRouter,
+            BlocProvider<AuthenticationBloc>.value(
+                value: mockAuthenticationBloc),
+          );
 
-        await tester.tap(find.byIcon(Icons.verified_user));
-        await tester.pumpAndSettle();
+          await tester.tap(find.byIcon(Icons.verified_user));
+          await tester.pumpAndSettle();
 
-        verify(() => mockGoRouter.go(Routes.profile)).called(1);
-        verifyNever(() => mockGoRouter.go(Routes.home));
-      });
+          verify(() => mockGoRouter.go(Routes.profile)).called(1);
+          verifyNever(() => mockGoRouter.go(Routes.home));
+        },
+      );
     },
     //skip: true,
   );
@@ -161,19 +166,21 @@ void main() {
         expect(find.text('$state'), findsOneWidget);
       });
 
-      testWidgets('calls increment when increment button is tapped',
-          (tester) async {
-        when(() => counterCubit.state).thenReturn(0);
-        when(() => counterCubit.increment()).thenReturn(null);
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: counterCubit,
-            child: const CounterView(),
-          ),
-        );
-        await tester.tap(find.byIcon(Icons.add));
-        verify(() => counterCubit.increment()).called(1);
-      });
+      testWidgets(
+        'calls increment when increment button is tapped',
+        (tester) async {
+          when(() => counterCubit.state).thenReturn(0);
+          when(() => counterCubit.increment()).thenReturn(null);
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: counterCubit,
+              child: const CounterView(),
+            ),
+          );
+          await tester.tap(find.byIcon(Icons.add));
+          verify(() => counterCubit.increment()).called(1);
+        },
+      );
 
       testWidgets(
         'calls decrement when decrement button is tapped',

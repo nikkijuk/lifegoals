@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lifegoals/core/routes.dart';
-import 'package:lifegoals/domain/authentication/authenticated_user.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_bloc.dart';
 import 'package:lifegoals/features/authentication/bloc/authentication_state.dart';
 import 'package:lifegoals/features/counter/cubit/counter_cubit.dart';
@@ -72,7 +71,7 @@ class CounterView extends StatelessWidget {
           const SizedBox(height: 8),
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) => state.maybeWhen(
-              authenticated: (AuthenticatedUser user) => FloatingActionButton(
+              authenticated: (_) => FloatingActionButton(
                 heroTag: 'profile',
                 onPressed: () => context.go(Routes.profile),
                 child: const Icon(Icons.verified_user),
