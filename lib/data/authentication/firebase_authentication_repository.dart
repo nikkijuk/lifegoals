@@ -17,7 +17,7 @@ class FirebaseAuthenticationRepository {
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      throw FirebaseAuthException(code: e.code, message: e.message);
+      throw FirebaseAuthException(message: e.message, code: e.code);
     }
   }
 
@@ -28,7 +28,7 @@ class FirebaseAuthenticationRepository {
 
       return userCredential;
     } on FirebaseAuthException catch (e) {
-      throw FirebaseAuthException(code: e.code, message: e.message);
+      throw FirebaseAuthException(message: e.message, code: e.code);
     }
   }
 

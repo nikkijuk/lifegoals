@@ -4,16 +4,25 @@ import 'package:lifegoals/constants/color_constants.dart';
 
 ThemeData get lightTheme {
   return ThemeData(
-    primarySwatch: Colors.blue,
-    textTheme: const TextTheme().apply(
-      bodyColor: ColorConstants.lightFontColor,
-      displayColor: ColorConstants.lightFontColor,
-      decorationColor: ColorConstants.lightFontColor,
-    ),
-    scaffoldBackgroundColor: ColorConstants.backgroundColorLight,
     primaryColor: ColorConstants.primaryColor,
+    primarySwatch: Colors.blue,
+    scaffoldBackgroundColor: ColorConstants.backgroundColorLight,
     iconTheme: IconThemeData(
       color: ColorConstants.lightFontColor,
+    ),
+    textTheme: const TextTheme().apply(
+      displayColor: ColorConstants.lightFontColor,
+      bodyColor: ColorConstants.lightFontColor,
+      decorationColor: ColorConstants.lightFontColor,
+    ),
+    cardTheme: CardTheme(
+      color: ColorConstants.cardColor,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          BorderConstants.borderRadius,
+        ),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -27,15 +36,6 @@ ThemeData get lightTheme {
               BorderConstants.buttonRadius,
             ),
           ),
-        ),
-      ),
-    ),
-    cardTheme: CardTheme(
-      elevation: 0,
-      color: ColorConstants.cardColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          BorderConstants.borderRadius,
         ),
       ),
     ),

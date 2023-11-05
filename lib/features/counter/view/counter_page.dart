@@ -35,46 +35,46 @@ class CounterView extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
           FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().increment(),
             heroTag: 'increment',
+            onPressed: () => context.read<CounterCubit>().increment(),
             child: const Icon(Icons.add),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.read<CounterCubit>().decrement(),
             heroTag: 'decrement',
+            onPressed: () => context.read<CounterCubit>().decrement(),
             child: const Icon(Icons.remove),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.go(Routes.scanner),
             heroTag: 'scanner',
+            onPressed: () => context.go(Routes.scanner),
             child: const Icon(Icons.camera),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.go(Routes.todos),
             heroTag: 'todos',
+            onPressed: () => context.go(Routes.todos),
             child: const Icon(Icons.task),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.go(Routes.about),
             heroTag: 'about',
+            onPressed: () => context.go(Routes.about),
             child: const Icon(Icons.info),
           ),
           const SizedBox(height: 8),
           FloatingActionButton(
-            onPressed: () => context.go(Routes.login),
             heroTag: 'login',
+            onPressed: () => context.go(Routes.login),
             child: const Icon(Icons.login),
           ),
           const SizedBox(height: 8),
           BlocBuilder<AuthenticationBloc, AuthenticationState>(
             builder: (context, state) => state.maybeWhen(
               authenticated: (AuthenticatedUser user) => FloatingActionButton(
-                onPressed: () => context.go(Routes.profile),
                 heroTag: 'profile',
+                onPressed: () => context.go(Routes.profile),
                 child: const Icon(Icons.verified_user),
               ),
               orElse: () => const SizedBox(height: 8),

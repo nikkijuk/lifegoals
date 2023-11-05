@@ -36,9 +36,9 @@ class TodosView extends StatelessWidget {
             builder: (context, state) {
               return state.when(
                 uninitialized: () => FloatingActionButton(
+                  heroTag: 'load',
                   onPressed: () =>
                       context.read<TodoBloc>().add(const Subscribe()),
-                  heroTag: 'load',
                   child: const Icon(Icons.download),
                 ),
                 error: _buildErrorWidget,
@@ -71,13 +71,13 @@ class TodosView extends StatelessWidget {
     }
 
     return ListView.builder(
-      padding: const EdgeInsets.all(8),
-      itemCount: todoList.length,
-      shrinkWrap: true,
       physics: const NeverScrollableScrollPhysics(),
+      shrinkWrap: true,
+      padding: const EdgeInsets.all(8),
       itemBuilder: (BuildContext context, int index) {
         return _buildTodoItemCardWidget(context, todoList[index]);
       },
+      itemCount: todoList.length,
     );
   }
 
@@ -85,6 +85,7 @@ class TodosView extends StatelessWidget {
     final themeData = Theme.of(context);
 
     return InkWell(
+      onTap: () => {}, // coverage:ignore-line,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.all(8),
@@ -124,8 +125,7 @@ class TodosView extends StatelessWidget {
             ],
           ),
         ),
-      ),
-      onTap: () => {}, // coverage:ignore-line
+      ), // coverage:ignore-line
     );
   }
 

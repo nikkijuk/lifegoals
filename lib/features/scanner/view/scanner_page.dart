@@ -37,7 +37,9 @@ class ScannerView extends StatelessWidget {
         title: const Text('Mobile Scanner'),
         actions: [
           IconButton(
+            iconSize: 32,
             color: Colors.white,
+            onPressed: cameraController.toggleTorch,
             icon: ValueListenableBuilder(
               valueListenable: cameraController.torchState,
               builder: (context, state, child) {
@@ -49,11 +51,11 @@ class ScannerView extends StatelessWidget {
                 }
               },
             ),
-            iconSize: 32,
-            onPressed: cameraController.toggleTorch,
           ),
           IconButton(
+            iconSize: 32,
             color: Colors.white,
+            onPressed: cameraController.switchCamera,
             icon: ValueListenableBuilder(
               valueListenable: cameraController.cameraFacingState,
               builder: (context, state, child) {
@@ -65,8 +67,6 @@ class ScannerView extends StatelessWidget {
                 }
               },
             ),
-            iconSize: 32,
-            onPressed: cameraController.switchCamera,
           ),
         ],
       ),

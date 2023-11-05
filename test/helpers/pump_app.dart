@@ -14,9 +14,9 @@ extension PumpApp on WidgetTester {
     initFirebase();
 
     final app = MaterialApp(
+      home: widget,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: widget,
     );
 
     final fullApp = MultiBlocProvider(
@@ -34,9 +34,9 @@ extension PumpApp on WidgetTester {
     initFirebase();
 
     final app = MaterialApp(
+      home: widget,
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: widget,
     );
 
     final fullApp = MultiBlocProvider(
@@ -57,12 +57,12 @@ extension PumpRealRouterApp on WidgetTester {
     initFirebase();
 
     final app = MaterialApp.router(
-      localizationsDelegates: AppLocalizations.localizationsDelegates,
-      supportedLocales: AppLocalizations.supportedLocales,
-      routeInformationParser: router.routeInformationParser,
-      routerDelegate: router.routerDelegate,
       // Required by Go Router 8.X
       routeInformationProvider: router.routeInformationProvider,
+      routeInformationParser: router.routeInformationParser,
+      routerDelegate: router.routerDelegate,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
     );
 
     final fullApp = MultiBlocProvider(
@@ -86,9 +86,9 @@ extension PumpMockRouterApp on WidgetTester {
     initFirebase();
 
     final app = MaterialApp(
+      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
     );
 
     final fullApp = MultiBlocProvider(
@@ -109,9 +109,9 @@ extension PumpMockRouterApp on WidgetTester {
     initFirebase();
 
     final app = MaterialApp(
+      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,
-      home: MockGoRouterProvider(goRouter: mockGoRouter, child: widget),
     );
 
     final fullApp = MultiBlocProvider(

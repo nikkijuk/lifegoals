@@ -71,6 +71,11 @@ GoRouter router(BuildContext ctx) => GoRouter(
       // when state changes (e.g. user logs in)
       // or when user tries to access route that requires
       // authentication
+      routes: routes(),
+      // redirect is used to redirect to another route
+      // when state changes (e.g. user logs in)
+      // or when user tries to access route that requires
+      // authentication
       redirect: (context, state) {
         // find blocs current state
         final state = context.read<AuthenticationBloc>().state;
@@ -101,7 +106,6 @@ GoRouter router(BuildContext ctx) => GoRouter(
 
         return target;
       },
-
       // refreshListenable is used to refresh routes
       // when state changes (e.g. user logs in) and
       // we need to redirect to another route
@@ -109,8 +113,6 @@ GoRouter router(BuildContext ctx) => GoRouter(
           GoRouterRefreshBloc<AuthenticationBloc, AuthenticationState>(
         BlocProvider.of<AuthenticationBloc>(ctx),
       ),
-
-      routes: routes(),
     );
 
 // GoRouterRefreshStream is removed from Go Router v5
