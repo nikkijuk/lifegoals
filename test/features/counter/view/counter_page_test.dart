@@ -120,7 +120,8 @@ void main() {
             const CounterPage(),
             mockGoRouter,
             BlocProvider<AuthenticationBloc>.value(
-                value: mockAuthenticationBloc),
+              value: mockAuthenticationBloc,
+            ),
           );
 
           await tester.tap(find.byIcon(Icons.verified_user));
