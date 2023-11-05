@@ -175,19 +175,20 @@ void main() {
         verify(() => counterCubit.increment()).called(1);
       });
 
-      testWidgets('calls decrement when decrement button is tapped',
-          (tester) async {
-        when(() => counterCubit.state).thenReturn(0);
-        when(() => counterCubit.decrement()).thenReturn(null);
-        await tester.pumpApp(
-          BlocProvider.value(
-            value: counterCubit,
-            child: const CounterView(),
-          ),
-        );
-        await tester.tap(find.byIcon(Icons.remove));
-        verify(() => counterCubit.decrement()).called(1);
-      },
+      testWidgets(
+        'calls decrement when decrement button is tapped',
+        (tester) async {
+          when(() => counterCubit.state).thenReturn(0);
+          when(() => counterCubit.decrement()).thenReturn(null);
+          await tester.pumpApp(
+            BlocProvider.value(
+              value: counterCubit,
+              child: const CounterView(),
+            ),
+          );
+          await tester.tap(find.byIcon(Icons.remove));
+          verify(() => counterCubit.decrement()).called(1);
+        },
       );
     },
     //skip: true,

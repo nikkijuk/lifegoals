@@ -44,6 +44,10 @@ dart_code_metrics:
   metrics-exclude:
     - test/**
   rules:
+    - avoid-double-slash-imports
+    - avoid-duplicate-exports
+    - avoid-importing-entrypoint-exports:
+        only-in-src: true
     - avoid-bottom-type-in-records
     - avoid-bottom-type-in-patterns
     - avoid-cascade-after-if-null
