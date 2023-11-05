@@ -281,6 +281,14 @@ scripts:
     description: |
       Run DCM uc in all packages.
 
+  dcm:un:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm check-unnecessary-nullable lib test
+    description: |
+      Run DCM un in all packages.
+
+
   dcm:ec:
     run: |
       melos exec -c 1 --ignore="*example*" -- \
@@ -299,5 +307,12 @@ scripts:
     run: |
       melos exec -c 1 --ignore="*example*" -- \
         dcm format lib test
+    description: |
+      Run DCM uc in all packages.
+
+  dcm:fix:
+    run: |
+      melos exec -c 1 --ignore="*example*" -- \
+        dcm fix lib test
     description: |
       Run DCM uc in all packages.

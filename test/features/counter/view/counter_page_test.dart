@@ -187,7 +187,8 @@ void main() {
         );
         await tester.tap(find.byIcon(Icons.remove));
         verify(() => counterCubit.decrement()).called(1);
-      });
+      },
+      );
     },
     //skip: true,
   );

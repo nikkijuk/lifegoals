@@ -5,11 +5,20 @@ import 'package:lifegoals/constants/color_constants.dart';
 
 ThemeData get darkTheme {
   return ThemeData.dark().copyWith(
-    textTheme: const TextTheme().apply(),
-    scaffoldBackgroundColor: ColorConstants.backgroundColorDark,
     primaryColor: ColorConstants.primaryColor,
+    scaffoldBackgroundColor: ColorConstants.backgroundColorDark,
     iconTheme: const IconThemeData(
       color: Colors.white,
+    ),
+    textTheme: const TextTheme().apply(),
+    cardTheme: CardTheme(
+      color: ColorConstants.cardColor,
+      elevation: 0,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(
+          BorderConstants.borderRadius,
+        ),
+      ),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ButtonStyle(
@@ -23,15 +32,6 @@ ThemeData get darkTheme {
               BorderConstants.buttonRadius,
             ),
           ),
-        ),
-      ),
-    ),
-    cardTheme: CardTheme(
-      elevation: 0,
-      color: ColorConstants.cardColor,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(
-          BorderConstants.borderRadius,
         ),
       ),
     ),

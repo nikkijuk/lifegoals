@@ -44,13 +44,25 @@ dart_code_metrics:
   metrics-exclude:
     - test/**
   rules:
+    - avoid-bottom-type-in-records
+    - avoid-bottom-type-in-patterns
+    - avoid-cascade-after-if-null
+    - arguments-ordering:
+        child-last: true
+    - avoid-accessing-collections-by-constant-index
+    - avoid-banned-file-names:
+        entries:
+          - .*example.dart
+    # - avoid-accessing-other-classes-private-members
     # - avoid-dynamic
     # - avoid-passing-async-when-sync-expected
     # - avoid-redundant-async
+    - avoid-async-call-in-sync-function
     - avoid-unnecessary-type-assertions
     - avoid-unnecessary-type-casts
     - avoid-unrelated-type-assertions
-    - avoid-unused-parameters
+    - avoid-unused-parameters:
+        ignore-inline-functions: false
     - avoid-nested-conditional-expressions
     - newline-before-return
     - no-boolean-literal-compare
@@ -58,8 +70,11 @@ dart_code_metrics:
     - prefer-trailing-comma
     - prefer-conditional-expressions
     - no-equal-then-else
-    - prefer-moving-to-variable
-    - prefer-match-file-name
+    - prefer-moving-to-variable:
+        allowed-duplicated-chains: 3
+    - prefer-match-file-name:
+        exclude:
+          - test/**
     - avoid-collapsible-if
     - avoid-redundant-else
     - avoid-incomplete-copy-with
@@ -67,4 +82,5 @@ dart_code_metrics:
     - avoid-self-assignment
     # - avoid-unnecessary-nullable-return-type
     - avoid-unrelated-type-casts
-    - prefer-declaring-const-constructor
+    - prefer-declaring-const-constructor:
+        allow-one: true
