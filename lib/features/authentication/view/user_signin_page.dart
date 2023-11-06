@@ -81,6 +81,8 @@ void _showVerifyEmailMessage(BuildContext context, User user) {
       // TODO(jnikki): localize
       content: Text('Please check your email to verify your email address'),
     );
+
+    // ignore: avoid-ignoring-return-values
     ScaffoldMessenger.of(context).showSnackBar(snackBar);
   }
 }

@@ -43,7 +43,18 @@ dart_code_metrics:
 
   metrics-exclude:
     - test/**
+
   rules:
+    - avoid-ignoring-return-values:
+        exclude:
+          - test/**
+    - avoid-global-state
+    - avoid-identical-exception-handling-blocks
+    - avoid-long-files:
+        max-length: 500
+    - avoid-duplicate-named-imports
+    - avoid-duplicate-patterns
+    - avoid-equal-expressions
     - avoid-double-slash-imports
     - avoid-duplicate-exports
     - avoid-importing-entrypoint-exports:
@@ -88,3 +99,4 @@ dart_code_metrics:
     - avoid-unrelated-type-casts
     - prefer-declaring-const-constructor:
         allow-one: true
+    # - avoid-barrel-files

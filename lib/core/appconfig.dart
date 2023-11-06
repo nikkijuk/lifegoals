@@ -7,6 +7,7 @@ import 'package:logging/logging.dart';
 
 void initLogging({Level level = Level.INFO}) {
   Logger.root.level = level;
+  // ignore: avoid-ignoring-return-values
   Logger.root.onRecord.listen((record) {
     // TODO(jnikki): should be replaced with something more useful
     // ignore: avoid_print
@@ -15,6 +16,7 @@ void initLogging({Level level = Level.INFO}) {
 }
 
 Future<void> initFirebase() async {
+  // ignore: avoid-ignoring-return-values
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
