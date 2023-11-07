@@ -7,7 +7,7 @@ ThemeData get lightTheme {
     primaryColor: ColorConstants.primaryColor,
     primarySwatch: Colors.blue,
     scaffoldBackgroundColor: ColorConstants.backgroundColorLight,
-    iconTheme: IconThemeData(
+    iconTheme: const IconThemeData(
       color: ColorConstants.lightFontColor,
     ),
     textTheme: const TextTheme().apply(
