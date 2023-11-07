@@ -24,7 +24,8 @@ class AuditBloc extends Bloc<AuditEvent, AuditState> {
     );
 
     await _auditRepository.save(record);
-
-    emit(Added(record));
+    if (!isClosed) {
+      emit(Added(record));
+    }
   }
 }

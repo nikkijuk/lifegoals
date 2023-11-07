@@ -45,6 +45,12 @@ dart_code_metrics:
     - test/**
 
   rules:
+    - avoid-bloc-public-methods
+    - avoid-cubits
+    - avoid-passing-bloc-to-bloc
+    - check-is-not-closed-after-async-gap
+    - prefer-correct-bloc-provider
+    - prefer-multi-bloc-provider
     - avoid-ignoring-return-values:
         exclude:
           - test/**
