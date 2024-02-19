@@ -42,7 +42,7 @@ class ScannerView extends StatelessWidget {
             onPressed: cameraController.toggleTorch,
             icon: ValueListenableBuilder(
               valueListenable: cameraController.torchState,
-              builder: (context, state, child) {
+              builder: (_, state, __) {
                 switch (state) {
                   case TorchState.off:
                     return const Icon(Icons.flash_off, color: Colors.grey);
@@ -58,7 +58,7 @@ class ScannerView extends StatelessWidget {
             onPressed: cameraController.switchCamera,
             icon: ValueListenableBuilder(
               valueListenable: cameraController.cameraFacingState,
-              builder: (context, state, child) {
+              builder: (_, state, __) {
                 switch (state) {
                   case CameraFacing.front:
                     return const Icon(Icons.camera_front);
@@ -92,11 +92,9 @@ class ScannerView extends StatelessWidget {
       case null:
         log.warning('Failed to read barcode');
         context.read<ScannerBloc>().add(const ReadFailed());
-        break;
       default:
         log.warning("Successfully read barcode '$code'");
-        context.read<ScannerBloc>().add(ReadSucceeded(code!));
-        break;
+        context.read<ScannerBloc>().add(ReadSucceeded(code));
     }
   }
 }
@@ -107,7 +105,7 @@ class ScannedCode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<ScannerBloc, ScannerState>(
-      builder: (context, state) => state.maybeWhen(
+      builder: (_, state) => state.maybeWhen(
         found: Text.new,
         orElse: () => const Text('N/A'),
       ),

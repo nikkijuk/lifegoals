@@ -59,7 +59,7 @@ List<RouteBase> routes() => [
       ),
       GoRoute(
         path: Routes.forgotPassword,
-        builder: (context, state) => ForgotPasswordPage(
+        builder: (_, state) => ForgotPasswordPage(
           state.uri.queryParameters['email']!,
         ),
       ),
@@ -76,7 +76,7 @@ GoRouter router(BuildContext ctx) => GoRouter(
       // when state changes (e.g. user logs in)
       // or when user tries to access route that requires
       // authentication
-      redirect: (context, state) {
+      redirect: (context, _) {
         // find blocs current state
         final state = context.read<AuthenticationBloc>().state;
 

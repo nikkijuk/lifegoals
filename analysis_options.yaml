@@ -51,6 +51,9 @@ dart_code_metrics:
     - check-is-not-closed-after-async-gap
     - prefer-correct-bloc-provider
     - prefer-multi-bloc-provider
+    #- prefer-caret-version-syntax
+    #- prefer-semver-version
+    #- prefer-publish-to-none
     - avoid-ignoring-return-values:
         exclude:
           - test/**
