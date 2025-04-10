@@ -42,7 +42,7 @@ class App extends StatelessWidget {
          */
           BlocProvider<AuditBloc>(
             create: (_) =>
-                AuditBloc(FirebaseAuditRepository(FirebaseFirestore.instance)),
+                AuditBloc(context.read<AuditRepository>()),
           ),
         ],
         child: const RealApp(),

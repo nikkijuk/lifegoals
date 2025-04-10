@@ -246,73 +246,79 @@ scripts:
         - web
 
   dcm:a:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm analyze lib
+    run: dcm analyze lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM in all packages.
        - Note: you can also rely on your IDEs Dart Analysis / Issues window.
 
   dcm:cm:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm calculate-metrics lib
+    run: dcm calculate-metrics lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM ul in all packages.
 
   dcm:ul:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-unused-l10n lib
+    run: dcm check-unused-l10n lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM ul in all packages.
 
   dcm:uc:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-unused-code lib
+    run: dcm check-unused-code lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM uc in all packages.
 
   dcm:uf:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-unused-files lib
+    run: dcm check-unused-files lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM uc in all packages.
 
   dcm:un:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-unnecessary-nullable lib test
+    run: dcm check-unnecessary-nullable lib test
+    exec:
+      concurrency: 1
     description: |
       Run DCM un in all packages.
 
-
   dcm:ec:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-exports-completeness lib
+    run: dcm check-exports-completeness lib
+    exec:
+      concurrency: 1
     description: |
       Run DCM ec in all packages.
 
   dcm:d:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm check-dependencies lib test
+    run: dcm check-dependencies lib test
+    exec:
+      concurrency: 1
     description: |
       Run DCM ec in all packages.
 
   dcm:fmt:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm format lib test
+    run: dcm format lib test
+    exec:
+      concurrency: 1
     description: |
       Run DCM uc in all packages.
 
   dcm:fix:
-    run: |
-      melos exec -c 1 --ignore="*example*" -- \
-        dcm fix lib test
+    run: dcm fix lib test
+    exec:
+      concurrency: 1
     description: |
       Run DCM uc in all packages.
+
+  analyze:dcm:
+    run: melos exec -c 10 -- dcm analyze . --fatal-style --fatal-performance --fatal-warnings
+    description: Run DCM static analysis checks.
+    #packageFilters:
+    #  dependsOn: "dart_code_metrics_presets"
+

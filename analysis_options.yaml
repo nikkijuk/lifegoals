@@ -71,8 +71,6 @@ dart_code_metrics:
     - avoid-bottom-type-in-records
     - avoid-bottom-type-in-patterns
     - avoid-cascade-after-if-null
-    - arguments-ordering:
-        child-last: true
     - avoid-accessing-collections-by-constant-index
     - avoid-banned-file-names:
         entries:
